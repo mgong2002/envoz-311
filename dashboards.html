@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboards &amp; AI Insights — City Manager 311 Dashboard | Envoz 311</title>
+<meta name="description" content="The city manager 311 dashboard for Vista Robles: response speed, routing accuracy, equity coverage, after-hours capture, cost avoided, AI-discovered service gaps, and council-ready 311 reporting — generated from live demo evidence.">
+<link rel="icon" type="image/svg+xml" href="assets/img/envoz-mark.svg">
+<link rel="stylesheet" href="assets/css/main.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://envoz311.example.com/index.html" },
+    { "@type": "ListItem", "position": 2, "name": "Dashboards & AI Insights", "item": "https://envoz311.example.com/dashboards.html" }
+  ]
+}
+</script>
+<style>
+/* ---- Dashboards page-only styles ---- */
+.dash-hero{padding:42px 0 30px}
+.dash-hero h1{font-size:clamp(1.5rem,2.8vw,2.1rem);margin:10px 0 6px}
+.dash-hero .lede{font-size:1rem;margin-bottom:0}
+.tab-panel{padding:30px 0 6px}
+.panel-head{max-width:70ch}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:12px;margin-top:18px}
+.kpi-grid .kpi{padding:13px 15px}
+.kpi-grid .kpi-value{font-size:1.42rem}
+.range-pills{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.surge-banner{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:linear-gradient(120deg,#5f3404,#92610c);color:#fff;border:1px solid var(--amber-600);border-radius:12px;padding:13px 18px;font-weight:600;margin:16px 0 2px;animation:proofReveal .5s ease both}
+.surge-banner .chip{background:rgba(255,255,255,.16);color:#fff;border-color:transparent}
+.chart-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:22px}
+@media(max-width:880px){.chart-grid{grid-template-columns:1fr}}
+.chart-span{grid-column:1/-1}
+.chart-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.75rem;font-weight:600;color:var(--slate-600);margin:0 0 8px}
+.lg-swatch{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+.chart-note{font-size:.72rem;color:var(--slate-400);margin-top:8px}
+.heat-grid{display:grid;gap:5px;margin-top:10px;font-variant-numeric:tabular-nums}
+.heat-head{font-size:.66rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:flex-end;padding-bottom:2px;line-height:1.25}
+.heat-rowlab{font-size:.78rem;font-weight:600;color:var(--slate-700);display:flex;align-items:center;gap:6px}
+.heat-cell.hot{outline:2px solid var(--amber-600);outline-offset:1px}
+.gap-status{margin-top:12px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.counter-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:12px;margin-top:18px}
+.ledger-detail>td{background:var(--aqua-50);font-size:.85rem}
+.ledger-toggle{appearance:none;background:none;border:none;cursor:pointer;font-family:var(--mono);font-size:.82rem;color:var(--ocean-600);padding:2px 4px;border-radius:6px;font-weight:600}
+.ledger-toggle:hover{background:var(--ocean-100)}
+.chip-cloud{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.rec-card{cursor:pointer}
+.rec-title-btn{appearance:none;background:none;border:none;padding:0;font:inherit;font-weight:700;font-size:1.02rem;color:var(--navy-900);cursor:pointer;text-align:left;line-height:1.3}
+.rec-title-btn:hover{color:var(--teal-700)}
+.rec-meta{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.8rem;color:var(--muted);margin:10px 0}
+.agent-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:16px}
+.agent-orb{width:46px;height:46px;border-radius:50%;flex-shrink:0;background:radial-gradient(circle at 35% 30%,#9be8e6,var(--teal-500) 55%,var(--teal-700));animation:orbPulse 2.6s ease-in-out infinite}
+.boundary-cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:14px}
+@media(max-width:720px){.boundary-cols{grid-template-columns:1fr}}
+.boundary-cols ul{margin:8px 0 0;line-height:1.9}
+.drawer .d-section{margin:16px 0 0;padding-top:14px;border-top:1px solid var(--line-soft)}
+.d-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin-bottom:6px}
+.d-highlight{outline:3px solid var(--teal-500);outline-offset:4px;border-radius:8px;transition:outline-color 1s ease}
+.sbx-track{height:8px;border-radius:6px;background:var(--slate-100);overflow:hidden;margin:10px 0}
+.sbx-bar{height:100%;width:0;background:var(--teal-600);border-radius:6px;transition:width .3s ease}
+.audit-list{list-style:none;padding:0;margin:0;font-size:.83rem}
+.audit-list li{padding:6px 0;border-bottom:1px dashed var(--line-soft);display:flex;gap:10px}
+.audit-list .mono{color:var(--teal-700)}
+.toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%);background:var(--navy-900);color:#fff;font-size:.85rem;font-weight:600;padding:11px 18px;border-radius:10px;box-shadow:var(--shadow-lg);z-index:300;animation:bubbleIn .25s ease;max-width:min(480px,90vw);text-align:center}
+.report-section{opacity:0;transform:translateY(14px);transition:opacity .45s ease,transform .45s ease;margin-top:16px}
+.report-section.built{opacity:1;transform:none}
+.stat-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin:12px 0}
+.stat-callout{background:var(--aqua-50);border:1px solid var(--teal-100);border-radius:10px;padding:11px 14px}
+.stat-callout .v{font-size:1.28rem;font-weight:750;color:var(--navy-900);font-variant-numeric:tabular-nums;line-height:1.2}
+.stat-callout .l{font-size:.74rem;color:var(--muted);font-weight:600;margin-top:2px}
+.report-shell{position:relative}
+#council-report .report-section h3{margin-bottom:4px}
+.build-status{display:flex;align-items:center;gap:10px;font-size:.85rem;font-weight:600;color:var(--teal-700)}
+.build-dot{width:9px;height:9px;border-radius:50%;background:var(--teal-600);animation:orbPulse 1.2s infinite}
+</style>
+</head>
+<body data-page="dashboards" data-marketing="false">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main">
+
+  <!-- ============ Compact hero ============ -->
+  <section class="section-dark grid-texture dash-hero">
+    <div class="container">
+      <span class="eyebrow">Dashboards &amp; AI Insights</span>
+      <div class="flex space-between flex-wrap" style="align-items:flex-end">
+        <div style="max-width:760px">
+          <h1>City Manager Success Dashboard · Vista Robles</h1>
+          <p class="lede">The numbers a council actually asks about — access, speed, accuracy, equity, and cost — plus the AI success agent that keeps improving them.</p>
+        </div>
+        <div class="chip-row" style="margin-bottom:6px">
+          <span class="chip chip-outline on-dark">Illustrative demo data</span>
+          <span class="chip chip-outline on-dark">Updated today · 7:12 AM</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ Answer block + tabs ============ -->
+  <section class="section-tight" style="padding-bottom:0">
+    <div class="container">
+      <div class="answer-block" style="margin-top:0">This city manager 311 dashboard shows what changed for residents — faster response, correct routing, after-hours coverage, equitable neighborhood service, and lower cost per interaction — and turns that evidence into council-ready 311 reporting in one click.</div>
+      <div class="tabs" role="tablist" aria-label="Dashboard views" id="dash-tabs">
+        <button class="tab" role="tab" type="button" id="tab-performance" data-tab="performance" aria-controls="panel-performance" aria-selected="true">Performance</button>
+        <button class="tab" role="tab" type="button" id="tab-gaps" data-tab="gaps" aria-controls="panel-gaps" aria-selected="false" tabindex="-1">Service Gaps</button>
+        <button class="tab" role="tab" type="button" id="tab-cel" data-tab="cel" aria-controls="panel-cel" aria-selected="false" tabindex="-1">CEL Learning</button>
+        <button class="tab" role="tab" type="button" id="tab-agent" data-tab="agent" aria-controls="panel-agent" aria-selected="false" tabindex="-1">Nico Success Agent</button>
+        <button class="tab" role="tab" type="button" id="tab-council" data-tab="council" aria-controls="panel-council" aria-selected="false" tabindex="-1">Council Proof</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TAB 1 · Performance ============ -->
+  <section class="tab-panel" role="tabpanel" id="panel-performance" aria-labelledby="tab-performance">
+    <div class="container">
+      <div class="flex space-between flex-wrap">
+        <div class="panel-head">
+          <h2 style="margin-bottom:4px">Resident outcomes, not AI vanity metrics</h2>
+          <p class="small" style="color:var(--muted);margin-bottom:0">Faster response, correct routing, a cleared after-hours backlog, equitable neighborhood coverage, lower cost per interaction, fewer repeat contacts — and residents who trust the number they called.</p>
+        </div>
+        <div class="flex flex-wrap" style="align-items:center">
+          <div class="range-pills" role="group" aria-label="Time range" id="range-pills">
+            <button class="filter-pill" type="button" data-range="30" aria-pressed="false">Last 30 days</button>
+            <button class="filter-pill" type="button" data-range="60" aria-pressed="false">Last 60 days</button>
+            <button class="filter-pill" type="button" data-range="90" aria-pressed="true">Last 90 days</button>
+          </div>
+          <button class="btn btn-secondary btn-sm" type="button" id="surge-toggle" aria-pressed="false">⛈ Storm surge view</button>
+        </div>
+      </div>
+      <div id="surge-banner" hidden></div>
+      <div class="kpi-grid" id="kpi-grid" aria-live="polite"></div>
+      <div class="chart-grid" id="perf-charts"></div>
+      <p class="disclaimer" style="margin-top:14px">All figures are illustrative demo data for the fictional City of Vista Robles.</p>
+    </div>
+  </section>
+
+  <!-- ============ TAB 2 · Service Gaps ============ -->
+  <section class="tab-panel" role="tabpanel" id="panel-gaps" aria-labelledby="tab-gaps" hidden>
+    <div class="container">
+      <div class="panel-head">
+        <h2 style="margin-bottom:4px">AI-discovered service gaps</h2>
+        <p class="small" style="color:var(--muted)">Nico watches every routed case, staff correction, and unknown category — then surfaces the gaps worth fixing, with evidence and a one-click next step. Nothing changes in production without approval.</p>
+      </div>
+      <div class="grid grid-2" id="gap-cards" style="margin-top:22px"></div>
+    </div>
+  </section>
+
+  <!-- ============ TAB 3 · CEL Learning ============ -->
+  <section class="tab-panel" role="tabpanel" id="panel-cel" aria-labelledby="tab-cel" hidden>
+    <div class="container">
+      <div class="panel-head">
+        <h2 style="margin-bottom:4px">Civic Evidence Ledger · what the system learned</h2>
+        <p class="small" style="color:var(--muted)">Every correction, unknown phrase, and connector hiccup becomes a logged learning signal. This quarter’s tally, and the ledger behind it.</p>
+      </div>
+      <div class="counter-grid" id="cel-counters"></div>
+
+      <h3 style="margin:34px 0 6px">Learning Ledger</h3>
+      <p class="small" style="color:var(--muted);margin-bottom:14px">Click any row for the full evidence and audit trail.</p>
+      <div class="table-wrap" id="ledger-wrap"></div>
+
+      <div class="card" id="cel-loop-card" style="margin-top:30px;position:relative">
+        <div class="flex space-between flex-wrap">
+          <div>
+            <h3 style="margin-bottom:4px">The Continuous Civic Improvement Loop</h3>
+            <p class="small" style="color:var(--muted)">How a 9:42 PM phone call becomes an approved, audited improvement to your 311 program.</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" type="button" id="loop-replay">↻ Replay the loop</button>
+        </div>
+        <div id="cel-loop-host" style="margin-top:14px"></div>
+        <div class="infra-watermark"><svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path fill="currentColor" d="M10 8 L90 8 L90 24 L36 24 L64 50 L36 76 L90 76 L90 92 L10 92 L10 82 L42 50 L10 18 Z"/></svg><span>Powered By MetaEngage.ai</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TAB 4 · Nico Success Agent ============ -->
+  <section class="tab-panel" role="tabpanel" id="panel-agent" aria-labelledby="tab-agent" hidden>
+    <div class="container">
+      <div class="panel-head">
+        <h2 style="margin-bottom:4px">Nico Success Agent · Assigned to Vista Robles</h2>
+        <p class="small" style="color:var(--muted)">Every Envoz city gets a dedicated AI success agent that monitors the program around the clock, finds what to improve next, and drafts the change for your approval. <strong>Autonomous where safe. Approval-gated where civic trust matters.</strong></p>
+      </div>
+
+      <div class="card" id="agent-card" style="margin-top:22px"></div>
+
+      <h3 style="margin:32px 0 4px">What the agent monitors</h3>
+      <div class="chip-cloud" id="agent-monitors" role="list"></div>
+
+      <div class="flex space-between flex-wrap" style="margin:34px 0 4px;align-items:flex-end">
+        <h3 style="margin:0">This week’s improvement plan</h3>
+        <div class="range-pills" role="group" aria-label="Filter recommendations" id="rec-filters">
+          <button class="filter-pill" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-pill" type="button" data-filter="ready" aria-pressed="false">Ready for approval</button>
+          <button class="filter-pill" type="button" data-filter="open" aria-pressed="false">Open</button>
+          <button class="filter-pill" type="button" data-filter="approved" aria-pressed="false">Approved</button>
+        </div>
+      </div>
+      <p class="small" style="color:var(--muted);margin-bottom:14px">Click a recommendation to see evidence, sample cases, sandbox results, and the approval flow.</p>
+      <div class="grid grid-2" id="rec-cards"></div>
+
+      <div class="card" style="margin-top:30px;border-top:3px solid var(--navy-900)">
+        <h3 style="margin-bottom:2px">Autonomy boundaries</h3>
+        <p class="small" style="color:var(--muted)">Governed autonomy is the product. These boundaries are enforced in the platform, not just promised.</p>
+        <div class="boundary-cols">
+          <div>
+            <span class="chip chip-teal">Nico CAN — autonomously</span>
+            <ul class="small">
+              <li>Monitor routing accuracy, SLA risk, equity, and language quality 24/7</li>
+              <li>Analyze correction trends and surge patterns across every interaction</li>
+              <li>Draft rules, vocabulary, and taxonomy proposals with evidence attached</li>
+              <li>Simulate and run sandbox tests against historical cases</li>
+              <li>Prepare council reports and improvement summaries</li>
+              <li>Create <em>proposed</em> configuration changes for review</li>
+            </ul>
+          </div>
+          <div>
+            <span class="chip chip-red">Nico CANNOT</span>
+            <ul class="small">
+              <li>Silently change production routing</li>
+              <li>Fabricate case numbers or resolution dates — ever</li>
+              <li>Change the global taxonomy from one city’s correction</li>
+              <li>Deploy any production change without city approval</li>
+            </ul>
+          </div>
+        </div>
+        <div class="audit-ribbon" style="margin-top:16px"><span>🛡</span><span><strong style="color:#fff">Production changes require city approval</strong> — and every approval is logged to the Civic Evidence Ledger.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TAB 5 · Council Proof ============ -->
+  <section class="tab-panel" role="tabpanel" id="panel-council" aria-labelledby="tab-council" hidden>
+    <div class="container">
+      <div class="grid grid-2" style="align-items:center">
+        <div class="panel-head">
+          <h2 style="margin-bottom:4px">Council-ready proof, generated from evidence</h2>
+          <p class="small" style="color:var(--muted)">Every number in this report traces back to a logged interaction, a routed case, or an approved change — no hand-assembled slide decks the night before the council meeting.</p>
+          <button class="btn btn-primary btn-lg" type="button" id="generate-report" style="margin-top:14px">📄 Generate council-ready proof report</button>
+        </div>
+        <div class="card card-flat" style="background:var(--aqua-50);border-color:var(--teal-100)">
+          <h4>What the report covers</h4>
+          <ul class="small" style="line-height:2;color:var(--slate-600)">
+            <li>Executive summary &amp; resident access gains</li>
+            <li>Operational performance, equity &amp; language access</li>
+            <li>Cost savings and service gaps discovered</li>
+            <li>Next-quarter recommendations</li>
+          </ul>
+        </div>
+      </div>
+      <div class="report-shell" id="council-report" aria-live="polite" style="margin-top:10px"></div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/shared.js"></script>
+<script src="assets/js/pages/dashboards.js"></script>
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilot &amp; Pricing — 90-Day 311 Pilot Programs &amp; ROI Calculator | Envoz 311</title>
+<meta name="description" content="Procurement-friendly 90-day Envoz 311 pilots: transparent pilot pricing ranges for small, mid-size, and large cities, an interactive 311 ROI calculator, and after-hours 311 automation that overlays your existing CRM.">
+<link rel="icon" type="image/svg+xml" href="assets/img/envoz-mark.svg">
+<link rel="stylesheet" href="assets/css/main.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://envoz311.example.com/index.html" },
+    { "@type": "ListItem", "position": 2, "name": "Pilot & Pricing", "item": "https://envoz311.example.com/pilot-pricing.html" }
+  ]
+}
+</script>
+<style>
+/* page-specific styles only */
+.pilot-band-card { display: flex; align-items: flex-start; gap: 12px; }
+.pilot-band-card .icon-tile { margin-bottom: 0; }
+.pricing-card { display: flex; flex-direction: column; }
+.pricing-card .price-range {
+  font-size: 1.5rem; font-weight: 750; color: var(--navy-900);
+  letter-spacing: -0.02em; font-variant-numeric: tabular-nums; line-height: 1.2; margin: 10px 0 2px;
+}
+.pricing-card .price-unit { font-size: 0.82rem; font-weight: 600; color: var(--muted); }
+.pricing-card ul.included { list-style: none; padding: 0; margin: 14px 0 0; font-size: 0.87rem; }
+.pricing-card ul.included li { padding: 5px 0 5px 24px; position: relative; border-bottom: 1px solid var(--line-soft); }
+.pricing-card ul.included li:last-child { border-bottom: none; }
+.pricing-card ul.included li::before { content: "✓"; position: absolute; left: 2px; color: var(--teal-600); font-weight: 700; }
+.pricing-card .card-footer { margin-top: auto; padding-top: 16px; }
+.pricing-card.tier-recommended { border-color: var(--teal-600); box-shadow: 0 0 0 3px var(--teal-100), var(--shadow-md); }
+.pricing-card .estimate-note { font-size: 0.72rem; color: var(--slate-400); margin-top: 10px; }
+.roi-row { display: grid; grid-template-columns: 1fr 110px; gap: 10px 14px; align-items: center; margin-bottom: 16px; }
+.roi-row .field-label { margin-bottom: 0; }
+.roi-row input[type="range"] { grid-column: 1 / -1; margin-top: -2px; }
+.roi-out-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+@media (max-width: 640px) { .roi-out-grid { grid-template-columns: 1fr; } }
+.roi-out-grid .kpi .kpi-value { font-size: 1.5rem; }
+details.assumptions {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md);
+  margin-top: 18px; overflow: hidden;
+}
+details.assumptions summary {
+  cursor: pointer; font-weight: 650; color: var(--navy-900); padding: 15px 20px;
+  list-style: none; display: flex; justify-content: space-between; align-items: center; gap: 12px;
+}
+details.assumptions summary::-webkit-details-marker { display: none; }
+details.assumptions summary::after { content: "+"; font-size: 1.3rem; color: var(--teal-600); font-weight: 400; }
+details.assumptions[open] summary::after { content: "–"; }
+details.assumptions .assumptions-body { padding: 0 20px 18px; font-size: 0.87rem; }
+details.assumptions .assumptions-body li { margin-bottom: 6px; }
+.check-list { list-style: none; padding: 0; margin: 0; }
+.check-list li {
+  display: flex; gap: 12px; align-items: flex-start; padding: 12px 0;
+  border-bottom: 1px solid var(--line-soft);
+}
+.check-list li:last-child { border-bottom: none; }
+.check-list .check-dot {
+  width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+  background: var(--green-100); color: var(--green-700);
+  display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700;
+}
+</style>
+</head>
+<body data-page="pilot-pricing" data-marketing="true">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <section class="section-dark grid-texture" style="padding:76px 0 60px">
+    <div class="container" style="max-width:900px">
+      <span class="chip chip-outline on-dark" style="margin-bottom:18px">Pilot &amp; Pricing · procurement-friendly · no rip-and-replace</span>
+      <h1>Start with a 90-day pilot. Prove it to council with numbers.</h1>
+      <p class="lede" style="margin-top:14px">Every Envoz 311 engagement begins as a scoped, measurable pilot: one or two departments, your top service categories, your existing CRM — and a council-ready report at the end. Transparent pricing ranges below, so procurement can plan before the first call.</p>
+      <div class="answer-block" style="margin-top:22px">Envoz 311 pilots run 90 days, cover 1–2 departments and your top 5–10 service categories, overlay your existing 311 CRM (or fall back to structured email), and are priced in transparent monthly ranges by city size — from roughly $2,500/month for small cities. Use the ROI calculator on this page to estimate staff hours saved, cost avoided, and payback for your call volume.</div>
+      <div class="flex flex-wrap" style="margin-top:20px">
+        <a class="btn btn-primary btn-lg" href="#roi-calculator">Estimate your ROI</a>
+        <a class="btn btn-secondary btn-lg" href="#pilot-tiers">See pilot pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= PILOT STRUCTURE ================= -->
+  <section class="section section-aqua" id="pilot-structure">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">How every pilot is structured</span>
+        <h2>A pilot with edges: scoped, staffed, and measured</h2>
+        <p class="lede">The same seven commitments apply to every tier — so your procurement team knows exactly what is being bought.</p>
+      </div>
+      <div class="grid grid-4" style="margin-top:32px">
+        <div class="card card-pad-sm card-hover reveal pilot-band-card">
+          <span class="icon-tile">📅</span>
+          <div><strong>90-day pilot</strong><p class="small" style="color:var(--muted);margin:4px 0 0">Fixed term with defined success criteria — no open-ended contracts.</p></div>
+        </div>
+        <div class="card card-pad-sm card-hover reveal pilot-band-card">
+          <span class="icon-tile ocean">🏢</span>
+          <div><strong>1–2 departments</strong><p class="small" style="color:var(--muted);margin:4px 0 0">Typically Public Works plus one more — deep, not thin.</p></div>
+        </div>
+        <div class="card card-pad-sm card-hover reveal pilot-band-card">
+          <span class="icon-tile amber">🗂</span>
+          <div><strong>Top 5–10 service categories</strong><p class="small" style="color:var(--muted);margin:4px 0 0">Your highest-volume request types, mapped to your taxonomy.</p></div>
+        </div>
+        <div class="card card-pad-sm card-hover reveal pilot-band-card">
+          <span class="icon-tile purple">🌐</span>
+          <div><strong>English + Spanish</strong><p class="small" style="color:var(--muted);margin:4px 0 0">Additional languages configurable to match your community.</p></div>
+        </div>
+        <div class="card card-pad-sm card-hover reveal pilot-band-card">
+          <span class="icon-tile navy">🔌</span>
+          <div><strong>CRM overlay or email fallback</strong><p class="small" style="color:var(--muted);margin:4px 0 0">Writes into SeeClickFix, Tyler, and others — or structured email if you have no CRM.</p></div>
+        </div>
+        <div class="card card-pad-sm card-hover reveal pilot-band-card">
+          <span class="icon-tile green">📈</span>
+          <div><strong>Weekly success review</strong><p class="small" style="color:var(--muted);margin:4px 0 0">Routing accuracy, containment, and corrections reviewed with your team.</p></div>
+        </div>
+        <div class="card card-pad-sm card-hover reveal pilot-band-card">
+          <span class="icon-tile">🏛</span>
+          <div><strong>Council-ready report at pilot end</strong><p class="small" style="color:var(--muted);margin:4px 0 0">Access gains, accuracy, equity coverage, and cost — evidence, not anecdotes.</p></div>
+        </div>
+        <div class="card card-pad-sm reveal" style="background:var(--navy-900);border-color:var(--navy-900);color:var(--slate-300);display:flex;flex-direction:column;justify-content:center">
+          <strong style="color:#fff">Success is defined up front.</strong>
+          <p class="small" style="margin:4px 0 0">You and Envoz agree on pilot metrics in week one — the same metrics the final council report is built from.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FOUR PILOT TIERS ================= -->
+  <section class="section" id="pilot-tiers">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Pilot pricing</span>
+        <h2>Four ways to start — priced in honest ranges</h2>
+        <p class="lede">Ranges below are pilot estimates — final scope is set during discovery. No hidden per-seat fees; pilot pricing includes setup, configuration, and the weekly success review.</p>
+      </div>
+
+      <div class="grid grid-4" style="margin-top:32px;align-items:stretch">
+
+        <!-- Small city -->
+        <div class="card card-hover pricing-card reveal" id="tier-small">
+          <span class="chip chip-teal" style="align-self:flex-start">Under 75k population</span>
+          <h3 style="margin-top:12px">Small city pilot</h3>
+          <div class="price-range">$2,500–$4,500</div>
+          <span class="price-unit">per month · 90-day pilot estimate</span>
+          <p class="small" style="color:var(--muted);margin-top:12px"><strong>Who it's for:</strong> small cities and towns where after-hours calls go to voicemail and one clerk carries the 311 load.</p>
+          <ul class="included">
+            <li>1 department (typically Public Works)</li>
+            <li>Top 5 service categories</li>
+            <li>English + Spanish intake</li>
+            <li>Structured email fallback or 1 CRM connector</li>
+            <li>Weekly 30-minute success review</li>
+            <li>Council-ready report at pilot end</li>
+          </ul>
+          <div class="card-footer">
+            <a class="btn btn-secondary" style="width:100%;justify-content:center" href="mailto:pilots@envoz311.example.com?subject=Pilot%20conversation%20%E2%80%94%20Small%20city%20pilot">Start a pilot conversation</a>
+            <p class="estimate-note">Pilot estimate — final scope set during discovery.</p>
+          </div>
+        </div>
+
+        <!-- Mid-size city -->
+        <div class="card card-hover pricing-card reveal" id="tier-mid">
+          <span class="chip chip-ocean" style="align-self:flex-start">75k–250k population</span>
+          <h3 style="margin-top:12px">Mid-size city pilot</h3>
+          <div class="price-range">$4,500–$9,000</div>
+          <span class="price-unit">per month · 90-day pilot estimate</span>
+          <p class="small" style="color:var(--muted);margin-top:12px"><strong>Who it's for:</strong> cities like Vista Robles — a real 311 operation, an existing CRM, and a council asking for modernization proof.</p>
+          <ul class="included">
+            <li>1–2 departments</li>
+            <li>Top 5–10 service categories</li>
+            <li>English + Spanish; 1 additional language configurable</li>
+            <li>1 CRM connector (SeeClickFix, Tyler, QAlert…)</li>
+            <li>Weekly success review + mid-pilot leadership brief</li>
+            <li>Council-ready report at pilot end</li>
+          </ul>
+          <div class="card-footer">
+            <a class="btn btn-primary" style="width:100%;justify-content:center" href="mailto:pilots@envoz311.example.com?subject=Pilot%20conversation%20%E2%80%94%20Mid-size%20city%20pilot">Start a pilot conversation</a>
+            <p class="estimate-note">Pilot estimate — final scope set during discovery.</p>
+          </div>
+        </div>
+
+        <!-- Large city / county -->
+        <div class="card card-hover pricing-card reveal" id="tier-large">
+          <span class="chip chip-navy" style="align-self:flex-start">250k+ population</span>
+          <h3 style="margin-top:12px">Large city / county pilot</h3>
+          <div class="price-range">Custom</div>
+          <span class="price-unit">starting near $9,000 per month · pilot estimate</span>
+          <p class="small" style="color:var(--muted);margin-top:12px"><strong>Who it's for:</strong> large cities and counties with multi-department 311 centers, surge events, and cross-jurisdiction routing.</p>
+          <ul class="included">
+            <li>2 departments to start, expansion path defined</li>
+            <li>Top 10 service categories</li>
+            <li>English + Spanish; additional languages configurable</li>
+            <li>Multiple connectors + GIS jurisdiction layers</li>
+            <li>Named success manager · weekly review</li>
+            <li>Council / board-ready report at pilot end</li>
+          </ul>
+          <div class="card-footer">
+            <a class="btn btn-secondary" style="width:100%;justify-content:center" href="mailto:pilots@envoz311.example.com?subject=Pilot%20conversation%20%E2%80%94%20Large%20city%20or%20county%20pilot">Start a pilot conversation</a>
+            <p class="estimate-note">Pilot estimate — final scope set during discovery.</p>
+          </div>
+        </div>
+
+        <!-- Incumbent partner -->
+        <div class="card card-hover pricing-card reveal" id="tier-partner">
+          <span class="chip chip-purple" style="align-self:flex-start">CRM vendors &amp; incumbents</span>
+          <h3 style="margin-top:12px">Incumbent partner / white-label pilot</h3>
+          <div class="price-range">Partner pricing</div>
+          <span class="price-unit">revenue-share · scoped during discovery</span>
+          <p class="small" style="color:var(--muted);margin-top:12px"><strong>Who it's for:</strong> 311 CRM and case-management vendors who want to arm their CRM with voice-to-outcome — without building a voice AI team.</p>
+          <ul class="included">
+            <li>White-label voice intake under your brand</li>
+            <li>Your CRM stays the system of record</li>
+            <li>Case numbers issued by your platform</li>
+            <li>Confidence + rationale on every write</li>
+            <li>Partner enablement + joint success reviews</li>
+            <li>Shared pilot report for your city customer</li>
+          </ul>
+          <div class="card-footer">
+            <a class="btn btn-secondary" style="width:100%;justify-content:center" href="mailto:partners@envoz311.example.com?subject=Partner%20conversation%20%E2%80%94%20White-label%20pilot">Start a partner conversation</a>
+            <p class="estimate-note">Partner terms set during discovery.</p>
+          </div>
+        </div>
+      </div>
+
+      <p class="small center reveal" style="color:var(--muted);margin-top:20px">Prefer to write first? Questions and RFI requests are welcome at <a href="mailto:pilots@envoz311.example.com">pilots@envoz311.example.com</a> — or see the <a href="resources.html">Resources &amp; FAQ page</a> for procurement-ready answers.</p>
+    </div>
+  </section>
+
+  <!-- ================= ROI CALCULATOR ================= -->
+  <section class="section section-aqua" id="roi-calculator">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">ROI calculator</span>
+        <h2>Estimate what a pilot is worth to your city</h2>
+        <p class="lede">Adjust the inputs to your call volume and staffing costs. Every output is an estimate, and every formula is published in the assumptions below.</p>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:32px;align-items:start">
+
+        <!-- Inputs -->
+        <div class="card reveal">
+          <h3 style="margin-bottom:4px">Your inputs</h3>
+          <p class="small" style="color:var(--muted);margin-bottom:20px">Defaults reflect a typical mid-size city. Sliders and fields stay in sync.</p>
+          <form id="roi-form">
+            <div class="roi-row">
+              <label class="field-label" for="in-pop">Population</label>
+              <input type="number" id="in-pop" min="10000" max="1000000" step="1000" value="120000" inputmode="numeric">
+              <input type="range" id="rg-pop" min="10000" max="1000000" step="5000" value="120000" aria-label="Population slider">
+            </div>
+            <div class="roi-row">
+              <label class="field-label" for="in-volume">Annual 311 call volume</label>
+              <input type="number" id="in-volume" min="1000" max="500000" step="500" value="60000" inputmode="numeric">
+              <input type="range" id="rg-volume" min="5000" max="500000" step="1000" value="60000" aria-label="Annual 311 call volume slider">
+            </div>
+            <div class="roi-row">
+              <label class="field-label" for="in-afterhours">Percent of calls after hours (%)</label>
+              <input type="number" id="in-afterhours" min="0" max="80" step="1" value="35" inputmode="numeric">
+              <input type="range" id="rg-afterhours" min="0" max="80" step="1" value="35" aria-label="Percent after-hours slider">
+            </div>
+            <div class="roi-row">
+              <label class="field-label" for="in-costcall">Current cost per human-handled call ($)</label>
+              <input type="number" id="in-costcall" min="1" max="30" step="0.25" value="8.50" inputmode="decimal">
+              <input type="range" id="rg-costcall" min="1" max="30" step="0.25" value="8.5" aria-label="Cost per human-handled call slider">
+            </div>
+            <div class="roi-row">
+              <label class="field-label" for="in-containment">Target containment (%)</label>
+              <input type="number" id="in-containment" min="30" max="90" step="1" value="70" inputmode="numeric">
+              <input type="range" id="rg-containment" min="30" max="90" step="1" value="70" aria-label="Target containment slider">
+            </div>
+            <div class="roi-row">
+              <label class="field-label" for="in-handle">Average handle time (minutes)</label>
+              <input type="number" id="in-handle" min="1" max="15" step="0.5" value="4" inputmode="decimal">
+              <input type="range" id="rg-handle" min="1" max="15" step="0.5" value="4" aria-label="Average handle time slider">
+            </div>
+            <div class="roi-row" style="margin-bottom:4px">
+              <label class="field-label" for="in-hourly">Fully loaded staff hourly cost ($)</label>
+              <input type="number" id="in-hourly" min="15" max="120" step="1" value="42" inputmode="numeric">
+              <input type="range" id="rg-hourly" min="15" max="120" step="1" value="42" aria-label="Staff hourly cost slider">
+            </div>
+          </form>
+          <hr class="divider">
+          <div class="chip-row" aria-live="polite">
+            <span class="chip chip-ocean" id="tier-chip">Suggested tier: Mid-size city pilot</span>
+            <span class="chip chip-outline">Recalculates live</span>
+          </div>
+        </div>
+
+        <!-- Outputs -->
+        <div class="reveal">
+          <div class="roi-out-grid" aria-live="polite">
+            <div class="kpi kpi-accent">
+              <span class="kpi-value" id="out-handled">—</span>
+              <span class="kpi-label">Estimated AI-handled interactions / yr</span>
+            </div>
+            <div class="kpi kpi-accent">
+              <span class="kpi-value" id="out-hours">—</span>
+              <span class="kpi-label">Estimated staff hours saved / yr</span>
+            </div>
+            <div class="kpi kpi-accent">
+              <span class="kpi-value" id="out-avoided">—</span>
+              <span class="kpi-label">Estimated cost avoided / yr</span>
+            </div>
+            <div class="kpi kpi-accent">
+              <span class="kpi-value" id="out-afterhours">—</span>
+              <span class="kpi-label">Estimated after-hours capture value / yr</span>
+            </div>
+            <div class="kpi kpi-accent">
+              <span class="kpi-value" id="out-value">—</span>
+              <span class="kpi-label">Estimated annual platform value</span>
+            </div>
+            <div class="kpi kpi-accent">
+              <span class="kpi-value" id="out-payback">—</span>
+              <span class="kpi-label">Estimated payback period</span>
+              <span class="kpi-delta neutral" id="payback-assumption">vs. assumed pilot fee</span>
+            </div>
+          </div>
+
+          <details class="assumptions" id="roi-assumptions">
+            <summary>Assumptions &amp; formulas — how every number is computed</summary>
+            <div class="assumptions-body">
+              <ul>
+                <li><strong>AI-handled interactions / yr</strong> = annual call volume × target containment. Containment means fully resolved by Envoz with no human handling.</li>
+                <li><strong>Staff hours saved / yr</strong> = AI-handled interactions × average handle time ÷ 60.</li>
+                <li><strong>Cost avoided / yr</strong> = AI-handled interactions × (your cost per human-handled call − $0.42 estimated Envoz cost per AI interaction). The $0.42 figure is illustrative demo data from the Vista Robles demo world.</li>
+                <li><strong>After-hours capture value / yr</strong> = call volume × percent after-hours × containment × (handle time ÷ 60) × staff hourly cost × 50%. We assume half of after-hours calls would otherwise become next-morning voicemail triage work at your staff hourly cost; the other half we conservatively assume would be re-dialed during business hours and are already counted in cost avoided.</li>
+                <li><strong>Annual platform value</strong> = cost avoided + after-hours capture value.</li>
+                <li><strong>Payback period (months)</strong> = (assumed monthly pilot fee × 12) ÷ annual platform value × 12. The assumed fee follows your population input: $3,500/mo (small, under 75k), $6,750/mo (mid-size, 75k–250k — the midpoint of the $4,500–$9,000 range), or $9,000/mo (large, 250k+). Your actual pilot fee is set during discovery.</li>
+                <li>No value is assigned to resident satisfaction, equity coverage, or council reporting — real benefits we deliberately leave out of the math.</li>
+              </ul>
+            </div>
+          </details>
+
+          <div class="caution-strip" style="margin-top:14px">
+            <span>ℹ️</span>
+            <span>These are planning estimates for procurement conversations — not a guarantee of savings. Every city's call mix, staffing model, and after-hours volume differs; your pilot's weekly success reviews measure the real numbers.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHAT A PILOT PROVES + PROCUREMENT NOTES ================= -->
+  <section class="section" id="pilot-proof">
+    <div class="container grid grid-2" style="align-items:start">
+      <div class="card reveal">
+        <span class="eyebrow">What a pilot proves</span>
+        <h3>The checklist your council report is built from</h3>
+        <p class="small" style="color:var(--muted)">Demo figures below are from the Vista Robles demo world — illustrative demo data, shown so you can see the shape of the report.</p>
+        <ul class="check-list">
+          <li><span class="check-dot">✓</span><span><strong>Access gains</strong> — every call answered, 24/7, in the resident's language. <span class="chip chip-teal" data-metric="afterHoursCaptured">327</span> <span class="small" style="color:var(--muted)">after-hours calls captured in the demo quarter</span></span></li>
+          <li><span class="check-dot">✓</span><span><strong>Routing accuracy</strong> — cases land in the right department, with confidence and rationale visible. <span class="chip chip-teal" data-metric="routingAccuracy">91.6%</span></span></li>
+          <li><span class="check-dot">✓</span><span><strong>Containment</strong> — interactions fully resolved without staff handling. <span class="chip chip-teal" data-metric="containment">76%</span></span></li>
+          <li><span class="check-dot">✓</span><span><strong>Equity coverage</strong> — service quality measured across languages and neighborhoods, not just averages. <span class="chip chip-purple" data-metric="languages">18</span> <span class="small" style="color:var(--muted)">languages served in the demo</span></span></li>
+          <li><span class="check-dot">✓</span><span><strong>Cost per interaction</strong> — a defensible unit cost for the council packet. <span class="chip chip-teal" data-metric="costPerInteraction">$0.42</span> <span class="small" style="color:var(--muted)">per AI interaction · demo data</span></span></li>
+        </ul>
+        <div class="flex flex-wrap" style="margin-top:18px">
+          <a class="btn btn-navy btn-sm" href="dashboards.html?tab=council&amp;generate=1">Generate a sample council report</a>
+          <a class="btn btn-ghost btn-sm" href="customer-success.html">How cities present this →</a>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <span class="eyebrow">Procurement notes</span>
+        <h3>What your review team will ask — answered plainly</h3>
+        <ul class="check-list">
+          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)">🛡</span><span><strong>Security review packet available.</strong> Architecture overview, data-flow diagrams, and control descriptions on request. Envoz is a demonstration prototype — we keep compliance claims modest and will not assert certifications we do not hold.</span></li>
+          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)">🏷</span><span><strong>Tenant isolation.</strong> Every rule, vocabulary entry, and case write is scoped to your city's tenant. Corrections your staff make train your configuration — not a shared model other cities inherit.</span></li>
+          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)">📁</span><span><strong>Your data stays yours.</strong> The city owns its case data, transcripts, and configuration. Export at any time; deletion honored at contract end.</span></li>
+          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)">🗄</span><span><strong>System of record unchanged.</strong> Overlay mode writes into your existing CRM — case numbers come from your system, never fabricated.</span></li>
+          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)">✋</span><span><strong>Humans stay accountable.</strong> Low-confidence calls escalate to people with full context; configuration changes require city approval. Envoz protects staff from chaos — it does not replace them.</span></li>
+        </ul>
+        <div class="audit-ribbon" style="margin-top:16px"><span>🛡</span><span><strong style="color:#fff">Full detail on the Trust page</strong> — governed autonomy, data model, and audit trail.</span></div>
+        <div style="margin-top:14px"><a class="btn btn-secondary btn-sm" href="trust.html">Read Trust, Data &amp; Compliance →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA BAND ================= -->
+  <section class="section section-dark grid-texture">
+    <div class="container center">
+      <div class="reveal">
+        <span class="eyebrow">Next steps</span>
+        <h2>See what a pilot looks like from the inside</h2>
+        <p class="lede" style="margin:0 auto 26px">Walk through how cities run the 90 days — or configure a demo city yourself in about 12 minutes.</p>
+        <div class="flex flex-wrap" style="justify-content:center">
+          <a class="btn btn-primary btn-lg" href="customer-success.html">See the customer success playbook</a>
+          <a class="btn btn-secondary btn-lg" href="configuration-studio.html?flow=harbor-mesa">Configure a demo city</a>
+        </div>
+        <p class="small" style="margin-top:22px;color:var(--slate-400)">Or email <a href="mailto:pilots@envoz311.example.com" style="color:var(--teal-500)">pilots@envoz311.example.com</a> with your population and call volume — we'll reply with a scoped pilot outline.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/shared.js"></script>
+<script src="assets/js/pages/pilot-pricing.js"></script>
+</body>
+</html>

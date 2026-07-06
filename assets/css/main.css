@@ -147,6 +147,11 @@ code, .mono { font-family: var(--mono); font-size: 0.86em; }
 }
 .section-dark h1, .section-dark h2, .section-dark h3, .section-dark h4 { color: #fff; }
 .section-dark strong { color: #fff; }
+/* Light cards inside dark sections keep ink text */
+.section-dark .card, .section-dark .kpi, .section-dark .chart-card { color: var(--body); }
+.section-dark .card h1, .section-dark .card h2, .section-dark .card h3, .section-dark .card h4,
+.section-dark .kpi .kpi-value, .section-dark .chart-card h4,
+.section-dark .card strong { color: var(--ink); }
 .section-aqua { background: var(--aqua-50); }
 
 .eyebrow {
@@ -471,7 +476,7 @@ input[type="range"] { width: 100%; accent-color: var(--teal-600); }
   font-size: 0.62rem; font-weight: 600; letter-spacing: 0.02em;
   color: var(--slate-500);
   background: var(--slate-100); border-radius: 999px; padding: 2px 8px 2px 5px;
-  line-height: 1.4; width: fit-content;
+  line-height: 1.4; width: fit-content; white-space: nowrap;
 }
 .powered-pill img, .powered-pill svg { height: 11px; width: auto; display: block; opacity: 0.75; }
 .powered-pill-lg { font-size: 0.72rem; padding: 4px 12px 4px 8px; gap: 7px; }
@@ -709,6 +714,7 @@ input[type="range"] { width: 100%; accent-color: var(--teal-600); }
 .chart-card h4 { font-size: 0.92rem; margin-bottom: 4px; }
 .chart-card .chart-sub { font-size: 0.78rem; color: var(--muted); margin-bottom: 12px; }
 .chart-svg { width: 100%; height: auto; display: block; }
+.chart-card svg { max-width: 100%; height: auto; }
 .bar-fill { fill: var(--teal-600); }
 .bar-track { fill: var(--slate-100); }
 .chart-axis { stroke: var(--slate-200); stroke-width: 1; }
@@ -765,3 +771,13 @@ details.faq-item .faq-body { padding: 0 20px 18px; color: var(--body); }
   pointer-events: none;
 }
 .infra-watermark svg, .infra-watermark img { height: 10px; width: auto; opacity: 0.7; }
+
+/* ---------------- Responsive safety overrides (keep last) ---------------- */
+/* Grid/flex items must be allowed to shrink; inner scroll containers handle wide content */
+.grid > *, .flex > *, .console > *, [class*="-grid"] > * { min-width: 0; }
+@media (max-width: 640px) {
+  /* long labels wrap instead of widening the page */
+  .btn { white-space: normal; text-align: center; }
+  .chip { white-space: normal; }
+  .main-nav a { white-space: normal; }
+}

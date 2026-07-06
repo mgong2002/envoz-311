@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Platform — Civic Intent-to-Action Routing Brain | Envoz 311</title>
+<meta name="description" content="How the Envoz 311 platform works: voice-first intake, an AI routing brain with confidence-scored classification, six structured outcomes, a 311 CRM overlay for SeeClickFix and Tyler, standalone fallback, and the Continuous Civic Improvement Loop.">
+<link rel="icon" type="image/svg+xml" href="assets/img/envoz-mark.svg">
+<link rel="stylesheet" href="assets/css/main.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://envoz311.example.com/index.html" },
+    { "@type": "ListItem", "position": 2, "name": "Platform", "item": "https://envoz311.example.com/platform.html" }
+  ]
+}
+</script>
+<style>
+/* ---- Platform page only ---- */
+.layer-tag {
+  display: inline-block; font-size: .68rem; font-weight: 800; letter-spacing: .14em;
+  text-transform: uppercase; color: var(--teal-700); background: var(--teal-100);
+  border-radius: 6px; padding: 3px 9px; margin-bottom: 8px;
+}
+.arch-layer { position: relative; }
+.arch-layer .wf-node { padding: 14px 16px; font-size: .9rem; }
+.owns-row { display: flex; gap: 12px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--line-soft); }
+.owns-row:last-child { border-bottom: none; }
+.owns-row .owns-icon {
+  width: 30px; height: 30px; border-radius: 8px; flex-shrink: 0; font-size: .9rem;
+  background: var(--teal-100); color: var(--teal-700);
+  display: flex; align-items: center; justify-content: center;
+}
+.outcome-card { display: flex; flex-direction: column; gap: 12px; }
+.outcome-card .json-card { flex: 1; }
+.mode-toggle { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.mode-toggle .filter-pill { font-size: .92rem; padding: 11px 22px; }
+.mode-panel[hidden] { display: none; }
+.sys-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+@media (max-width: 860px) { .sys-grid { grid-template-columns: repeat(2, 1fr); } }
+.sys-tile {
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-md);
+  padding: 13px 14px; font-weight: 650; font-size: .88rem; color: var(--navy-800);
+  display: flex; align-items: center; gap: 9px;
+}
+.sys-tile .small { font-weight: 500; color: var(--muted); display: block; }
+.drill-stage .wf-node { margin-top: 0; }
+</style>
+</head>
+<body data-page="platform" data-marketing="true">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <section class="section-dark grid-texture" style="padding:80px 0 64px">
+    <div class="container" style="max-width:900px">
+      <span class="eyebrow">The platform</span>
+      <h1>A civic intent-to-action routing brain — with voice-first intake.</h1>
+      <p class="lede" style="margin-top:14px">Envoz 311 sits between every resident channel and your systems of record. It listens, classifies, locates, routes, and writes — and it shows its work on every decision. <strong>One call. Correctly classified. Correctly routed. With confidence.</strong></p>
+      <div class="answer-block" style="margin-top:22px">The Envoz 311 platform is an AI voice 311 layer with three parts: multichannel intake (voice, web, SMS), a routing brain that classifies resident intent with confidence and rationale, and a 311 CRM overlay that writes structured cases into systems like SeeClickFix and Tyler — or runs standalone where no CRM exists. No rip-and-replace.</div>
+      <div class="flex flex-wrap" style="margin-top:24px">
+        <a class="btn btn-primary btn-lg" href="#architecture">See the architecture</a>
+        <a class="btn btn-secondary btn-lg" href="voice-ai.html?demo=pothole">▶ Watch a call become a case</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ARCHITECTURE ================= -->
+  <section class="section" id="architecture">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Three layers, one accountable pipeline</span>
+        <h2>Where Envoz sits — and what it owns</h2>
+        <p class="lede">Envoz is not another CRM and not another chatbot. It is the routing layer in between — the part of 311 that decides what a request is, where it goes, and how to prove it.</p>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:38px;align-items:start">
+        <!-- Layer stack -->
+        <div class="card reveal">
+          <div class="arch-layer">
+            <span class="layer-tag">Layer 1 · Intake</span>
+            <div class="wf-node lit"><span class="wf-icon">🎙</span>
+              <span>Voice · web · SMS<span class="small" style="display:block;font-weight:500;color:var(--muted)">24/7 answer before the second ring · 70+ language-ready · safety gate first, always</span></span>
+            </div>
+          </div>
+          <div class="wf-connector lit"></div>
+          <div class="arch-layer">
+            <span class="layer-tag">Layer 2 · Envoz routing brain</span>
+            <div class="wf-node lit" style="border-width:2.5px"><span class="wf-icon">🧠</span>
+              <span>Classify · locate · dedupe · route · prove<span class="small" style="display:block;font-weight:500;color:var(--muted)">Intent against your taxonomy, location against your GIS layers, confidence and rationale on every decision</span></span>
+            </div>
+          </div>
+          <div class="wf-connector lit"></div>
+          <div class="arch-layer">
+            <span class="layer-tag">Layer 3 · Your systems of record</span>
+            <div class="wf-node done"><span class="wf-icon">🗄</span>
+              <span>CRM / work-order systems<span class="small" style="display:block;font-weight:500;color:var(--muted)">SeeClickFix, Tyler, Cityworks, and more — they keep issuing the case numbers</span></span>
+            </div>
+          </div>
+          <div class="audit-ribbon" style="margin-top:18px"><span>🛡</span><span><strong style="color:#fff">Your system of record stays the system of record.</strong> Envoz writes into it — it never replaces it.</span></div>
+        </div>
+
+        <!-- What Envoz owns -->
+        <div class="card reveal">
+          <h3 style="margin-bottom:6px">What Envoz owns</h3>
+          <p class="small" style="color:var(--muted)">The layer in the middle is where 311 programs win or lose. Envoz takes accountability for all of it.</p>
+          <div class="owns-row"><span class="owns-icon">🏷</span><span><strong>Classification logic</strong><span class="small" style="display:block;color:var(--muted)">Resident intent mapped to your city's service taxonomy — not a generic one.</span></span></div>
+          <div class="owns-row"><span class="owns-icon">🧭</span><span><strong>Routing logic</strong><span class="small" style="display:block;color:var(--muted)">Department ownership, GIS jurisdiction, duplicate checks, and SLA priority on every request.</span></span></div>
+          <div class="owns-row"><span class="owns-icon">🧾</span><span><strong>Structured outputs</strong><span class="small" style="display:block;color:var(--muted)">Every interaction ends in one of six auditable outcome types — never a loose transcript.</span></span></div>
+          <div class="owns-row"><span class="owns-icon">◍</span><span><strong>Confidence &amp; rationale</strong><span class="small" style="display:block;color:var(--muted)">A visible score and a plain-language reason attached to every routing decision.</span></span></div>
+          <div class="owns-row"><span class="owns-icon">📒</span><span><strong>CEL — Continuous-improvement Event Log</strong><span class="small" style="display:block;color:var(--muted)">Routed cases, staff corrections, SLA outcomes, and unknowns logged as evidence.</span></span></div>
+          <div class="owns-row"><span class="owns-icon">⚡</span><span><strong>Onboarding &amp; configuration speed</strong><span class="small" style="display:block;color:var(--muted)">A city goes from documents to a configured sandbox in a conversation, not a six-month project.</span></span></div>
+          <div class="owns-row"><span class="owns-icon">📈</span><span><strong>AI improvement recommendations</strong><span class="small" style="display:block;color:var(--muted)">Evidence-linked proposals city staff approve — Envoz recommends, humans decide.</span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= STRUCTURED OUTPUTS ================= -->
+  <section class="section section-aqua" id="outputs">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Structured outputs</span>
+        <h2>Every interaction ends in one of six outcomes</h2>
+        <p class="lede">No loose ends, no ambiguous chat logs. Each outcome is machine-readable, human-auditable, and logged to the CEL. Samples below are from the Vista Robles demo world.</p>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:36px">
+
+        <div class="card outcome-card reveal">
+          <div class="flex space-between flex-wrap">
+            <span class="chip chip-green">SERVICE_REQUEST_CREATED</span>
+            <span class="chip chip-confidence">● 92% confidence</span>
+          </div>
+          <p class="small" style="margin:0;color:var(--muted)">A confidently classified request is written into the system of record — the case number comes from the CRM, never fabricated.</p>
+          <div class="json-card" aria-label="Sample SERVICE_REQUEST_CREATED output">{
+  <span class="k">"outcome"</span>: <span class="s">"SERVICE_REQUEST_CREATED"</span>,
+  <span class="k">"case_display_id"</span>: <span class="s">"VR-4281"</span>,
+  <span class="k">"service_type"</span>: <span class="s">"pothole_road_hazard"</span>,
+  <span class="k">"assigned_department"</span>: <span class="s">"public_works"</span>,
+  <span class="k">"priority"</span>: <span class="s">"high"</span>,
+  <span class="k">"routing_confidence"</span>: <span class="n">0.92</span>,
+  <span class="k">"classification_rationale"</span>: <span class="s">"Road hazard near
+    ramp access on city-maintained roadway"</span>,
+  <span class="k">"location"</span>: { <span class="k">"resolved"</span>: <span class="b">true</span>, <span class="k">"jurisdiction"</span>: <span class="s">"city"</span>,
+    <span class="k">"gis_layer"</span>: <span class="s">"road_ownership"</span> },
+  <span class="k">"duplicate_check"</span>: <span class="s">"no_match_500ft_72h"</span>,
+  <span class="k">"id_proof"</span>: <span class="s">"Issued by SeeClickFix · 21:44 PT"</span>,
+  <span class="k">"resident_notified"</span>: <span class="s">"sms_status_link_sent"</span>,
+  <span class="k">"cel_event"</span>: <span class="s">"logged"</span>
+}</div>
+        </div>
+
+        <div class="card outcome-card reveal">
+          <div class="flex space-between flex-wrap">
+            <span class="chip chip-teal">INFORMATION_ANSWERED</span>
+            <span class="chip chip-source">Grounded in city sources</span>
+          </div>
+          <p class="small" style="margin:0;color:var(--muted)">Questions are answered only from grounded city knowledge, with the source cited. No case is created when none is needed.</p>
+          <div class="json-card" aria-label="Sample INFORMATION_ANSWERED output">{
+  <span class="k">"outcome"</span>: <span class="s">"INFORMATION_ANSWERED"</span>,
+  <span class="k">"topic"</span>: <span class="s">"bulk_waste_pickup_schedule"</span>,
+  <span class="k">"answer_summary"</span>: <span class="s">"Next bulk pickup for Oak
+    Bluff is Tuesday, July 8"</span>,
+  <span class="k">"answer_confidence"</span>: <span class="n">0.96</span>,
+  <span class="k">"grounded_sources"</span>: [
+    <span class="s">"Sanitation collection calendar · rev Jun 30"</span>,
+    <span class="s">"vistarobles.gov/bulk-waste"</span>
+  ],
+  <span class="k">"case_created"</span>: <span class="b">false</span>,
+  <span class="k">"follow_up_offer"</span>: <span class="s">"sms_copy_of_answer"</span>,
+  <span class="k">"cel_event"</span>: <span class="s">"logged"</span>
+}</div>
+        </div>
+
+        <div class="card outcome-card reveal">
+          <div class="flex space-between flex-wrap">
+            <span class="chip chip-ocean">STATUS_PROVIDED</span>
+            <span class="chip chip-rationale">Read live from the CRM</span>
+          </div>
+          <p class="small" style="margin:0;color:var(--muted)">Status comes from a live CRM read at answer time. If the CRM has no repair date, Envoz says so — it never invents one.</p>
+          <div class="json-card" aria-label="Sample STATUS_PROVIDED output">{
+  <span class="k">"outcome"</span>: <span class="s">"STATUS_PROVIDED"</span>,
+  <span class="k">"case_display_id"</span>: <span class="s">"VR-4293"</span>,
+  <span class="k">"lookup_source"</span>: <span class="s">"seeclickfix_read_api"</span>,
+  <span class="k">"verified_at"</span>: <span class="s">"2026-07-06T07:41:12-07:00"</span>,
+  <span class="k">"current_status"</span>: <span class="s">"crew_scheduled"</span>,
+  <span class="k">"repair_date"</span>: <span class="b">null</span>,
+  <span class="k">"date_policy"</span>: <span class="s">"never promise a date the
+    CRM has not committed to"</span>,
+  <span class="k">"resident_notified"</span>: <span class="s">"sms_status_link_refreshed"</span>,
+  <span class="k">"cel_event"</span>: <span class="s">"logged"</span>
+}</div>
+        </div>
+
+        <div class="card outcome-card reveal">
+          <div class="flex space-between flex-wrap">
+            <span class="chip chip-amber">ESCALATED_TO_HUMAN</span>
+            <span class="chip chip-confidence low">◔ 41% confidence</span>
+          </div>
+          <p class="small" style="margin:0;color:var(--muted)">Below the routing threshold, Envoz hands off warmly — with a full context packet, so the resident never repeats themselves.</p>
+          <div class="json-card" aria-label="Sample ESCALATED_TO_HUMAN output">{
+  <span class="k">"outcome"</span>: <span class="s">"ESCALATED_TO_HUMAN"</span>,
+  <span class="k">"reason"</span>: <span class="s">"confidence_below_threshold"</span>,
+  <span class="k">"top_confidence"</span>: <span class="n">0.41</span>,
+  <span class="k">"candidate_routes"</span>: [
+    { <span class="k">"dept"</span>: <span class="s">"parks_maintenance"</span>, <span class="k">"p"</span>: <span class="n">0.41</span> },
+    { <span class="k">"dept"</span>: <span class="s">"code_enforcement"</span>, <span class="k">"p"</span>: <span class="n">0.33</span> }
+  ],
+  <span class="k">"transfer_type"</span>: <span class="s">"warm_transfer"</span>,
+  <span class="k">"context_packet"</span>: {
+    <span class="k">"summary"</span>: <span class="s">"Beehive inside bus shelter,
+      Jeffrey Transit Stop"</span>,
+    <span class="k">"transcript"</span>: <span class="s">"attached"</span>,
+    <span class="k">"location"</span>: <span class="s">"resolved"</span>,
+    <span class="k">"callback_number"</span>: <span class="s">"on_file"</span>
+  },
+  <span class="k">"resident_repeats_story"</span>: <span class="b">false</span>,
+  <span class="k">"cel_event"</span>: <span class="s">"logged_for_learning"</span>
+}</div>
+        </div>
+
+        <div class="card outcome-card reveal">
+          <div class="flex space-between flex-wrap">
+            <span class="chip chip-red">EMERGENCY_REDIRECTED</span>
+            <span class="chip chip-rationale">Safety gate · first utterance</span>
+          </div>
+          <p class="small" style="margin:0;color:var(--muted)">Emergencies go straight to 911. No ordinary 311 case is created — nothing about an emergency waits in a service queue.</p>
+          <div class="json-card" aria-label="Sample EMERGENCY_REDIRECTED output">{
+  <span class="k">"outcome"</span>: <span class="s">"EMERGENCY_REDIRECTED"</span>,
+  <span class="k">"safety_gate"</span>: <span class="s">"triggered_on_first_utterance"</span>,
+  <span class="k">"signal"</span>: <span class="s">"downed power line reported
+    arcing near pedestrians"</span>,
+  <span class="k">"action"</span>: <span class="s">"connected_to_911"</span>,
+  <span class="k">"handoff_time_sec"</span>: <span class="n">6</span>,
+  <span class="k">"case_created"</span>: <span class="b">false</span>,
+  <span class="k">"note"</span>: <span class="s">"No 311 case is created for an
+    emergency — the caller goes to 911"</span>,
+  <span class="k">"cel_event"</span>: <span class="s">"logged"</span>
+}</div>
+        </div>
+
+        <div class="card outcome-card reveal">
+          <div class="flex space-between flex-wrap">
+            <span class="chip">NO_STRUCTURED_OUTPUT</span>
+            <span class="chip chip-rationale">Honest about the gap</span>
+          </div>
+          <p class="small" style="margin:0;color:var(--muted)">When a call ends before intent is clear, Envoz records exactly that. No fabricated case number, no invented confirmation — ever.</p>
+          <div class="json-card" aria-label="Sample NO_STRUCTURED_OUTPUT output">{
+  <span class="k">"outcome"</span>: <span class="s">"NO_STRUCTURED_OUTPUT"</span>,
+  <span class="k">"reason"</span>: <span class="s">"caller_disconnected_before_intent"</span>,
+  <span class="k">"call_duration_sec"</span>: <span class="n">19</span>,
+  <span class="k">"partial_transcript"</span>: <span class="s">"retained_for_review"</span>,
+  <span class="k">"case_created"</span>: <span class="b">false</span>,
+  <span class="k">"fabricated_confirmation"</span>: <span class="b">false</span>,
+  <span class="k">"callback_offer"</span>: <span class="s">"sms_sent_to_caller_id"</span>,
+  <span class="k">"queued_for"</span>: <span class="s">"staff_review_next_morning"</span>,
+  <span class="k">"cel_event"</span>: <span class="s">"logged"</span>
+}</div>
+        </div>
+
+      </div>
+      <p class="center disclaimer reveal" style="margin-top:22px">All samples are illustrative demo data from the fictional City of Vista Robles.</p>
+    </div>
+  </section>
+
+  <!-- ================= DEPLOYMENT MODES ================= -->
+  <section class="section" id="deployment">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Two deployment modes</span>
+        <h2>Overlay your CRM — or run standalone until you have one</h2>
+        <p class="lede">Cities do not need another CRM. Envoz arms the one you have; where none exists, it stands in with a lightweight case surface. Either way: no rip-and-replace.</p>
+      </div>
+
+      <div class="mode-toggle reveal" style="margin-top:28px" role="tablist" aria-label="Deployment mode">
+        <button class="filter-pill" type="button" role="tab" id="tab-overlay" aria-selected="true" aria-controls="panel-overlay">Overlay Mode · arm your CRM</button>
+        <button class="filter-pill" type="button" role="tab" id="tab-standalone" aria-selected="false" aria-controls="panel-standalone">Standalone Mode · no CRM required</button>
+      </div>
+
+      <!-- Overlay panel -->
+      <div class="mode-panel" id="panel-overlay" role="tabpanel" aria-labelledby="tab-overlay" style="margin-top:26px">
+        <div class="grid grid-2" style="align-items:start">
+          <div class="card">
+            <h3>Envoz writes into the systems you already run</h3>
+            <p>Residents and staff keep the tools they know. Envoz answers the phone, classifies and routes the request, then creates the case through your CRM's own API — so <strong>your CRM issues the case number</strong> and remains the single source of truth.</p>
+            <div class="sys-grid" style="margin:16px 0">
+              <div class="sys-tile">🗺 SeeClickFix</div>
+              <div class="sys-tile">🏛 Tyler</div>
+              <div class="sys-tile">📣 Granicus</div>
+              <div class="sys-tile">📋 QAlert</div>
+              <div class="sys-tile">☁️ Salesforce</div>
+              <div class="sys-tile">🏗 Accela</div>
+              <div class="sys-tile">🔧 Cityworks</div>
+              <div class="sys-tile">🏙 OpenGov EAM</div>
+            </div>
+            <a class="btn btn-navy" href="integrations.html">See the full integration matrix</a>
+          </div>
+          <div class="card">
+            <h4 style="margin-bottom:14px">One overlay write, end to end</h4>
+            <div class="wf-node lit"><span class="wf-icon">🧠</span>Envoz classifies &amp; routes · confidence 92%</div>
+            <div class="wf-connector lit"></div>
+            <div class="wf-node lit"><span class="wf-icon">🔌</span>Tenant-scoped connector writes via the CRM API</div>
+            <div class="wf-connector lit"></div>
+            <div class="wf-node done"><span class="wf-icon">🗄</span>SeeClickFix creates the case &amp; issues VR-4281</div>
+            <div class="proof-strip" style="margin-top:16px"><span class="proof-icon">✓</span>Case number issued by SeeClickFix at 9:44 PM — proof shown to the resident and logged to the CEL.</div>
+            <p class="small" style="color:var(--muted);margin-top:12px">Status updates flow back the same way: Envoz reads your CRM, so residents hear the truth your staff already see.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Standalone panel -->
+      <div class="mode-panel" id="panel-standalone" role="tabpanel" aria-labelledby="tab-standalone" style="margin-top:26px" hidden>
+        <div class="grid grid-2" style="align-items:start">
+          <div class="card">
+            <h3>Full 311 intake, even with no CRM at all</h3>
+            <p>Many smaller cities run 311 on voicemail and shared inboxes. Standalone Mode gives them structured intake on day one — and a clean upgrade path to Overlay Mode if they adopt a CRM later.</p>
+            <div class="owns-row"><span class="owns-icon">📧</span><span><strong>Structured email fallback</strong><span class="small" style="display:block;color:var(--muted)">Every request delivered to the right department inbox as a structured, classified packet — not a voicemail.</span></span></div>
+            <div class="owns-row"><span class="owns-icon">🗂</span><span><strong>Lightweight staff triage</strong><span class="small" style="display:block;color:var(--muted)">A simple queue where staff approve, reroute, or close — with confidence and rationale on each case.</span></span></div>
+            <div class="owns-row"><span class="owns-icon">🪪</span><span><strong>Thin case surface with local case numbers</strong><span class="small" style="display:block;color:var(--muted)">Envoz issues a local VR-series case number and a status link the resident can actually use.</span></span></div>
+            <div class="owns-row"><span class="owns-icon">🛡</span><span><strong>Status &amp; audit tracking</strong><span class="small" style="display:block;color:var(--muted)">Every state change is timestamped and audit-logged — the same evidence trail as Overlay Mode.</span></span></div>
+            <a class="btn btn-navy" href="staff-triage.html" style="margin-top:14px">Open the staff triage console</a>
+          </div>
+          <div class="card">
+            <h4 style="margin-bottom:14px">A standalone case, end to end</h4>
+            <div class="wf-node lit"><span class="wf-icon">🧠</span>Envoz classifies &amp; routes · confidence 89%</div>
+            <div class="wf-connector lit"></div>
+            <div class="wf-node lit"><span class="wf-icon">🪪</span>Local case VR-4330 created on the thin case surface</div>
+            <div class="wf-connector lit"></div>
+            <div class="wf-node done"><span class="wf-icon">📧</span>Structured packet emailed to Transportation triage</div>
+            <div class="proof-strip" style="margin-top:16px"><span class="proof-icon">✓</span>Resident receives case VR-4330 and an SMS status link · every step audit-logged.</div>
+            <p class="small" style="color:var(--muted);margin-top:12px">Adopt a CRM later? Overlay Mode takes over the write path — the resident experience doesn't change.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= IMPROVEMENT LOOP ================= -->
+  <section class="section section-aqua" id="improvement-loop">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Continuous Civic Improvement Loop</span>
+        <h2>The 311 program that improves itself — safely.</h2>
+        <p class="lede">Every routed case, staff correction, SLA outcome, and unknown phrase becomes evidence in the CEL. Nico turns evidence into recommendations. City staff approve every change before it reaches production.</p>
+      </div>
+      <div class="grid grid-2" style="margin-top:34px;align-items:start">
+        <div class="card reveal">
+          <div id="loop-host"></div>
+        </div>
+        <div class="reveal">
+          <div class="card">
+            <h4>Watch it move</h4>
+            <p class="small" style="color:var(--muted)">Step through the nine stages — from the first resident call to an approved, audited improvement.</p>
+            <button class="btn btn-primary" type="button" id="animate-loop-btn" aria-label="Animate the Continuous Civic Improvement Loop">↻ Animate the loop</button>
+          </div>
+          <div class="card" style="margin-top:18px">
+            <h4>See the evidence behind it</h4>
+            <p class="small" style="color:var(--muted)">The Learning Ledger shows every CEL-logged signal, the change it produced, its scope, and who approved it — like audit entry <span class="mono">LL-1042</span>: 19 water-pooling reroutes became one approved city-only rule.</p>
+            <a class="btn btn-navy" href="dashboards.html?tab=cel">Open the Learning Ledger</a>
+          </div>
+          <div class="audit-ribbon" style="margin-top:18px"><span>🛡</span><span><strong style="color:#fff">Envoz recommends. City staff approve.</strong> Nothing deploys to production without city sign-off.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BAD-DAY BEHAVIORS ================= -->
+  <section class="section section-dark grid-texture" id="bad-day">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Engineered for the bad days</span>
+        <h2>What Envoz does when things go wrong</h2>
+        <p class="lede">Any platform looks good on a sunny Tuesday. Cities should judge 311 systems by their failure behavior — so here is ours, in the open.</p>
+      </div>
+      <div class="grid grid-3" style="margin-top:34px">
+        <div class="card reveal">
+          <span class="icon-tile amber">🔌</span>
+          <h4>The CRM write fails</h4>
+          <p class="small" style="color:var(--muted)">Envoz retries with an idempotency key — no duplicate cases. If the CRM stays down, the request falls back to a structured email to the department, and the resident is told the truth about what happened.</p>
+          <div class="drill-stage" id="drill-stage" style="display:flex;flex-direction:column;margin:12px 0">
+            <div class="wf-node" id="drill-write"><span class="wf-icon">🗄</span>Write to SeeClickFix</div>
+            <div class="wf-connector" id="drill-c1"></div>
+            <div class="wf-node" id="drill-retry"><span class="wf-icon">🔁</span>Retry ×3 · idempotency key attached</div>
+            <div class="wf-connector" id="drill-c2"></div>
+            <div class="wf-node" id="drill-fallback"><span class="wf-icon">📧</span>Structured-email fallback delivered</div>
+          </div>
+          <div id="drill-proof" style="visibility:hidden"><div class="proof-strip"><span class="proof-icon">✓</span>Fallback delivered &amp; audit-logged · no duplicate case, no false confirmation</div></div>
+          <button class="btn btn-secondary btn-sm" type="button" id="drill-btn" style="margin-top:12px" aria-label="Run the write-back failure drill animation">▶ Run the failure drill</button>
+          <p class="small" style="margin-top:10px;color:var(--slate-400)"><strong style="color:#fff">Never fabricated:</strong> Envoz only confirms a case after a system of record confirms it first.</p>
+        </div>
+        <div class="card reveal">
+          <span class="icon-tile purple">◔</span>
+          <h4>Confidence is low</h4>
+          <p class="small" style="color:var(--muted)">Below the routing threshold, Envoz does not guess. It warm-transfers to a person with the full context packet — summary, transcript, resolved location, and callback number — so the resident never repeats their story.</p>
+          <div class="caution-strip" style="margin:12px 0"><span>◔</span>41% confidence → warm transfer, not a wrong route</div>
+          <p class="small" style="color:var(--slate-400)">Low-confidence patterns are logged to the CEL, so the same gap gets a proposed fix — reviewed and approved by your staff.</p>
+          <a class="btn btn-secondary btn-sm" href="voice-ai.html#escalation">See a warm transfer →</a>
+        </div>
+        <div class="card reveal">
+          <span class="icon-tile ocean">🧹</span>
+          <h4>The city's data is messy</h4>
+          <p class="small" style="color:var(--muted)">Inconsistent neighborhood names or a stale trash calendar don't block your pilot. Dirty data gates <strong style="color:#fff">production</strong>, not the <strong style="color:#fff">sandbox</strong> — you configure and test immediately while Envoz drafts the cleanup list.</p>
+          <div class="caution-strip" style="margin:12px 0"><span>⚠</span>17 inconsistent names found → sandbox proceeds, production waits</div>
+          <p class="small" style="color:var(--slate-400)">Nico flags each issue as a data-quality task with an owner, so launch-blocking problems become a checklist, not a surprise.</p>
+          <a class="btn btn-secondary btn-sm" href="configuration-studio.html?flow=harbor-mesa">Watch onboarding handle it →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= NEXT STEPS ================= -->
+  <section class="section" id="next-steps">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Go deeper</span>
+        <h2>See each layer working</h2>
+      </div>
+      <div class="grid grid-3" style="margin-top:32px">
+        <a class="card card-hover reveal" href="voice-ai.html?demo=pothole" style="text-decoration:none;color:inherit">
+          <span class="icon-tile">🎙</span>
+          <h4>Layer 1 · Voice AI</h4>
+          <p class="small" style="color:var(--muted)">Watch a 9:42 PM call move through the safety gate to a routed case with a real number.</p>
+          <span class="small" style="color:var(--link)">Run the voice demo →</span>
+        </a>
+        <a class="card card-hover reveal" href="configuration-studio.html?flow=harbor-mesa" style="text-decoration:none;color:inherit">
+          <span class="icon-tile ocean">⚙️</span>
+          <h4>Layer 2 · Configuration Studio</h4>
+          <p class="small" style="color:var(--muted)">Onboard Harbor Mesa conversationally — taxonomy, GIS layers, and rules in minutes, sandbox-first.</p>
+          <span class="small" style="color:var(--link)">Configure a demo city →</span>
+        </a>
+        <a class="card card-hover reveal" href="integrations.html" style="text-decoration:none;color:inherit">
+          <span class="icon-tile green">🔌</span>
+          <h4>Layer 3 · Integrations</h4>
+          <p class="small" style="color:var(--muted)">The overlay connectors: SeeClickFix, Tyler, Granicus, QAlert, Salesforce, Accela, Cityworks, OpenGov EAM.</p>
+          <span class="small" style="color:var(--link)">Explore integrations →</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/shared.js"></script>
+<script src="assets/js/pages/platform.js"></script>
+</body>
+</html>

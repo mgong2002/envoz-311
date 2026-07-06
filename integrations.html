@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Integrations — 311 CRM Overlay for SeeClickFix, Tyler, Salesforce &amp; More | Envoz 311</title>
+<meta name="description" content="Envoz 311 is a thin overlay that writes into the systems your city already runs: SeeClickFix, Tyler, Granicus, QAlert, Salesforce, Accela, Cityworks, OpenGov EAM, ArcGIS, Twilio, and your city knowledge sources. Keep the system of record — close the voice loop.">
+<link rel="icon" type="image/svg+xml" href="assets/img/envoz-mark.svg">
+<link rel="stylesheet" href="assets/css/main.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://envoz311.example.com/index.html" },
+    { "@type": "ListItem", "position": 2, "name": "Integrations", "item": "https://envoz311.example.com/integrations.html" }
+  ]
+}
+</script>
+<style>
+/* page-specific styles only */
+#matrix-table { min-width: 1080px; }
+#matrix-table td:first-child { white-space: nowrap; }
+.matrix-sys-btn {
+  appearance: none; background: none; border: none; padding: 0;
+  font-family: var(--font); font-size: inherit; font-weight: 700;
+  color: var(--navy-900); cursor: pointer; text-align: left;
+}
+.matrix-sys-btn:hover { color: var(--teal-700); text-decoration: underline; }
+.compare-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 14px; }
+.compare-cols ul { margin: 8px 0 0; line-height: 1.75; font-size: 0.9rem; }
+@media (max-width: 720px) { .compare-cols { grid-template-columns: 1fr; } }
+.relia-flow { display: flex; align-items: stretch; }
+.relia-flow .wf-node { flex: 1; min-width: 0; }
+.hconn { width: 30px; height: 2px; background: var(--slate-300); margin: auto 4px; flex-shrink: 0; transition: background 0.3s; }
+.hconn.lit { background: var(--teal-600); }
+@media (max-width: 860px) {
+  .relia-flow { flex-direction: column; }
+  .hconn { width: 2px; height: 20px; margin: 0 auto; }
+}
+</style>
+</head>
+<body data-page="integrations" data-marketing="true">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <section class="section-dark grid-texture" style="padding:80px 0 64px">
+    <div class="container">
+      <div style="max-width:840px">
+        <span class="chip chip-outline on-dark" style="margin-bottom:18px">Integrations · overlay-first architecture</span>
+        <h1>Arm the incumbent. Keep the system of record.</h1>
+        <p class="lede" style="margin-top:16px">Envoz 311 is a thin layer on top of the tools your city already trusts. It answers the voice channel, classifies and routes with confidence — then writes the case into <em>your</em> CRM, so the case number residents receive is the one your system issued.</p>
+        <div class="flex flex-wrap" style="margin-top:26px">
+          <a class="btn btn-primary btn-lg" href="platform.html">See how overlay mode works</a>
+          <a class="btn btn-secondary btn-lg" href="configuration-studio.html">Connect your stack in the studio</a>
+        </div>
+        <div class="chip-row" style="margin-top:24px">
+          <span class="chip chip-outline on-dark">No rip-and-replace</span>
+          <span class="chip chip-outline on-dark">Open311-native</span>
+          <span class="chip chip-outline on-dark">14 connectors</span>
+          <span class="chip chip-outline on-dark">Structured-email fallback</span>
+          <span class="chip chip-outline on-dark">Tenant-scoped</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ANSWER BLOCK ================= -->
+  <section class="section-tight">
+    <div class="container">
+      <div class="answer-block reveal" style="max-width:900px">Envoz 311 is a <strong>311 CRM overlay</strong>: it answers the resident calls your city can’t staff, then writes structured, confidence-scored cases into the system of record you already run — SeeClickFix, Tyler, Granicus, QAlert, Salesforce Service Cloud, Accela, Cityworks, or OpenGov EAM — so your CRM keeps issuing every case number and your staff keep the queues they know.</div>
+    </div>
+  </section>
+
+  <!-- ================= INTEGRATION MATRIX ================= -->
+  <section class="section" id="matrix" style="padding-top:32px">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">Integration matrix</span>
+        <h2>What Envoz writes, reads, and proves — per system</h2>
+        <p class="lede">Systems of record receive cases. GIS grounds routing. Telephony carries the call. Knowledge sources ground answers. Select a system for connector details.</p>
+      </div>
+      <div class="flex flex-wrap reveal" role="group" aria-label="Filter connectors by category" style="margin:22px 0 14px">
+        <button class="filter-pill" type="button" data-cat="all" aria-pressed="true">All connectors</button>
+        <button class="filter-pill" type="button" data-cat="record" aria-pressed="false">Systems of record</button>
+        <button class="filter-pill" type="button" data-cat="gis" aria-pressed="false">GIS &amp; maps</button>
+        <button class="filter-pill" type="button" data-cat="tel" aria-pressed="false">Telephony</button>
+        <button class="filter-pill" type="button" data-cat="knowledge" aria-pressed="false">Knowledge</button>
+        <span class="small" id="matrix-count" style="color:var(--muted);margin-left:auto" aria-live="polite"></span>
+      </div>
+      <div class="table-wrap reveal">
+        <table class="data-table" id="matrix-table">
+          <thead>
+            <tr>
+              <th scope="col">System</th>
+              <th scope="col">Use case</th>
+              <th scope="col">Mode</th>
+              <th scope="col">Data written</th>
+              <th scope="col">Data read</th>
+              <th scope="col">Proof / audit</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody id="matrix-body"><!-- rendered by integrations.js --></tbody>
+        </table>
+      </div>
+      <p class="disclaimer" style="margin-top:10px">Illustrative demo catalog for the Vista Robles demo world. Product names belong to their respective owners; “Partner API” indicates integrations delivered with vendor cooperation, “Beta” indicates connectors in pilot hardening.</p>
+    </div>
+  </section>
+
+  <!-- ================= FEATURE CARDS ================= -->
+  <section class="section section-aqua" id="overlay-principles">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Overlay principles</span>
+        <h2>A thin layer that behaves like a good guest</h2>
+        <p class="lede">Envoz adds a voice channel and a routing brain — it never asks your staff to move into a new system.</p>
+      </div>
+      <div class="grid grid-3" style="margin-top:36px">
+        <div class="card card-hover reveal">
+          <span class="icon-tile">🗄</span>
+          <h4>Write into the CRM residents already know</h4>
+          <p class="small" style="color:var(--muted)">Overlay mode creates the case in SeeClickFix, Tyler, or QAlert, so the case number a resident receives is the one your CRM issued — never a parallel record living somewhere else.</p>
+        </div>
+        <div class="card card-hover reveal">
+          <span class="icon-tile ocean">🛠</span>
+          <h4>No staff workflow disruption</h4>
+          <p class="small" style="color:var(--muted)">Cases land in the same queues, categories, and dashboards staff use today — with confidence and rationale attached — so there is no second console to check and no retraining program to fund.</p>
+        </div>
+        <div class="card card-hover reveal">
+          <span class="icon-tile amber">📧</span>
+          <h4>Structured email fallback when APIs fail</h4>
+          <p class="small" style="color:var(--muted)">If a connector is down, Envoz sends a fully structured case packet — category, location, priority, transcript summary — to the department inbox and flags it for reconciliation when the API recovers.</p>
+        </div>
+        <div class="card card-hover reveal">
+          <span class="icon-tile">🔁</span>
+          <h4>Retry with idempotency</h4>
+          <p class="small" style="color:var(--muted)">Every write carries an idempotency key, so a retry after a timeout can never create a duplicate case — and a resident can never be confirmed twice for the same report.</p>
+        </div>
+        <div class="card card-hover reveal">
+          <span class="icon-tile green">✓</span>
+          <h4>Proof that the case number was issued</h4>
+          <p class="small" style="color:var(--muted)">Residents only hear a case number after the system of record returns one; every confirmation links to a timestamped write receipt in the audit log.</p>
+        </div>
+        <div class="card card-hover reveal">
+          <span class="icon-tile navy">🔒</span>
+          <h4>Tenant-scoped every time</h4>
+          <p class="small" style="color:var(--muted)">Credentials, taxonomies, GIS layers, and knowledge sources are isolated per city — Vista Robles data never grounds a Harbor Mesa answer, and no connector shares secrets across tenants.</p>
+        </div>
+        <div class="card card-hover reveal">
+          <span class="icon-tile purple">📚</span>
+          <h4>Connector library compounds city-to-city</h4>
+          <p class="small" style="color:var(--muted)">Every deployment hardens the shared connector library — field mappings, retry behavior, vendor quirks — so the thirtieth city onboards in days, not the months the third one took.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WRITE-BACK RELIABILITY ================= -->
+  <section class="section" id="reliability">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Write-back reliability</span>
+        <h2>What happens when your CRM’s API has a bad night</h2>
+        <p class="lede">The write path degrades honestly: retry with idempotency, fall back to structured email, and never — under any failure — fabricate a confirmation.</p>
+      </div>
+      <div class="grid grid-2" style="margin-top:32px;align-items:start">
+        <div class="card reveal">
+          <div class="relia-flow" aria-label="Write-back reliability pipeline">
+            <div class="wf-node" id="rn-write"><span class="wf-icon">🗄</span>Write to CRM · idempotency key attached</div>
+            <div class="hconn" id="rc-1"></div>
+            <div class="wf-node" id="rn-retry"><span class="wf-icon">🔁</span>Retry ×3 · backoff, same key — no duplicates possible</div>
+            <div class="hconn" id="rc-2"></div>
+            <div class="wf-node" id="rn-fallback"><span class="wf-icon">📧</span>Structured-email fallback to the department inbox</div>
+            <div class="hconn" id="rc-3"></div>
+            <div class="wf-node" id="rn-honest"><span class="wf-icon">🛡</span>Honest confirmation — never a fabricated case number</div>
+          </div>
+          <div id="relia-status" aria-live="polite" style="margin-top:18px;display:flex;flex-direction:column;gap:10px">
+            <div class="caution-strip"><span aria-hidden="true">⚠</span>If every write attempt fails, the case is preserved and emailed — it is never dropped, and it is never “confirmed” with an invented number.</div>
+            <div class="proof-strip"><span class="proof-icon">✓</span>The case number always comes from your system of record. Envoz waits for it — residents get the real one by SMS.</div>
+          </div>
+          <div style="margin-top:18px">
+            <button class="btn btn-navy" type="button" id="relia-run">▶ Simulate a CRM API outage</button>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="json-card" aria-label="Structured-email fallback packet">{
+  <span class="k">"fallback"</span>: <span class="s">"STRUCTURED_EMAIL"</span>,
+  <span class="k">"to"</span>: <span class="s">"publicworks@vistarobles.gov"</span>,
+  <span class="k">"service_type"</span>: <span class="s">"pothole_road_hazard"</span>,
+  <span class="k">"priority"</span>: <span class="s">"high"</span>,
+  <span class="k">"location"</span>: <span class="s">"Alton Pkwy &amp; Irvine Center Dr"</span>,
+  <span class="k">"routing_confidence"</span>: <span class="n">0.92</span>,
+  <span class="k">"transcript_summary"</span>: <span class="s">"Deep pothole near ramp,
+    no injuries, hazard to evening traffic"</span>,
+  <span class="k">"idempotency_key"</span>: <span class="s">"env-vr-4281-a1"</span>,
+  <span class="k">"crm_case_number"</span>: <span class="b">null</span>,
+  <span class="k">"resident_told"</span>: <span class="s">"Report recorded; city will
+    text the case number once issued"</span>,
+  <span class="k">"reconcile_on_recovery"</span>: <span class="b">true</span>
+}</div>
+          <p class="small" style="margin-top:12px;color:var(--muted)">The fallback packet carries everything a staffer needs to act — and an explicit <code>crm_case_number: null</code>. When the connector recovers, the queued write replays with the same idempotency key and the resident gets the real number by SMS.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= RESPECTFUL COMPARISON ================= -->
+  <section class="section section-aqua" id="comparison">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">A respectful comparison</span>
+        <h2>The incumbents are good. Envoz arms them — or fills the gap.</h2>
+        <p class="lede">Cities have invested in these platforms for good reasons. Here is where each is strong, and where Envoz adds the voice-to-outcome layer on top.</p>
+      </div>
+
+      <div class="grid" style="margin-top:36px;grid-template-columns:1fr">
+        <div class="card reveal">
+          <div class="flex flex-wrap space-between">
+            <h3 style="margin:0">SeeClickFix / CivicPlus</h3>
+            <span class="chip chip-teal">System-of-record partner</span>
+          </div>
+          <div class="compare-cols">
+            <div>
+              <span class="chip chip-green">Strengths</span>
+              <ul>
+                <li>Excellent case CRM that 311 staff genuinely trust</li>
+                <li>Map-first web and app reporting residents already use</li>
+                <li>Mature status updates, notifications, and integrations</li>
+              </ul>
+            </div>
+            <div>
+              <span class="chip chip-ocean">Where Envoz adds</span>
+              <ul>
+                <li>Autonomous resident-facing <strong>voice-to-outcome</strong> — the 9:42 PM call becomes a SeeClickFix case, not a voicemail</li>
+                <li>AI-powered continuous improvement: staff corrections and CEL evidence become approved routing rules</li>
+              </ul>
+            </div>
+          </div>
+          <div class="flex flex-wrap" style="margin-top:14px">
+            <button class="btn btn-secondary btn-sm" type="button" onclick="Envoz.openCompareModal()">See the side-by-side comparison</button>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="flex flex-wrap space-between">
+            <h3 style="margin:0">Tyler Technologies</h3>
+            <span class="chip chip-teal">System-of-record partner</span>
+          </div>
+          <div class="compare-cols">
+            <div>
+              <span class="chip chip-green">Strengths</span>
+              <ul>
+                <li>Powerful 311 / ERP system of record with deep workflow</li>
+                <li>Enterprise footprint across thousands of local governments</li>
+              </ul>
+            </div>
+            <div>
+              <span class="chip chip-ocean">Where Envoz adds</span>
+              <ul>
+                <li>AI-native voice deployed in weeks — an overlay, not a multi-year modernization program</li>
+                <li>Routing-confidence transparency: every case written back carries a visible confidence score and rationale</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="flex flex-wrap space-between">
+            <h3 style="margin:0">Granicus</h3>
+            <span class="chip chip-teal">System-of-record partner</span>
+          </div>
+          <div class="compare-cols">
+            <div>
+              <span class="chip chip-green">Strengths</span>
+              <ul>
+                <li>Broad government experience suite with a large communications footprint</li>
+                <li>Investing in the right direction on RAG-grounded resident answers</li>
+              </ul>
+            </div>
+            <div>
+              <span class="chip chip-ocean">Where Envoz adds</span>
+              <ul>
+                <li>Production voice-to-outcome depth — calls end in routed cases, not just grounded answers</li>
+                <li>Action-execution depth into systems of record, with write receipts and audit proof</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="flex flex-wrap space-between">
+            <h3 style="margin:0">EffiGov</h3>
+            <span class="chip chip-purple">AI voice peer</span>
+          </div>
+          <div class="compare-cols">
+            <div>
+              <span class="chip chip-green">Strengths</span>
+              <ul>
+                <li>Focused AI voice offering for local government</li>
+                <li>Live oversight of calls in progress</li>
+              </ul>
+            </div>
+            <div>
+              <span class="chip chip-ocean">Envoz differentiation</span>
+              <ul>
+                <li>Configuration speed — talk a city live in the Configuration Studio</li>
+                <li>Compounding connector library across systems of record</li>
+                <li>CEL learning loop with confidence and rationale transparency</li>
+                <li>Overlay <em>and</em> standalone dual mode, plus council-proof dashboards</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <div class="flex flex-wrap space-between">
+            <h3 style="margin:0">Polimorphic / Citibot</h3>
+            <span class="chip chip-purple">AI front-door peers</span>
+          </div>
+          <div class="compare-cols">
+            <div>
+              <span class="chip chip-green">Strengths</span>
+              <ul>
+                <li>Real momentum on the AI front door for local government</li>
+                <li>Strong chat and search-based resident deflection</li>
+              </ul>
+            </div>
+            <div>
+              <span class="chip chip-ocean">Envoz differentiation</span>
+              <ul>
+                <li>Proof of action — CRM-issued case numbers with write receipts, not chat logs</li>
+                <li>Data-model rigor and a service-system improvement loop</li>
+                <li>Staff correction capture that becomes approved city rules</li>
+                <li>City-manager proof metrics packaged for council</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="disclaimer center" style="margin-top:18px">Comparisons reflect our understanding of publicly described capabilities; every platform above serves cities well. Most cities should keep their system of record — and arm it.</p>
+    </div>
+  </section>
+
+  <!-- ================= FINAL CTA ================= -->
+  <section class="section section-dark grid-texture">
+    <div class="container center">
+      <div class="reveal">
+        <h2>Keep your system of record. Close the voice loop.</h2>
+        <p class="lede" style="margin:0 auto">See how the routing brain decides — or connect a demo city’s stack in twelve minutes.</p>
+        <div class="flex flex-wrap" style="margin-top:26px;justify-content:center">
+          <a class="btn btn-primary btn-lg" href="platform.html">Explore the platform</a>
+          <a class="btn btn-secondary btn-lg" href="configuration-studio.html?flow=harbor-mesa">Configure Harbor Mesa’s connectors</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/shared.js"></script>
+<script src="assets/js/pages/integrations.js"></script>
+</body>
+</html>

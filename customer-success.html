@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Success — Council-Ready 311 Reporting &amp; Proof | Envoz 311</title>
+<meta name="description" content="Envoz 311 turns 311 modernization into council-ready 311 reporting: a city manager scorecard for access, quality, speed, equity, efficiency, and learning — plus a 90-day improvement timeline and generated council proof reports. Illustrative demo data.">
+<link rel="icon" type="image/svg+xml" href="assets/img/envoz-mark.svg">
+<link rel="stylesheet" href="assets/css/main.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://envoz311.example.com/index.html" },
+    { "@type": "ListItem", "position": 2, "name": "Customer Success / Council Proof", "item": "https://envoz311.example.com/customer-success.html" }
+  ]
+}
+</script>
+<style>
+/* ---- page-specific styles: customer-success ---- */
+
+/* Before / After contrast cards */
+.ba-card { position: relative; }
+.ba-card ul { list-style: none; padding: 0; margin: 0; }
+.ba-card li { display: flex; gap: 11px; align-items: flex-start; padding: 9px 0; border-bottom: 1px solid var(--line-soft); font-size: 0.93rem; }
+.ba-card li:last-child { border-bottom: none; }
+.ba-ico { flex-shrink: 0; width: 24px; height: 24px; border-radius: 7px; display: inline-flex; align-items: center; justify-content: center; font-size: 0.78rem; margin-top: 1px; }
+.ba-before .ba-ico { background: var(--slate-100); color: var(--slate-500); }
+.ba-after .ba-ico { background: var(--green-100); color: var(--green-700); }
+.ba-before { border-top: 3px solid var(--slate-300); }
+.ba-after { border-top: 3px solid var(--teal-600); }
+
+/* Scorecard pillar cards */
+.pillar-kpis { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 14px; }
+.pillar-kpis .kpi { padding: 10px 11px; box-shadow: none; border-radius: 10px; }
+.pillar-kpis .kpi .kpi-value { font-size: 1.14rem; }
+.pillar-kpis .kpi .kpi-label { font-size: 0.68rem; line-height: 1.3; }
+.pillar-kpis .kpi .kpi-delta { font-size: 0.68rem; margin-top: 3px; }
+@media (max-width: 1080px) { .pillar-kpis { grid-template-columns: 1fr 1fr; } }
+
+/* Equity heatmap thumbnail */
+.heat-thumb { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin-top: 14px; }
+.heat-thumb .heat-cell { min-height: 34px; font-size: 0.6rem; padding: 2px 4px; text-align: center; line-height: 1.25; }
+
+/* 90-day story arc (pull-quotes) */
+.arc { position: relative; padding-left: 34px; margin-top: 30px; }
+.arc::before { content: ""; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 2px; background: var(--slate-200); }
+.arc-item { position: relative; margin-bottom: 22px; }
+.arc-item:last-child { margin-bottom: 0; }
+.arc-dot { position: absolute; left: -34px; top: 4px; width: 24px; height: 24px; border-radius: 50%; background: var(--teal-600); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.62rem; font-weight: 800; box-shadow: 0 0 0 4px var(--aqua-50); }
+.arc-quote { font-size: 1.02rem; color: var(--navy-800); font-style: italic; margin: 6px 0 8px; }
+.arc-who { font-size: 0.8rem; font-weight: 600; color: var(--muted); }
+
+/* 90-day improvement timeline (interactive phases) */
+.phase-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 34px; align-items: start; }
+@media (max-width: 980px) { .phase-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .phase-grid { grid-template-columns: 1fr; } }
+.phase-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); overflow: hidden; transition: border-color 0.2s, box-shadow 0.2s; }
+.phase-card.open { border-color: var(--teal-600); box-shadow: 0 0 0 3px var(--teal-100), var(--shadow-sm); }
+.phase-head { appearance: none; width: 100%; background: none; border: none; font-family: var(--font); text-align: left; cursor: pointer; padding: 18px 18px 14px; display: flex; flex-direction: column; gap: 4px; }
+.phase-head:hover { background: var(--aqua-50); }
+.phase-dot { width: 30px; height: 30px; border-radius: 50%; border: 2px solid var(--slate-300); background: var(--surface); color: var(--slate-500); display: flex; align-items: center; justify-content: center; font-size: 0.76rem; font-weight: 700; margin-bottom: 6px; transition: all 0.25s; }
+.phase-card.open .phase-dot { background: var(--teal-600); border-color: var(--teal-600); color: #fff; }
+.phase-when { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-700); }
+.phase-title { font-size: 1rem; font-weight: 700; color: var(--navy-900); line-height: 1.3; }
+.phase-caret { font-size: 0.78rem; color: var(--muted); transition: transform 0.2s; }
+.phase-card.open .phase-caret { transform: rotate(180deg); }
+.phase-panel { padding: 0 18px 18px; }
+.phase-panel[hidden] { display: none; }
+.phase-panel ul { list-style: none; padding: 0; margin: 0 0 12px; }
+.phase-panel li { display: flex; gap: 9px; align-items: flex-start; padding: 6px 0; font-size: 0.86rem; color: var(--body); border-bottom: 1px solid var(--line-soft); }
+.phase-panel li:last-child { border-bottom: none; }
+.phase-panel li::before { content: "✓"; color: var(--teal-600); font-weight: 800; flex-shrink: 0; }
+
+/* Agent stat rows */
+.agent-stat { display: flex; justify-content: space-between; gap: 14px; padding: 9px 0; border-bottom: 1px solid rgba(255,255,255,0.1); font-size: 0.88rem; }
+.agent-stat:last-child { border-bottom: none; }
+.agent-stat .v { font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; text-align: right; }
+
+/* CTA band */
+.cta-band { text-align: center; padding: 68px 0; }
+</style>
+</head>
+<body data-page="customer-success" data-marketing="true">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <section class="section-dark grid-texture" style="padding:80px 0 64px">
+    <div class="container">
+      <div style="max-width:840px">
+        <span class="eyebrow">Customer success · Council proof</span>
+        <h1>Turn 311 modernization into proof your council can see.</h1>
+        <p class="lede" style="margin-top:14px">Every mayor hears "we modernized 311." Councils want evidence. Envoz 311 turns daily 311 operations into council-ready reporting — access, quality, speed, equity, efficiency, and learning — so your accomplishments are visible, measurable, and defensible.</p>
+        <div class="answer-block" style="margin-top:22px">Envoz 311 gives city managers council-ready 311 reporting: after-hours access, routing accuracy, equity and language coverage, and cost metrics — generated from live operational evidence, so every claim presented to council traces back to real cases in your system of record.</div>
+        <div class="flex flex-wrap" style="margin-top:24px">
+          <a class="btn btn-primary btn-lg" href="dashboards.html?tab=council&amp;generate=1">Generate a council proof report</a>
+          <a class="btn btn-secondary btn-lg" href="#case-study">Read the 90-day demo story</a>
+        </div>
+        <div class="chip-row" style="margin-top:22px">
+          <span class="chip chip-outline on-dark">City of Vista Robles · fictional demo city</span>
+          <span class="chip chip-outline on-dark">Illustrative demo data throughout</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= BEFORE / AFTER ================= -->
+  <section class="section" id="before-after">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">What actually changes</span>
+        <h2>Before Envoz, service happened. After Envoz, service is proven.</h2>
+        <p class="lede">Most 311 modernization fails quietly — not because staff underperform, but because nothing captures the evidence. Here is the contrast a city manager can show.</p>
+      </div>
+      <div class="grid grid-2" style="margin-top:34px;align-items:stretch">
+        <div class="card ba-card ba-before reveal">
+          <span class="chip">Before Envoz</span>
+          <h3 style="margin-top:12px">Service without evidence</h3>
+          <ul style="margin-top:8px">
+            <li><span class="ba-ico">📼</span><span><strong>Voicemail after hours.</strong> Calls after 5 PM become a morning triage pile — or are never returned.</span></li>
+            <li><span class="ba-ico">📧</span><span><strong>Unstructured emails.</strong> Requests arrive as free text with no classification, location, or priority.</span></li>
+            <li><span class="ba-ico">🌙</span><span><strong>Missed after-hours reports.</strong> Residents who can only call at night simply give up.</span></li>
+            <li><span class="ba-ico">❓</span><span><strong>No confirmation for residents.</strong> No case number, no status, no closure — just hope.</span></li>
+            <li><span class="ba-ico">🌐</span><span><strong>No language-access proof.</strong> You believe non-English callers are served; you cannot show it.</span></li>
+            <li><span class="ba-ico">🗺</span><span><strong>No equity view.</strong> Which neighborhoods are underserved? Nobody can say with data.</span></li>
+            <li><span class="ba-ico">🧾</span><span><strong>Manual council reporting.</strong> Staff spend days assembling slides from partial spreadsheets.</span></li>
+            <li><span class="ba-ico">🧠</span><span><strong>Improvements depend on memory.</strong> Institutional knowledge lives in a few veterans' heads.</span></li>
+          </ul>
+        </div>
+        <div class="card ba-card ba-after reveal">
+          <span class="chip chip-teal">After Envoz</span>
+          <h3 style="margin-top:12px">Service with council-ready proof</h3>
+          <ul style="margin-top:8px">
+            <li><span class="ba-ico">✓</span><span><strong>Every call answered</strong> — 24/7, before the second ring, in the resident's language.</span></li>
+            <li><span class="ba-ico">✓</span><span><strong>Cases correctly routed</strong> — classified against your taxonomy with visible confidence and rationale.</span></li>
+            <li><span class="ba-ico">✓</span><span><strong>Residents updated</strong> — real case numbers from your CRM, plus SMS status links.</span></li>
+            <li><span class="ba-ico">✓</span><span><strong>Staff corrections captured</strong> — every reroute becomes evidence that teaches the system.</span></li>
+            <li><span class="ba-ico">✓</span><span><strong>Service gaps discovered</strong> — hotspots, language disparities, and SLA lags surfaced automatically.</span></li>
+            <li><span class="ba-ico">✓</span><span><strong>City rules improved</strong> — approved, sandbox-tested, city-only routing rules, not tribal knowledge.</span></li>
+            <li><span class="ba-ico">✓</span><span><strong>Council proof generated</strong> — quarterly evidence reports assembled from live data, not memory.</span></li>
+          </ul>
+          <div class="proof-strip" style="margin-top:16px"><span class="proof-icon">✓</span>Staff stay accountable for every decision — Envoz protects them from chaos, it never replaces them.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CITY MANAGER SCORECARD ================= -->
+  <section class="section section-aqua" id="scorecard">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">The city manager scorecard</span>
+        <h2>Six pillars a council actually asks about</h2>
+        <p class="lede">This is the standing scorecard Envoz maintains for Vista Robles — the same six pillars that structure every generated council proof report. Illustrative demo data.</p>
+      </div>
+      <div class="grid grid-3" style="margin-top:36px">
+
+        <div class="card card-hover reveal">
+          <span class="icon-tile">🕘</span>
+          <h3>Access</h3>
+          <p class="small" style="color:var(--muted)">Can every resident reach the city — at night, on weekends, in their language?</p>
+          <div class="pillar-kpis">
+            <div class="kpi"><span class="kpi-value">100%</span><span class="kpi-label">after-hours coverage</span><span class="kpi-delta up">▲ was 0%</span></div>
+            <div class="kpi"><span class="kpi-value">18</span><span class="kpi-label">languages detected · 70+ ready</span><span class="kpi-delta up">▲ 6 new</span></div>
+            <div class="kpi"><span class="kpi-value">0:04</span><span class="kpi-label">avg time to answer — no hold</span><span class="kpi-delta up">▼ from 4:37 hold</span></div>
+          </div>
+        </div>
+
+        <div class="card card-hover reveal">
+          <span class="icon-tile purple">🎯</span>
+          <h3>Quality</h3>
+          <p class="small" style="color:var(--muted)">Are cases classified and routed correctly — and can you see the confidence behind each one?</p>
+          <div class="pillar-kpis">
+            <div class="kpi"><span class="kpi-value">91.6%</span><span class="kpi-label">routing accuracy</span><span class="kpi-delta up">▲ 3.2 pts</span></div>
+            <div class="kpi"><span class="kpi-value">89%</span><span class="kpi-label">median routing confidence</span><span class="kpi-delta up">▲ improving</span></div>
+            <div class="kpi"><span class="kpi-value">2.9%</span><span class="kpi-label">staff correction rate</span><span class="kpi-delta up">▼ 1.1 pts</span></div>
+          </div>
+        </div>
+
+        <div class="card card-hover reveal">
+          <span class="icon-tile ocean">⚡</span>
+          <h3>Speed</h3>
+          <p class="small" style="color:var(--muted)">How fast do requests move from a resident's voice to a routed, tracked case?</p>
+          <div class="pillar-kpis">
+            <div class="kpi"><span class="kpi-value">2:18</span><span class="kpi-label">avg handle time</span><span class="kpi-delta up">▼ 0:41</span></div>
+            <div class="kpi"><span class="kpi-value">93.4%</span><span class="kpi-label">SLA compliance</span><span class="kpi-delta up">▲ 4.1 pts</span></div>
+            <div class="kpi"><span class="kpi-value">−1.3d</span><span class="kpi-label">median resolution trend</span><span class="kpi-delta up">▲ quarter over quarter</span></div>
+          </div>
+        </div>
+
+        <div class="card card-hover reveal">
+          <span class="icon-tile navy">⚖️</span>
+          <h3>Equity</h3>
+          <p class="small" style="color:var(--muted)">Is every neighborhood — and every language — getting the same quality of service?</p>
+          <div class="heat-thumb" role="img" aria-label="Neighborhood service-coverage heatmap thumbnail: SLA compliance by neighborhood, from 88 percent in Harbor View to 97 percent in Civic Center. Illustrative demo data.">
+            <div class="heat-cell" style="background:var(--teal-600);color:#fff" title="Alton District · 96% SLA">Alton<br>96%</div>
+            <div class="heat-cell" style="background:var(--teal-100);color:var(--teal-700)" title="Harbor View · 88% SLA — parks lag flagged">Harbor Vw<br>88%</div>
+            <div class="heat-cell" style="background:var(--teal-500);color:#fff" title="Oak Bluff · 92% SLA">Oak Bluff<br>92%</div>
+            <div class="heat-cell" style="background:var(--teal-500);color:#fff" title="Paseo Market Corridor · 93% SLA">Paseo<br>93%</div>
+            <div class="heat-cell" style="background:var(--teal-600);color:#fff" title="Mesa Ridge · 95% SLA">Mesa Rdg<br>95%</div>
+            <div class="heat-cell" style="background:var(--teal-700);color:#fff" title="Civic Center · 97% SLA">Civic Ctr<br>97%</div>
+            <div class="heat-cell" style="background:var(--teal-600);color:#fff" title="North Foothills · 94% SLA">N. Foothills<br>94%</div>
+            <div class="heat-cell" style="background:var(--teal-500);color:#fff" title="School Zone South · 91% SLA">School S<br>91%</div>
+          </div>
+          <div class="pillar-kpis" style="grid-template-columns:1fr 1fr">
+            <div class="kpi"><span class="kpi-value">+11%</span><span class="kpi-label">Spanish address confidence · language-quality audit</span></div>
+            <div class="kpi"><span class="kpi-value">3</span><span class="kpi-label">repeated hotspots under analysis</span></div>
+          </div>
+        </div>
+
+        <div class="card card-hover reveal">
+          <span class="icon-tile green">💰</span>
+          <h3>Efficiency</h3>
+          <p class="small" style="color:var(--muted)">What does each interaction cost — and where are staff hours going back to real work?</p>
+          <div class="pillar-kpis">
+            <div class="kpi"><span class="kpi-value">$0.42</span><span class="kpi-label">cost per interaction</span><span class="kpi-delta up">▼ vs $3.80 manual</span></div>
+            <div class="kpi"><span class="kpi-value">312</span><span class="kpi-label">staff hours saved this quarter</span><span class="kpi-delta up">▲ growing</span></div>
+            <div class="kpi"><span class="kpi-value">−38%</span><span class="kpi-label">"any update?" follow-up calls</span><span class="kpi-delta up">▼ status links working</span></div>
+          </div>
+        </div>
+
+        <div class="card card-hover reveal">
+          <span class="icon-tile amber">📈</span>
+          <h3>Learning</h3>
+          <p class="small" style="color:var(--muted)">Is the 311 program measurably smarter this quarter than last — with an audit trail?</p>
+          <div class="pillar-kpis" style="grid-template-columns:1fr 1fr">
+            <div class="kpi"><span class="kpi-value">31</span><span class="kpi-label">unknown requests resolved into known services</span></div>
+            <div class="kpi"><span class="kpi-value">4</span><span class="kpi-label">city-only rules approved &amp; live</span></div>
+            <div class="kpi"><span class="kpi-value">2</span><span class="kpi-label">taxonomy candidates in review</span></div>
+            <div class="kpi"><span class="kpi-value">5</span><span class="kpi-label">knowledge-source fixes shipped</span></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="center reveal" style="margin-top:26px">
+        <p class="disclaimer">All scorecard figures are illustrative demo data for the fictional City of Vista Robles.</p>
+        <a class="btn btn-navy" href="dashboards.html?tab=performance">Open the live scorecard dashboard</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 90-DAY CASE STUDY ================= -->
+  <section class="section" id="case-study">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Fictional case study</span>
+        <h2>Vista Robles 311 Modernization: 90-Day Demo Story</h2>
+        <p class="lede">A composite narrative showing what a first quarter looks like. Vista Robles is a fictional demonstration city; every figure and quotation below is illustrative demo data.</p>
+        <span class="chip chip-amber" style="margin-top:10px">Illustrative demo data · fictional city &amp; staff</span>
+      </div>
+
+      <div class="grid grid-4 reveal" style="margin-top:34px">
+        <div class="kpi kpi-accent"><span class="kpi-value">327</span><span class="kpi-label">after-hours requests captured</span><span class="kpi-delta up">▲ previously voicemail or lost</span></div>
+        <div class="kpi kpi-accent"><span class="kpi-value">76%</span><span class="kpi-label">contained without staff involvement</span><span class="kpi-delta up">▲ staff focus on judgment calls</span></div>
+        <div class="kpi kpi-accent"><span class="kpi-value">31 → 4</span><span class="kpi-label">unknowns converted into 4 approved city rules</span><span class="kpi-delta up">▲ audited in the Learning Ledger</span></div>
+        <div class="kpi kpi-accent"><span class="kpi-value">93.4%</span><span class="kpi-label">SLA compliance</span><span class="kpi-delta up">▲ 4.1 pts this quarter</span></div>
+        <div class="kpi kpi-accent"><span class="kpi-value">312</span><span class="kpi-label">staff hours saved</span><span class="kpi-delta up">▲ returned to field &amp; case work</span></div>
+        <div class="kpi kpi-accent"><span class="kpi-value">18</span><span class="kpi-label">languages detected and served</span><span class="kpi-delta up">▲ with quality audits</span></div>
+        <div class="kpi kpi-accent"><span class="kpi-value">−18%</span><span class="kpi-label">unknown-service rate</span><span class="kpi-delta up">▼ taxonomy learning working</span></div>
+        <div class="kpi kpi-accent"><span class="kpi-value">+11%</span><span class="kpi-label">Spanish address confidence</span><span class="kpi-delta up">▲ landmark vocabulary added</span></div>
+      </div>
+
+      <div class="grid grid-2" style="margin-top:40px;align-items:start">
+        <div class="reveal">
+          <h3>How the quarter unfolded</h3>
+          <p>Vista Robles didn't flip a switch — it ran a governed rollout. Week 1 was sandbox-only: top services configured, writeback validated against SeeClickFix, dirty data flagged before it could cause misroutes. By week 4, after-hours calls were being captured and staff corrections were feeding the learning loop. By week 8, the first city-only rules were approved and live. By week 12, the city manager walked into council with a generated proof report instead of a slide deck built from memory.</p>
+          <p><strong>The pattern to notice:</strong> nothing improved by magic. Every gain traces to evidence — a correction, a cluster, an audit — reviewed and approved by city staff.</p>
+          <div class="flex flex-wrap" style="margin-top:16px">
+            <a class="btn btn-primary" href="dashboards.html?tab=council&amp;generate=1">See the generated council report</a>
+            <a class="btn btn-ghost" href="dashboards.html?tab=cel">Open the Learning Ledger →</a>
+          </div>
+        </div>
+        <div class="card reveal">
+          <div class="arc">
+            <div class="arc-item">
+              <span class="arc-dot">W1</span>
+              <span class="chip chip-ocean">Week 1 · Stand-up</span>
+              <p class="arc-quote">"I expected months of IT meetings. We validated writeback into SeeClickFix in the first week — and Envoz flagged our messy neighborhood names before they broke anything."</p>
+              <span class="arc-who">Dana Reyes · 311 Operations Manager, Vista Robles (fictional)</span>
+            </div>
+            <div class="arc-item">
+              <span class="arc-dot">W4</span>
+              <span class="chip chip-ocean">Week 4 · First signal</span>
+              <p class="arc-quote">"The morning voicemail pile is gone. My crews get geo-tagged cases with a confidence score — the first after-hours pothole report reached us before the resident got home."</p>
+              <span class="arc-who">Marcus Hale · Public Works Director, Vista Robles (fictional)</span>
+            </div>
+            <div class="arc-item">
+              <span class="arc-dot">W8</span>
+              <span class="chip chip-ocean">Week 8 · First approved rules</span>
+              <p class="arc-quote">"Nineteen water-pooling reroutes became one storm-drain rule my team approved after a sandbox run. That's institutional knowledge that used to live in one supervisor's head."</p>
+              <span class="arc-who">Dana Reyes · 311 Operations Manager, Vista Robles (fictional)</span>
+            </div>
+            <div class="arc-item">
+              <span class="arc-dot">W12</span>
+              <span class="chip chip-ocean">Week 12 · Council proof</span>
+              <p class="arc-quote">"For the first time I presented 311 to council with evidence instead of anecdotes — access gains, equity coverage, and cost per interaction, every number traceable to real cases."</p>
+              <span class="arc-who">Priya Natarajan · City Manager, Vista Robles (fictional)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ALWAYS-ON IMPROVEMENT AGENT ================= -->
+  <section class="section section-dark grid-texture" id="improvement-agent">
+    <div class="container grid grid-2" style="align-items:center">
+      <div class="reveal">
+        <span class="eyebrow">Nico Success Agent</span>
+        <h2>Your always-on 311 improvement agent</h2>
+        <p>City managers do not just need a dashboard. They need a way to show that service delivery is getting better. Nico Success Agent turns operational evidence into improvement plans and council-ready proof.</p>
+        <ul style="line-height:2.05">
+          <li><strong>Watches</strong> routing accuracy, corrections, SLA risk, equity, and surge patterns — every day.</li>
+          <li><strong>Recommends</strong> safe, evidence-linked improvements: city-only rules, vocabulary, taxonomy, data fixes.</li>
+          <li><strong>Proves</strong> the gains in generated council reports — with an audit trail behind every change.</li>
+        </ul>
+        <div class="flex flex-wrap" style="margin-top:20px">
+          <a class="btn btn-primary" href="dashboards.html?tab=agent">Meet your success agent</a>
+          <a class="btn btn-secondary" href="dashboards.html?tab=agent&amp;filter=ready">What's ready for approval?</a>
+        </div>
+      </div>
+      <div class="card-dark reveal" aria-label="Nico Success Agent live status panel (demo)">
+        <div class="flex space-between" style="margin-bottom:6px">
+          <strong style="color:#fff">🤖 Nico Success Agent · Vista Robles</strong>
+          <span class="chip chip-green" id="agent-status">Monitoring 24/7</span>
+        </div>
+        <p class="small" style="color:var(--slate-400);margin-bottom:10px">Live demo status · illustrative data</p>
+        <div id="agent-stats"></div>
+        <div class="audit-ribbon" style="margin-top:16px"><span>🛡</span><span><strong style="color:#fff">Nico recommends. City staff approve.</strong> Nothing deploys without sign-off.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= 90-DAY IMPROVEMENT TIMELINE ================= -->
+  <section class="section" id="timeline">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Your first 90 days</span>
+        <h2>The 90-day improvement timeline</h2>
+        <p class="lede">A governed rollout, not a big-bang launch. Click a phase to see exactly what happens — and the milestone your council will hear about.</p>
+      </div>
+      <div class="phase-grid reveal" id="phase-grid"><!-- phases rendered by page JS --></div>
+      <div class="center reveal" style="margin-top:26px">
+        <p class="small" style="color:var(--muted)">Every phase ends with something you can show — no rip-and-replace, no staff workflow disruption.</p>
+        <a class="btn btn-secondary" href="configuration-studio.html?flow=harbor-mesa">See week 1 happen: configure a demo city</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CTA BAND ================= -->
+  <section class="section-dark grid-texture cta-band">
+    <div class="container">
+      <span class="eyebrow">Ready when your council is</span>
+      <h2 style="max-width:22ch;margin-left:auto;margin-right:auto">Walk into your next council meeting with proof, not promises.</h2>
+      <p class="lede" style="margin:14px auto 0">Generate the same 90-day council proof report a Vista Robles city manager would present — built live from demo evidence.</p>
+      <div class="flex flex-wrap" style="margin-top:26px;justify-content:center">
+        <a class="btn btn-primary btn-lg" href="dashboards.html?tab=council&amp;generate=1">Generate a council proof report</a>
+        <a class="btn btn-secondary btn-lg" href="pilot-pricing.html">Explore a 90-day pilot</a>
+      </div>
+      <p class="disclaimer" style="margin-top:20px">Vista Robles is a fictional demonstration city. All metrics on this page are illustrative demo data.</p>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/shared.js"></script>
+<script src="assets/js/pages/customer-success.js"></script>
+</body>
+</html>

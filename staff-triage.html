@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Staff Triage Console — Clean, Confidence-Scored 311 Cases | Envoz 311</title>
+<meta name="description" content="The Envoz 311 staff triage console: city staff receive clean, confidence-scored cases with rationale and proof — approve, reroute, merge, escalate, or teach the AI with scoped corrections. Every decision audited in the Civic Evidence Ledger.">
+<link rel="icon" type="image/svg+xml" href="assets/img/envoz-mark.svg">
+<link rel="stylesheet" href="assets/css/main.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://envoz311.example.com/index.html" },
+    { "@type": "ListItem", "position": 2, "name": "Staff Triage", "item": "https://envoz311.example.com/staff-triage.html" }
+  ]
+}
+</script>
+<style>
+/* ---- Staff Triage page-specific styles ---- */
+.triage-band { padding: 30px 0 26px; }
+.triage-band h1 { font-size: clamp(1.45rem, 2.6vw, 1.9rem); margin-bottom: 6px; }
+.triage-band .band-line { color: var(--slate-300); font-size: 0.95rem; margin: 8px 0 0; }
+
+.console { display: grid; grid-template-columns: 212px minmax(0, 1fr); gap: 18px; align-items: start; }
+#detail-col { display: none; }
+@media (min-width: 1101px) {
+  .console { grid-template-columns: 208px minmax(0, 1fr) 372px; }
+  #detail-col {
+    display: block; position: sticky; top: calc(var(--header-h) + 16px);
+    max-height: calc(100vh - var(--header-h) - 32px); overflow-y: auto;
+  }
+}
+@media (max-width: 760px) { .console { grid-template-columns: 1fr; } }
+
+.queue-rail { display: flex; flex-direction: column; gap: 6px; }
+.rail-btn {
+  appearance: none; font-family: var(--font); display: flex; justify-content: space-between;
+  align-items: center; gap: 10px; width: 100%; text-align: left;
+  font-size: 0.85rem; font-weight: 600; color: var(--slate-600);
+  background: var(--surface); border: 1px solid var(--line); border-radius: 10px;
+  padding: 9px 12px; cursor: pointer; transition: all 0.15s;
+}
+.rail-btn:hover { border-color: var(--teal-600); color: var(--teal-700); }
+.rail-btn[aria-pressed="true"] { background: var(--navy-900); border-color: var(--navy-900); color: #fff; }
+.rail-btn .count {
+  font-size: 0.72rem; font-weight: 700; background: var(--slate-100); color: var(--slate-600);
+  border-radius: 999px; padding: 2px 8px; min-width: 26px; text-align: center;
+}
+.rail-btn[aria-pressed="true"] .count { background: rgba(255, 255, 255, 0.18); color: #fff; }
+@media (max-width: 760px) {
+  .queue-rail { flex-direction: row; flex-wrap: wrap; }
+  .rail-btn { width: auto; }
+}
+
+.case-detail h4 {
+  margin: 18px 0 8px; font-size: 0.74rem; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--muted);
+}
+.case-transcript {
+  display: flex; flex-direction: column; gap: 7px;
+  background: var(--offwhite); border: 1px solid var(--line-soft);
+  border-radius: 12px; padding: 12px;
+}
+.case-transcript .nico-bubble { font-size: 0.82rem; padding: 8px 11px; max-width: 92%; }
+.kv { display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 0.84rem; margin: 0; }
+.kv dt { color: var(--muted); font-weight: 600; }
+.kv dd { margin: 0; color: var(--navy-800); }
+.cel-list { list-style: none; padding: 0; margin: 0; font-size: 0.8rem; }
+.cel-list li { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--line-soft); align-items: flex-start; }
+.cel-list li:last-child { border-bottom: none; }
+.cel-list .t { color: var(--muted); font-family: var(--mono); font-size: 0.7rem; flex-shrink: 0; padding-top: 2px; }
+.detail-ribbon a { color: var(--teal-500); }
+.follower-box {
+  border: 1.5px dashed var(--ocean-500); background: var(--ocean-100);
+  border-radius: 12px; padding: 12px 14px; font-size: 0.85rem; color: var(--navy-800);
+}
+
+.clf-row { display: grid; grid-template-columns: minmax(120px, 170px) 1fr 44px; gap: 12px; align-items: center; margin: 10px 0; font-size: 0.85rem; }
+.clf-track { height: 12px; border-radius: 999px; background: var(--slate-100); overflow: hidden; }
+.clf-fill { height: 100%; border-radius: 999px; background: var(--purple-600); width: 0; transition: width 0.9s cubic-bezier(0.2, 0.9, 0.3, 1); }
+.clf-val { font-weight: 700; color: var(--purple-700); font-variant-numeric: tabular-nums; }
+
+.scope-option { display: flex; gap: 10px; align-items: flex-start; padding: 9px 11px; border: 1px solid var(--line); border-radius: 10px; margin-bottom: 8px; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+.scope-option:hover { border-color: var(--teal-600); }
+.scope-option input { margin-top: 4px; accent-color: var(--teal-600); }
+.scope-option strong { display: block; font-size: 0.87rem; }
+.scope-option .small { color: var(--muted); }
+
+.ccil-step { display: flex; gap: 12px; align-items: flex-start; padding: 10px 12px; border-radius: 10px; opacity: 0.38; transition: opacity 0.35s, background 0.35s; }
+.ccil-step.lit { opacity: 1; background: var(--aqua-50); }
+.ccil-step .dot {
+  width: 27px; height: 27px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem; font-weight: 700; border: 2px solid var(--slate-300);
+  color: var(--slate-500); background: var(--surface); transition: all 0.3s;
+}
+.ccil-step.lit .dot { background: var(--teal-600); border-color: var(--teal-600); color: #fff; }
+.ccil-connector { width: 2px; height: 14px; background: var(--slate-200); margin-left: 24px; }
+</style>
+</head>
+<body data-page="staff-triage" data-marketing="false">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main">
+
+  <!-- ================= COMPACT HEADER BAND ================= -->
+  <section class="section-dark grid-texture triage-band">
+    <div class="container flex space-between flex-wrap" style="align-items:flex-start;gap:18px">
+      <div>
+        <h1>Staff Triage · Vista Robles 311</h1>
+        <div class="chip-row">
+          <span class="chip chip-outline on-dark">Illustrative demo data</span>
+          <span class="chip chip-outline on-dark">Overlay mode · SeeClickFix</span>
+          <span class="chip chip-outline on-dark">Tuesday 7:58 AM · overnight intake pre-triaged</span>
+        </div>
+        <p class="band-line">AI feels like a transparent coworker, not a black box. You arrived to 8 structured cases — not 23 voicemails.</p>
+      </div>
+      <div style="text-align:right">
+        <button class="btn btn-primary" type="button" data-ccil-open>▶ Show how Envoz learns from a staff correction</button>
+        <div class="small" style="color:var(--slate-400);margin-top:8px">Correction → evidence → rule → sandbox → approval</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONSOLE ================= -->
+  <section class="section-tight" id="console">
+    <div class="container">
+      <div class="answer-block" style="margin-top:0">The Envoz 311 staff triage console gives city staff clean, confidence-scored cases instead of chaotic transcripts. Every case arrives classified, geo-tagged, and explained — staff approve, reroute, merge, escalate, or teach the system with scoped corrections, and every decision is logged to the Civic Evidence Ledger.</div>
+
+      <div class="console" style="margin-top:20px">
+        <!-- LEFT RAIL -->
+        <nav class="queue-rail" id="queue-rail" aria-label="Triage queues"></nav>
+
+        <!-- MAIN TABLE -->
+        <div>
+          <div class="flex space-between flex-wrap" style="margin-bottom:10px;gap:8px">
+            <div>
+              <h2 id="queue-heading" style="font-size:1.05rem;margin:0">All cases</h2>
+              <p class="small" id="queue-note" style="color:var(--muted);margin:2px 0 0"></p>
+            </div>
+            <span class="chip chip-teal" id="queue-count-chip"></span>
+          </div>
+          <div class="table-wrap">
+            <table class="data-table" aria-label="Triage queue" id="triage-table">
+              <thead>
+                <tr><th scope="col">Case</th><th scope="col">Type</th><th scope="col">Location</th><th scope="col">Confidence</th><th scope="col">Priority</th><th scope="col">Department</th><th scope="col">Action</th></tr>
+              </thead>
+              <tbody id="triage-body"></tbody>
+            </table>
+          </div>
+          <p class="small" style="color:var(--muted);margin-top:10px">Select a case to open its detail panel. Every action writes a reversible, versioned event to the Civic Evidence Ledger (CEL). Illustrative demo data.</p>
+        </div>
+
+        <!-- CASE DETAIL (desktop; drawer on smaller screens) -->
+        <aside id="detail-col" aria-label="Case detail">
+          <div class="card card-pad-sm" id="case-detail" aria-live="polite"></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= UNKNOWNS LEARNING QUEUE ================= -->
+  <section class="section section-aqua" id="learning-queue">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">Unknowns learning queue</span>
+        <h2>When Nico doesn’t know, it says so — and asks you.</h2>
+        <p class="lede">VR-4320 never guessed its way into a department. Below the routing threshold, cases wait for a human — and your correction teaches the system exactly as much as you decide.</p>
+      </div>
+      <div class="grid grid-2" style="margin-top:26px;align-items:start">
+        <div class="card reveal">
+          <div class="flex space-between flex-wrap" style="gap:8px">
+            <strong class="mono" style="color:var(--navy-900)">VR-4320</strong>
+            <span class="chip-row">
+              <span class="chip chip-amber">Unknown category</span>
+              <span class="chip chip-confidence low" title="AI routing confidence">◔ 41% top candidate</span>
+            </span>
+          </div>
+          <blockquote style="margin:14px 0;border-left:4px solid var(--purple-600);padding:10px 16px;background:var(--purple-100);border-radius:0 10px 10px 0;color:var(--navy-800);font-size:1.02rem">
+            “There’s a basketball-sized beehive in the bus shelter.”
+            <footer class="small" style="color:var(--muted);margin-top:6px">Raw utterance · Voice · 3:45 PM · Jeffrey Transit Stop</footer>
+          </blockquote>
+          <div class="caution-strip" role="status"><span aria-hidden="true">⚠</span>Human review required. No CRM case routed yet — held in the learning queue (4-hour target).</div>
+          <h4 style="margin:18px 0 4px">Attempted classifications</h4>
+          <div id="clf-bars">
+            <div class="clf-row"><span>Parks Maintenance</span><div class="clf-track"><div class="clf-fill" data-w="41"></div></div><span class="clf-val">41%</span></div>
+            <div class="clf-row"><span>Code Enforcement</span><div class="clf-track"><div class="clf-fill" data-w="33"></div></div><span class="clf-val">33%</span></div>
+            <div class="clf-row"><span>Animal / Vector Control</span><div class="clf-track"><div class="clf-fill" data-w="29"></div></div><span class="clf-val">29%</span></div>
+          </div>
+          <p class="small" style="color:var(--muted);margin:10px 0 0">All three candidates fall below the 70% routing threshold, so Nico refused to guess — and told the resident a person would review it today.</p>
+        </div>
+
+        <div class="card reveal" id="correction-card">
+          <h3 style="font-size:1.05rem">Correct it — and choose how far the lesson travels</h3>
+          <label class="field-label" for="correct-dept" style="margin-top:12px">Route this case to</label>
+          <select id="correct-dept" style="max-width:320px"></select>
+          <fieldset style="border:none;padding:0;margin:16px 0 0">
+            <legend class="field-label">Correction scope</legend>
+            <label class="scope-option"><input type="radio" name="scope" value="case" checked>
+              <span><strong>Apply to this case only</strong><span class="small">One-time fix. Nothing else changes.</span></span></label>
+            <label class="scope-option"><input type="radio" name="scope" value="rule">
+              <span><strong>Create city-only rule</strong><span class="small">“Beehive/wasp nest on a transit asset → Animal / Vector Control” — Vista Robles only, pending approval.</span></span></label>
+            <label class="scope-option"><input type="radio" name="scope" value="dept">
+              <span><strong>Add to department memory</strong><span class="small">The receiving department’s tenant-scoped vocabulary learns the phrasing.</span></span></label>
+            <label class="scope-option"><input type="radio" name="scope" value="global">
+              <span><strong>Submit as global taxonomy evidence</strong><span class="small">Anonymized evidence for the global review board. Nothing changes without human approval.</span></span></label>
+          </fieldset>
+          <p class="small" style="color:var(--muted)"><strong>Corrections do not blindly overwrite the global model.</strong> You choose the blast radius — from one case to anonymized global evidence — and every choice is versioned and audited.</p>
+          <button class="btn btn-primary" type="button" id="apply-correction">Apply correction</button>
+          <div id="correction-result" aria-live="polite" style="margin-top:14px"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CCIL DEMO ================= -->
+  <section class="section" id="ccil">
+    <div class="container center reveal">
+      <span class="eyebrow">Continuous Civic Improvement Loop</span>
+      <h2>One reroute today. 14% fewer reroutes tomorrow.</h2>
+      <p class="lede">Watch a single staff correction on VR-4317 become an evidence-backed, sandbox-tested, city-approved routing rule — with a human sign-off at every gate.</p>
+      <div class="flex flex-wrap" style="justify-content:center;margin-top:22px">
+        <button class="btn btn-primary btn-lg" type="button" data-ccil-open>▶ Show how Envoz learns from a staff correction</button>
+        <a class="btn btn-secondary btn-lg" href="dashboards.html?tab=agent&amp;rec=rec-storm-drain">See the live recommendation in Dashboards</a>
+      </div>
+      <p class="small" style="color:var(--muted);margin-top:14px">Staff stay in control: Envoz recommends, city staff approve, and every change is sandbox-tested before deploy. Illustrative demo data.</p>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/shared.js"></script>
+<script src="assets/js/pages/staff-triage.js"></script>
+</body>
+</html>

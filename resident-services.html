@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resident Services Catalog — 311 Service Request Automation | Envoz 311</title>
+<meta name="description" content="Browse the configurable Envoz 311 resident services catalog: 29 demo service types with required fields, department routing, SLA targets, GIS ownership checks, and grounded knowledge answers — 311 service request automation, tuned per city.">
+<link rel="icon" type="image/svg+xml" href="assets/img/envoz-mark.svg">
+<link rel="stylesheet" href="assets/css/main.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://envoz311.example.com/index.html" },
+    { "@type": "ListItem", "position": 2, "name": "Resident Services", "item": "https://envoz311.example.com/resident-services.html" }
+  ]
+}
+</script>
+<style>
+/* ---- Resident Services page-only styles ---- */
+.svc-filter-row { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-end; margin-top: 16px; }
+.svc-filter-row .field { flex: 1; min-width: 200px; max-width: 260px; }
+.svc-toggles { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.svc-toggle {
+  display: inline-flex; align-items: center; gap: 7px;
+  font-size: 0.82rem; font-weight: 600; color: var(--slate-600);
+  cursor: pointer; padding: 7px 13px; border: 1px solid var(--slate-300);
+  border-radius: 999px; background: var(--surface); transition: all 0.15s;
+}
+.svc-toggle:hover { border-color: var(--teal-600); color: var(--teal-700); }
+.svc-toggle input { accent-color: var(--teal-600); margin: 0; width: auto; }
+.svc-toggle.on { background: var(--navy-900); border-color: var(--navy-900); color: #fff; }
+.svc-count { margin-top: 14px; font-size: 0.87rem; font-weight: 700; color: var(--teal-700); }
+.svc-cat-head { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; margin: 36px 0 14px; }
+.svc-cat-head h3 { font-size: 1.15rem; margin: 0; }
+.svc-card { padding: 0; overflow: hidden; align-self: start; }
+.svc-head {
+  appearance: none; width: 100%; text-align: left; background: none; border: none;
+  font-family: var(--font); cursor: pointer; padding: 18px 20px;
+  display: flex; gap: 12px; align-items: flex-start; justify-content: space-between;
+}
+.svc-head:hover { background: var(--aqua-50); }
+.svc-kicker { font-size: 0.67rem; font-weight: 700; letter-spacing: 0.09em; text-transform: uppercase; color: var(--slate-400); }
+.svc-head h4 { font-size: 1.02rem; margin: 3px 0 9px; }
+.svc-caret { flex-shrink: 0; color: var(--teal-600); font-size: 0.9rem; margin-top: 4px; transition: transform 0.2s; }
+.svc-head[aria-expanded="true"] .svc-caret { transform: rotate(180deg); }
+.svc-body { padding: 4px 20px 20px; border-top: 1px solid var(--line-soft); }
+.svc-body dl { margin: 0; }
+.svc-row { display: grid; grid-template-columns: 148px 1fr; gap: 8px; padding: 9px 0; border-bottom: 1px dashed var(--line-soft); font-size: 0.87rem; }
+.svc-row:last-child { border-bottom: none; }
+.svc-row dt { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding-top: 3px; }
+.svc-row dd { margin: 0; color: var(--body); }
+.svc-prompt {
+  font-style: italic; color: var(--navy-800); background: var(--aqua-50);
+  border-left: 3px solid var(--teal-600); border-radius: 0 8px 8px 0;
+  padding: 8px 12px; margin: 0;
+}
+.svc-empty { text-align: center; padding: 44px 20px; }
+.emergency-card { border: 1px solid rgba(180, 35, 24, 0.35); border-left: 5px solid var(--red-600); }
+@media (max-width: 560px) { .svc-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body data-page="resident-services" data-marketing="true">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <section class="section-dark grid-texture" style="padding:76px 0 60px">
+    <div class="container">
+      <div style="max-width:840px">
+        <span class="eyebrow">Resident Services</span>
+        <h1>One front door for every resident request — configured for your city.</h1>
+        <p class="lede" style="margin-top:14px">Envoz 311 ships with a full catalog of resident service types. Each one defines what Nico collects, which department owns the work, the SLA the resident is promised, and how ownership is verified — before a case is ever created.</p>
+        <div class="chip-row" style="margin-top:20px">
+          <span class="chip chip-outline on-dark">29 services in this demo catalog</span>
+          <span class="chip chip-outline on-dark">8 departments</span>
+          <span class="chip chip-outline on-dark">Voice · Web · SMS</span>
+          <span class="chip chip-outline on-dark">City of Vista Robles · demo data</span>
+        </div>
+        <div class="flex flex-wrap" style="margin-top:26px">
+          <a class="btn btn-primary btn-lg" href="#catalog">Browse the service catalog</a>
+          <a class="btn btn-secondary btn-lg" href="configuration-studio.html">Configure your own city</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ANSWER BLOCK ================= -->
+  <section class="section-tight">
+    <div class="container">
+      <div class="answer-block reveal">The Envoz 311 resident services catalog defines how 311 service request automation behaves for each request type: the fields Nico must collect, the department that owns the work, the SLA target the resident is told, the GIS ownership check that confirms jurisdiction, and the request types where a grounded answer replaces a case entirely. Cities rename, retarget, and retire services in Configuration Studio — nothing here is hard-coded.</div>
+      <div class="grid grid-3 reveal" style="margin-top:22px">
+        <div class="card card-pad-sm card-flat"><strong>Requests become cases.</strong><p class="small" style="color:var(--muted);margin:6px 0 0">Classified, geo-tagged, deduplicated, and written into your CRM with confidence and rationale.</p></div>
+        <div class="card card-pad-sm card-flat"><strong>Questions become answers.</strong><p class="small" style="color:var(--muted);margin:6px 0 0">Trash day, park hours, permit status — grounded in city sources, cited, never guessed. No case needed.</p></div>
+        <div class="card card-pad-sm card-flat"><strong>Emergencies become 911.</strong><p class="small" style="color:var(--muted);margin:6px 0 0">Every call starts with a safety gate. Danger to life redirects immediately — no ordinary 311 case is created.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CATALOG ================= -->
+  <section class="section" id="catalog" style="padding-top:44px">
+    <div class="container">
+      <div class="reveal">
+        <span class="eyebrow">The catalog</span>
+        <h2>Every service, with its routing logic in the open</h2>
+        <p class="lede">Expand any card to see exactly how Nico handles that request in the Vista Robles demo configuration — required fields, routing, SLA, ownership check, channels, and duplicate logic.</p>
+      </div>
+
+      <div class="card reveal" role="region" aria-label="Service catalog filters" style="margin-top:26px">
+        <div class="chip-row" id="cat-pills" role="group" aria-label="Filter services by category"></div>
+        <div class="svc-filter-row">
+          <div class="field">
+            <label class="field-label" for="f-dept">Routing department</label>
+            <select id="f-dept"></select>
+          </div>
+          <div class="field">
+            <label class="field-label" for="f-channel">Resident channel</label>
+            <select id="f-channel">
+              <option value="any">Any channel</option>
+              <option value="Voice">Voice</option>
+              <option value="Web">Web</option>
+              <option value="SMS">SMS</option>
+            </select>
+          </div>
+          <button class="btn btn-ghost btn-sm" type="button" id="f-clear">Clear all filters</button>
+        </div>
+        <div class="svc-toggles" role="group" aria-label="Filter services by attribute">
+          <label class="svc-toggle"><input type="checkbox" id="f-photo">📷 Photo required</label>
+          <label class="svc-toggle"><input type="checkbox" id="f-gis">🗺 GIS check required</label>
+          <label class="svc-toggle"><input type="checkbox" id="f-referral">↗ External referral possible</label>
+          <label class="svc-toggle"><input type="checkbox" id="f-review">◔ Low-confidence review gate</label>
+        </div>
+        <div class="svc-count" id="svc-count" aria-live="polite"></div>
+      </div>
+
+      <div id="svc-catalog"></div>
+
+      <div class="card svc-empty" id="svc-empty" hidden>
+        <h3>No services match those filters</h3>
+        <p class="small" style="color:var(--muted)">Try removing a toggle or widening the category — every one of the 29 demo services is still here.</p>
+        <button class="btn btn-secondary btn-sm" type="button" id="svc-empty-clear">Clear all filters</button>
+      </div>
+
+      <p class="disclaimer" style="margin-top:22px">Vista Robles is a fictional demonstration city. Service names, SLA targets, ordinances, and routing rules shown here are illustrative demo data — each is set per city during onboarding.</p>
+    </div>
+  </section>
+
+  <!-- ================= EMERGENCY HANDLING ================= -->
+  <section class="section-tight" id="emergencies" aria-labelledby="emergency-heading">
+    <div class="container">
+      <div class="card emergency-card reveal">
+        <div class="chip-row" style="margin-bottom:10px"><span class="chip chip-red">Safety gate · first question, every call</span></div>
+        <h2 id="emergency-heading" style="font-size:1.35rem">Fire, downed wires, or danger to life? That is 911 — always.</h2>
+        <p>Nico opens every interaction with a safety gate: <em>“Is anyone hurt or in immediate danger?”</em> When the answer suggests an emergency — a structure fire, a downed power line, a gas smell, a crash with injuries — Envoz redirects the caller to 911 immediately. <strong>No ordinary 311 case is created, and no case number is ever invented for an emergency.</strong></p>
+        <div class="safety-strip"><span aria-hidden="true">🚨</span><span>Downed wire touching the road, smoke or flames, medical distress, or anyone trapped → immediate 911 redirect. 311 stays out of the way.</span></div>
+        <p class="small" style="color:var(--muted);margin-top:12px">After the emergency is handed off, Envoz logs the redirect as a <span class="mono">SAFETY_ESCALATION</span> outcome in the audit trail — so the city can prove the gate fired, without ever slowing the caller down.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXTERNAL REFERRALS ================= -->
+  <section class="section section-aqua" id="referrals" style="padding:56px 0">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">When it isn’t the city’s asset</span>
+        <h2>Warm referrals — never a dead end</h2>
+        <p class="lede">GIS ownership checks catch requests the city can’t fix before a wrong case is filed. Nico explains who does own it, shares the right contact, and passes the full context along — the resident never repeats themselves.</p>
+      </div>
+      <div class="grid grid-3" style="margin-top:30px">
+        <div class="card card-hover reveal">
+          <span class="icon-tile navy">🏛</span>
+          <h4>County &amp; state partners</h4>
+          <p class="small" style="color:var(--muted)">Potholes on county roads, flood-control channels, signals on state routes, deer on the highway shoulder — referred to the county or Caltrans with location and details attached.</p>
+        </div>
+        <div class="card card-hover reveal">
+          <span class="icon-tile ocean">⚡</span>
+          <h4>Utility providers</h4>
+          <p class="small" style="color:var(--muted)">Power outages, utility-owned poles, and water-district hydrants get the provider’s outage line and reporting link — plus a safety check for downed wires first.</p>
+        </div>
+        <div class="card card-hover reveal">
+          <span class="icon-tile amber">🏘</span>
+          <h4>HOA &amp; private property</h4>
+          <p class="small" style="color:var(--muted)">Private streets, HOA landscaping, and on-parcel issues are explained kindly, with the right next step — and a city case where code enforcement genuinely applies.</p>
+        </div>
+      </div>
+      <div class="proof-strip reveal" style="margin-top:24px"><span class="proof-icon">✓</span>Every referral is logged as a <span class="mono">REFERRED</span> outcome with the reason and destination — so “not ours” is still measured, audited, and improvable.</div>
+    </div>
+  </section>
+
+  <!-- ================= CLOSING CTA ================= -->
+  <section class="section-tight">
+    <div class="container">
+      <div class="card reveal" style="display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between">
+        <div style="max-width:60ch">
+          <h3 style="margin-bottom:6px">This catalog is a starting point, not a boundary.</h3>
+          <p class="small" style="color:var(--muted);margin:0">Rename services, change SLA targets, add subcategories, swap knowledge sources — all in Configuration Studio, all versioned and approval-gated.</p>
+        </div>
+        <div class="flex flex-wrap">
+          <a class="btn btn-primary" href="configuration-studio.html?flow=harbor-mesa">Configure Harbor Mesa</a>
+          <a class="btn btn-secondary" href="voice-ai.html?demo=pothole">Watch a service in action</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/shared.js"></script>
+<script src="assets/js/pages/resident-services.js"></script>
+</body>
+</html>

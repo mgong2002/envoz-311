@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Voice AI for 311 — AI Voice Agent, After-Hours &amp; Multilingual Calls | Envoz 311</title>
+<meta name="description" content="Envoz 311 is the AI voice agent for 311: after-hours 311 automation, multilingual 311 voice intake, safety gating, GIS-grounded routing, and real case numbers written into your existing CRM. Play ten interactive resident call journeys.">
+<link rel="icon" type="image/svg+xml" href="assets/img/envoz-mark.svg">
+<link rel="stylesheet" href="assets/css/main.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://envoz311.example.com/index.html" },
+    { "@type": "ListItem", "position": 2, "name": "Voice AI for 311", "item": "https://envoz311.example.com/voice-ai.html" }
+  ]
+}
+</script>
+<style>
+/* page-specific styles only */
+.scenario-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+.scenario-pills .filter-pill { display: inline-flex; align-items: center; gap: 6px; }
+
+.vo-grid { display: grid; grid-template-columns: 1.12fr 0.88fr; gap: 22px; align-items: start; margin-top: 22px; }
+@media (max-width: 900px) { .vo-grid { grid-template-columns: 1fr; } }
+
+.vo-transcript {
+  display: flex; flex-direction: column; gap: 9px;
+  min-height: 300px; max-height: 380px; overflow-y: auto;
+  padding: 4px 2px; scrollbar-width: thin;
+}
+.vo-note { font-size: 0.72rem; color: var(--muted); margin-top: -4px; max-width: 88%; }
+.vo-note.from-user { align-self: flex-end; text-align: right; }
+
+.vo-steps { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+.vo-step {
+  display: flex; gap: 9px; align-items: flex-start;
+  font-size: 0.83rem; line-height: 1.45; color: var(--slate-700);
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 10px; padding: 8px 11px;
+  animation: bubbleIn 0.3s ease both;
+}
+.vo-step .ic {
+  width: 24px; height: 24px; border-radius: 7px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center; font-size: 0.8rem;
+  background: var(--slate-100);
+}
+.vo-step.ok .ic { background: var(--green-100); }
+.vo-step.warn .ic { background: var(--amber-100); }
+.vo-step.alert .ic { background: var(--red-100); }
+.vo-step.alert { border-color: rgba(180, 35, 24, 0.45); }
+.vo-step.lang .ic { background: var(--purple-100); }
+.vo-step.lang { border-color: var(--purple-100); }
+.vo-step.info .ic { background: var(--ocean-100); }
+
+.vo-outcome > * { animation: bubbleIn 0.35s ease both; }
+.vo-actions { display: flex; flex-wrap: wrap; gap: 9px; }
+.vo-cluster {
+  position: absolute; width: 96px; height: 96px; border-radius: 50%;
+  background: radial-gradient(circle, rgba(180, 83, 9, 0.28), rgba(180, 83, 9, 0.02) 70%);
+  transform: translate(-50%, -50%); pointer-events: none;
+}
+.sms-phone {
+  max-width: 340px; margin: 14px auto 0; background: var(--offwhite);
+  border: 1px solid var(--line); border-radius: 18px; padding: 16px 14px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.sms-phone .sms-head { text-align: center; font-size: 0.72rem; font-weight: 700; color: var(--muted); letter-spacing: 0.05em; }
+.sms-msg { max-width: 86%; padding: 8px 12px; border-radius: 13px; font-size: 0.83rem; line-height: 1.45; }
+.sms-msg.in { background: var(--slate-200); color: var(--navy-900); align-self: flex-start; border-bottom-left-radius: 4px; }
+.sms-msg.out { background: var(--ocean-600); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+</style>
+</head>
+<body data-page="voice-ai" data-marketing="true">
+<a class="skip-link" href="#main">Skip to content</a>
+<div id="site-header"></div>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <section class="section-dark grid-texture" style="padding:80px 0 64px">
+    <div class="container">
+      <div style="max-width:800px">
+        <span class="chip chip-outline on-dark" style="margin-bottom:18px">Voice AI for 311 · City of Vista Robles · simulated calls, demo data</span>
+        <h1>The AI voice agent for 311 that turns every call into a routed outcome.</h1>
+        <p class="lede" style="margin-top:16px">Nico answers before the second ring — at 9:42 PM, in the resident's language — screens for safety, resolves the location against your GIS, checks duplicates and jurisdiction, and writes a real case into your existing CRM. Every decision comes with confidence, rationale, and an audit line.</p>
+        <div class="flex flex-wrap" style="margin-top:26px">
+          <button class="btn btn-primary btn-lg" type="button" data-play-demo="pothole">▶ Play the 9:42 PM pothole call</button>
+          <a class="btn btn-secondary btn-lg" href="#demo">Browse all 10 journeys</a>
+        </div>
+        <div class="chip-row" style="margin-top:24px">
+          <span class="chip chip-outline on-dark">After-hours 311 automation</span>
+          <span class="chip chip-outline on-dark">Multilingual 311 voice</span>
+          <span class="chip chip-outline on-dark">Safety gate on every call</span>
+          <span class="chip chip-outline on-dark">Real CRM case numbers</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHAT IT IS ================= -->
+  <section class="section-tight">
+    <div class="container">
+      <div class="answer-block reveal" style="max-width:880px">Envoz Voice AI is an AI voice agent for 311 that answers resident calls 24/7, screens every call for safety first, understands intent in 70+ languages, resolves locations against city GIS, checks duplicates and jurisdiction, and creates confidence-scored cases in systems like SeeClickFix — or hands off warmly to a person when it isn't sure. No voicemail, no dead ends, no invented answers.</div>
+      <div class="grid grid-3 reveal" style="margin-top:26px">
+        <div><strong>Safety first, always</strong><p class="small" style="color:var(--muted)">"Is anyone hurt or in immediate danger?" opens every report. Emergencies get 911 guidance — never a queue position.</p></div>
+        <div><strong>Grounded, never guessing</strong><p class="small" style="color:var(--muted)">Answers come from cited city sources; case numbers come from your CRM. When confidence is low, Nico says so and escalates.</p></div>
+        <div><strong>Proof on every call</strong><p class="small" style="color:var(--muted)">Confidence, rationale, jurisdiction, and a CEL audit event are attached to every outcome — visible to staff and leadership.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= INTERACTIVE PLAYER ================= -->
+  <section class="section section-aqua" id="demo">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Interactive journey demo</span>
+        <h2>Ten real resident calls. One governed pipeline.</h2>
+        <p class="lede">Pick a call and watch it play out — bubbles are the conversation, the right column is Nico's decision trail. Simulated calls · illustrative demo data.</p>
+      </div>
+
+      <div class="scenario-pills reveal" id="scenario-pills" role="group" aria-label="Choose a call scenario to play" style="margin-top:28px;justify-content:center"></div>
+
+      <div class="vo-grid reveal" id="player">
+        <!-- Left: call player -->
+        <div class="card" aria-label="Call player">
+          <div class="flex space-between" style="margin-bottom:6px">
+            <strong style="color:var(--navy-900)">📞 <span id="vo-call-title">Pothole / road hazard</span></strong>
+            <span class="nico-waveform" id="vo-wave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
+          </div>
+          <div class="chip-row" id="vo-call-meta" style="margin-bottom:12px"></div>
+          <div class="vo-transcript" id="vo-transcript" aria-live="polite" aria-label="Call transcript"></div>
+          <hr class="divider" style="margin:14px 0 12px">
+          <div class="flex space-between flex-wrap">
+            <span class="small" style="color:var(--muted)">Nico · AI voice agent · demo mode</span>
+            <button class="btn btn-secondary btn-sm" type="button" id="vo-replay">↺ Replay this call</button>
+          </div>
+        </div>
+
+        <!-- Right: outcome column -->
+        <div>
+          <div class="map-panel" id="vo-map" style="min-height:180px">
+            <div class="map-grid" aria-hidden="true"></div>
+            <div class="map-label" style="top:10px;left:12px">Vista Robles GIS · jurisdiction layer</div>
+            <div id="vo-map-streets"></div>
+            <div id="vo-pin-slot"></div>
+          </div>
+
+          <div class="vo-steps" id="vo-steps" aria-live="polite" aria-label="Pipeline decisions"></div>
+
+          <div class="vo-outcome" id="vo-outcome" style="margin-top:12px" aria-live="polite"></div>
+          <div class="vo-actions" id="vo-actions" style="margin-top:12px"></div>
+          <div id="vo-audit" style="margin-top:12px"></div>
+        </div>
+      </div>
+
+      <p class="disclaimer center" style="margin-top:22px">City of Vista Robles is a fictional demonstration city. All calls, cases, and metrics on this page are illustrative demo data.</p>
+    </div>
+  </section>
+
+  <!-- ================= BAD-DAY BEHAVIORS ================= -->
+  <section class="section" id="bad-day">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Trust is what happens on a bad day</span>
+        <h2>Bad-day behaviors, by design</h2>
+        <p class="lede">Anyone can demo a sunny-day call. These are the rules Envoz follows when the call is messy, the data is stale, or the caller isn't who you expect.</p>
+      </div>
+      <div class="grid grid-4" style="margin-top:36px">
+        <div class="card card-hover reveal">
+          <span class="icon-tile amber">🕰</span>
+          <h4>Stale status</h4>
+          <p class="small" style="color:var(--muted)">If the CRM hasn't posted an update, Nico says exactly that. It never invents repair dates or crew ETAs — "I don't have a new update yet, and I won't guess" is an honest answer.</p>
+        </div>
+        <div class="card card-hover reveal">
+          <span class="icon-tile ocean">🔊</span>
+          <h4>Noisy audio</h4>
+          <p class="small" style="color:var(--muted)">Ask once, then move on. If a field is still unclear, Nico marks it uncertain, lowers the confidence score, and escalates with the recording context — instead of interrogating the caller.</p>
+        </div>
+        <div class="card card-hover reveal">
+          <span class="icon-tile">📷</span>
+          <h4>Photo privacy</h4>
+          <p class="small" style="color:var(--muted)">Resident photos are cropped, and faces and license plates blurred, before anything appears on a public map. Originals stay tenant-scoped and access-logged.</p>
+        </div>
+        <div class="card card-hover reveal">
+          <span class="icon-tile navy">🛡</span>
+          <h4>Non-associated caller</h4>
+          <p class="small" style="color:var(--muted)">Someone checking on a case they didn't file gets public status only — never the reporter's name, callback number, or exact address.</p>
+        </div>
+      </div>
+      <div class="center reveal" style="margin-top:26px">
+        <a class="btn btn-ghost" href="trust.html">Read the full trust &amp; data practices →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CLOSING CTA ================= -->
+  <section class="section section-dark grid-texture">
+    <div class="container center">
+      <span class="eyebrow">Hear it in your city</span>
+      <h2>Every one of these calls used to be a voicemail.</h2>
+      <p class="lede" style="margin:0 auto">See how the same voice pipeline gets configured for your taxonomy, your GIS layers, and your CRM — in a sandbox, before a single resident call.</p>
+      <div class="flex flex-wrap" style="margin-top:26px;justify-content:center">
+        <a class="btn btn-primary btn-lg" href="configuration-studio.html?flow=harbor-mesa">Configure a demo city</a>
+        <a class="btn btn-secondary btn-lg" href="staff-triage.html">See what staff receive</a>
+        <a class="btn btn-secondary btn-lg" href="pilot-pricing.html">Explore a 90-day pilot</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div id="site-footer"></div>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/shared.js"></script>
+<script src="assets/js/pages/voice-ai.js"></script>
+</body>
+</html>
