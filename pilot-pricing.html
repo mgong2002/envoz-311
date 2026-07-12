@@ -431,14 +431,15 @@ details.assumptions .assumptions-body li { margin-bottom: 6px; }
       <div class="card reveal">
         <span class="eyebrow">What a pilot proves</span>
         <h3>The checklist your council report is built from</h3>
-        <p class="small" style="color:var(--muted)">Demo figures below are from the Vista Robles demo world — illustrative demo data, shown so you can see the shape of the report.</p>
+        <p class="small" style="color:var(--muted)">Demo figures below are from the Vista Robles demo world: illustrative demo data, shown so you can see the shape of the report.</p>
         <ul class="check-list">
-          <li><span class="check-dot">✓</span><span><strong>Access gains</strong> — every call answered, 24/7, in the resident's language. <span class="chip chip-teal" data-metric="afterHoursCaptured">327</span> <span class="small" style="color:var(--muted)">after-hours calls captured in the demo quarter</span></span></li>
-          <li><span class="check-dot">✓</span><span><strong>Routing accuracy</strong> — cases land in the right department, with confidence and rationale visible. <span class="chip chip-teal" data-metric="routingAccuracy">91.6%</span></span></li>
-          <li><span class="check-dot">✓</span><span><strong>Containment</strong> — interactions fully resolved without staff handling. <span class="chip chip-teal" data-metric="containment">76%</span></span></li>
-          <li><span class="check-dot">✓</span><span><strong>Equity coverage</strong> — service quality measured across languages and neighborhoods, not just averages. <span class="chip chip-purple" data-metric="languages">18</span> <span class="small" style="color:var(--muted)">languages served in the demo</span></span></li>
-          <li><span class="check-dot">✓</span><span><strong>Cost per interaction</strong> — a defensible unit cost for the council packet. <span class="chip chip-teal" data-metric="costPerInteraction">$0.42</span> <span class="small" style="color:var(--muted)">per AI interaction · demo data</span></span></li>
+          <li><span class="check-dot" data-icon="check"></span><span><strong>Access gains.</strong> Every call answered, 24/7, in the resident's language. <span class="chip chip-teal" data-metric="afterHoursCaptured">327</span> <span class="small" style="color:var(--muted)">after-hours calls captured in the demo quarter</span></span></li>
+          <li><span class="check-dot" data-icon="check"></span><span><strong>Routing accuracy.</strong> Cases land in the right department, with the confidence score and rationale visible. <span class="chip chip-teal" data-metric="routingAccuracy">91.6%</span></span></li>
+          <li><span class="check-dot" data-icon="check"></span><span><strong>Containment.</strong> Interactions fully resolved without staff handling. <span class="chip chip-teal" data-metric="containment">76%</span></span></li>
+          <li><span class="check-dot" data-icon="check"></span><span><strong>Equity coverage.</strong> Service quality measured across languages and neighborhoods, not just averages. <span class="chip chip-purple" data-metric="languages">18</span> <span class="small" style="color:var(--muted)">languages served in the demo</span></span></li>
+          <li><span class="check-dot" data-icon="check"></span><span><strong>Cost per interaction.</strong> A defensible unit cost for the council packet. <span class="chip chip-teal" data-metric="costPerInteraction">$0.50</span> <span class="small" style="color:var(--muted)">per AI interaction · demo data</span></span></li>
         </ul>
+        <p class="small" style="color:var(--muted);margin-top:10px;font-size:0.76rem">Efficiency here funds field work. Pilots are never scoped around headcount reduction.</p>
         <div class="flex flex-wrap" style="margin-top:18px">
           <a class="btn btn-navy btn-sm" href="dashboards.html?tab=council&amp;generate=1">Generate a sample council report</a>
           <a class="btn btn-ghost btn-sm" href="customer-success.html">How cities present this →</a>
@@ -447,16 +448,44 @@ details.assumptions .assumptions-body li { margin-bottom: 6px; }
 
       <div class="card reveal">
         <span class="eyebrow">Procurement notes</span>
-        <h3>What your review team will ask — answered plainly</h3>
+        <h3>What your review team will ask, answered plainly</h3>
         <ul class="check-list">
-          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)">🛡</span><span><strong>Security review packet available.</strong> Architecture overview, data-flow diagrams, and control descriptions on request. Envoz is a demonstration prototype — we keep compliance claims modest and will not assert certifications we do not hold.</span></li>
-          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)">🏷</span><span><strong>Tenant isolation.</strong> Every rule, vocabulary entry, and case write is scoped to your city's tenant. Corrections your staff make train your configuration — not a shared model other cities inherit.</span></li>
-          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)">📁</span><span><strong>Your data stays yours.</strong> The city owns its case data, transcripts, and configuration. Export at any time; deletion honored at contract end.</span></li>
-          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)">🗄</span><span><strong>System of record unchanged.</strong> Overlay mode writes into your existing CRM — case numbers come from your system, never fabricated.</span></li>
-          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)">✋</span><span><strong>Humans stay accountable.</strong> Low-confidence calls escalate to people with full context; configuration changes require city approval. Envoz protects staff from chaos — it does not replace them.</span></li>
+          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)" data-icon="shield"></span><span><strong>Security review packet available.</strong> Architecture overview, data-flow diagrams, and control descriptions on request. Envoz is a demonstration prototype — we keep compliance claims modest and will not assert certifications we do not hold.</span></li>
+          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)" data-icon="lock"></span><span><strong>Tenant isolation.</strong> Every rule, vocabulary entry, and case write is scoped to your city's tenant. Corrections your staff make train your configuration, not a shared model other cities inherit.</span></li>
+          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)" data-icon="doc"></span><span><strong>Your data stays yours.</strong> The city owns its case data, transcripts, and configuration. Export at any time; deletion honored at contract end.</span></li>
+          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)" data-icon="building"></span><span><strong>System of record unchanged.</strong> Overlay mode writes into your existing CRM; case numbers come from your system, never fabricated.</span></li>
+          <li><span class="check-dot" style="background:var(--ocean-100);color:var(--ocean-600)" data-icon="users"></span><span><strong>Humans stay accountable.</strong> Low-confidence calls escalate to people with full context; configuration changes require city approval. Envoz protects staff from chaos; it does not replace them.</span></li>
         </ul>
-        <div class="audit-ribbon" style="margin-top:16px"><span>🛡</span><span><strong style="color:#fff">Full detail on the Trust page</strong> — governed autonomy, data model, and audit trail.</span></div>
+        <div class="audit-ribbon" style="margin-top:16px"><span data-icon="shield"></span><span><strong style="color:#fff">Full detail on the Trust page:</strong> governed autonomy, data model, and audit trail.</span></div>
         <div style="margin-top:14px"><a class="btn btn-secondary btn-sm" href="trust.html">Read Trust, Data &amp; Compliance →</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= AFTER THE PILOT — THREE PATHS ================= -->
+  <section class="section section-aqua" id="post-pilot">
+    <div class="container">
+      <div class="center reveal">
+        <span class="eyebrow">Day 91</span>
+        <h2>After the pilot: three paths</h2>
+        <p class="lede">A buyer can paste this straight into a staff report. At the end of the 90 days you have three clear options.</p>
+      </div>
+      <div class="grid grid-3 reveal" style="margin-top:32px">
+        <div class="card">
+          <span class="chip chip-teal">Convert</span>
+          <h3 style="margin-top:10px">Move to an annual agreement</h3>
+          <p class="small" style="color:var(--muted)">Continue on the usage and outcome model: pay per resolved request plus voice minutes, sized from the real volumes your pilot measured.</p>
+        </div>
+        <div class="card">
+          <span class="chip chip-ocean">Walk away</span>
+          <h3 style="margin-top:10px">Don't convert, keep your data</h3>
+          <p class="small" style="color:var(--muted)">Full export of your cases, transcripts, and configuration within 30 days, at no cost. Nothing is held hostage.</p>
+        </div>
+        <div class="card">
+          <span class="chip chip-purple">Extend</span>
+          <h3 style="margin-top:10px">Run the pilot once more</h3>
+          <p class="small" style="color:var(--muted)">Add one more scoped term to bring in a second department or more service types before you decide.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -466,13 +495,13 @@ details.assumptions .assumptions-body li { margin-bottom: 6px; }
     <div class="container center">
       <div class="reveal">
         <span class="eyebrow">Next steps</span>
-        <h2>See what a pilot looks like from the inside</h2>
-        <p class="lede" style="margin:0 auto 26px">Walk through how cities run the 90 days — or configure a demo city yourself in about 12 minutes.</p>
-        <div class="flex flex-wrap" style="justify-content:center">
-          <a class="btn btn-primary btn-lg" href="customer-success.html">See the customer success playbook</a>
-          <a class="btn btn-secondary btn-lg" href="configuration-studio.html?flow=harbor-mesa">Configure a demo city</a>
+        <h2>Scope a council-ready pilot for your city</h2>
+        <p class="lede" style="margin:0 auto 26px">Book a 20-minute call and we reply within 2 business days with a scoped pilot outline. Or walk through how cities run the 90 days.</p>
+        <div class="flex flex-wrap" style="justify-content:center;gap:12px">
+          <button class="btn btn-primary btn-lg" type="button" data-pilot-open data-tier="Mid-size city pilot">Book a 20-minute pilot scoping call</button>
+          <a class="btn btn-secondary btn-lg" href="customer-success.html">See the customer success playbook</a>
         </div>
-        <p class="small" style="margin-top:22px;color:var(--slate-400)">Or email <a href="mailto:pilots@envoz311.example.com" style="color:var(--teal-500)">pilots@envoz311.example.com</a> with your population and call volume — we'll reply with a scoped pilot outline.</p>
+        <p class="small" style="margin-top:22px;color:var(--slate-400)">Prefer to explore first? <a href="voice-ai.html?demo=pothole" style="color:var(--teal-500)">Watch the 90-second demo</a> or <a href="configuration-studio.html?flow=harbor-mesa" style="color:var(--teal-500)">configure a demo city</a>.</p>
       </div>
     </div>
   </section>

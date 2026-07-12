@@ -157,7 +157,7 @@
     <div class="container" style="max-width:900px">
       <span class="eyebrow">Resources / FAQ</span>
       <h1>Straight answers to the questions cities actually ask.</h1>
-      <p class="lede" style="margin-top:14px">Eighteen questions from city managers, 311 supervisors, IT directors, and council staff — answered directly, with links to the proof. Plus practical guides for running a pilot and briefing your council.</p>
+      <p class="lede" style="margin-top:14px">Eighteen questions from city managers, 311 supervisors, IT directors, and council staff, answered directly, with links to the proof. Plus practical guides for running a pilot and briefing your council.</p>
       <div class="answer-block" style="margin-top:24px">Envoz 311 is an AI voice 311 platform that answers resident calls 24/7 in 70+ languages, classifies each request against the city&rsquo;s taxonomy, and writes confidence-scored cases into existing CRMs like SeeClickFix, with proof attached to every routing decision. It works as an overlay on the systems cities already own, no rip-and-replace, and gives city leaders council-ready evidence of service improvement.</div>
       <div class="chip-row" style="margin-top:18px">
         <span class="chip chip-outline on-dark">18 questions</span>
@@ -174,7 +174,7 @@
       <p class="lede">Each answer starts with the short version. Follow the links for the interactive proof.</p>
 
       <div class="faq-toolbar">
-        <input type="search" id="faq-search" placeholder="Filter questions — try &ldquo;SeeClickFix&rdquo;, &ldquo;emergency&rdquo;, &ldquo;Spanish&rdquo;&hellip;" aria-label="Filter frequently asked questions by keyword" autocomplete="off">
+        <input type="search" id="faq-search" placeholder="Filter questions: try &ldquo;SeeClickFix&rdquo;, &ldquo;emergency&rdquo;, &ldquo;Spanish&rdquo;&hellip;" aria-label="Filter frequently asked questions by keyword" autocomplete="off">
         <span id="faq-count" aria-live="polite">Showing all 18 questions</span>
         <span class="flex" style="gap:8px;margin-left:auto">
           <button class="btn btn-ghost btn-sm" type="button" id="faq-expand">Expand all</button>
@@ -238,14 +238,14 @@
           <details class="faq-item" id="faq-no-crm">
             <summary>Can Envoz work without an existing CRM?</summary>
             <div class="faq-body">
-              <p><strong>Yes — Envoz standalone mode is built for cities that don&rsquo;t have a usable CRM today.</strong> It provides a lightweight <a href="staff-triage.html">staff triage console</a>, structured-email dispatch to departments, and thin case surfaces with local VR case numbers, so residents still get a real trackable case. Cities that later adopt a CRM can switch to overlay mode without re-onboarding residents or retraining staff. The <a href="platform.html">Platform page</a> explains when to choose each mode, and the decision guide below walks through the criteria.</p>
+              <p><strong>Yes. Envoz standalone mode is built for cities that don&rsquo;t have a usable CRM today.</strong> It provides a lightweight <a href="staff-triage.html">staff triage console</a>, structured-email dispatch to departments, and thin case surfaces with local VR case numbers, so residents still get a real trackable case. Cities that later adopt a CRM can switch to overlay mode without re-onboarding residents or retraining staff. The <a href="platform.html">Platform page</a> explains when to choose each mode, and the decision guide below walks through the criteria.</p>
             </div>
           </details>
 
           <details class="faq-item" id="faq-data-collected">
             <summary>What data does Envoz collect?</summary>
             <div class="faq-body">
-              <p><strong>Envoz collects what a 311 case needs — the request, its location, and optional contact details for status updates — with consent records logged for every interaction.</strong> All data is tenant-scoped to a single city and never mixed across tenants, and the city owns its data outright: transcripts, cases, and learning evidence included. Learned improvements stay scoped to your city unless you explicitly approve sharing them as global evidence. The <a href="trust.html#data-model">data model section of the Trust page</a> covers retention, consent, and export in detail.</p>
+              <p><strong>Envoz collects what a 311 case needs: the request, its location, and optional contact details for status updates, with consent records logged for every interaction.</strong> All data is tenant-scoped to a single city and never mixed across tenants, and the city owns its data outright: transcripts, cases, and learning evidence included. Learned improvements stay scoped to your city unless you explicitly approve sharing them as global evidence. The <a href="trust.html#data-model">data model section of the Trust page</a> covers retention, consent, and export in detail.</p>
             </div>
           </details>
 
@@ -264,7 +264,7 @@
           <details class="faq-item" id="faq-hallucination">
             <summary>How does the voice agent prevent hallucinated case numbers?</summary>
             <div class="faq-body">
-              <p><strong>Nico can only read back a case number that was actually issued by the system of record — case numbers are never generated by the AI.</strong> The platform waits for write-back proof, like &ldquo;Case number issued by SeeClickFix at 9:44 PM&rdquo;, before confirming anything to the resident, and that proof strip is visible on every case. If the write fails, Envoz retries with idempotency or falls back to a structured email, and tells the resident the truth about what happened. The same rule applies to repair dates: if Envoz doesn&rsquo;t know, it says so. The <a href="trust.html">Trust page</a> documents every guardrail.</p>
+              <p><strong>Nico can only read back a case number that was actually issued by the system of record: case numbers are never generated by the AI.</strong> The platform waits for write-back proof, like &ldquo;Case number issued by SeeClickFix at 9:44 PM&rdquo;, before confirming anything to the resident, and that proof strip is visible on every case. If the write fails, Envoz retries with idempotency or falls back to a structured email, and tells the resident the truth about what happened. The same rule applies to repair dates: if Envoz doesn&rsquo;t know, it says so. The <a href="trust.html">Trust page</a> documents every guardrail.</p>
             </div>
           </details>
 
@@ -285,7 +285,7 @@
           <details class="faq-item" id="faq-metaengage">
             <summary>What does &ldquo;Powered By MetaEngage.ai&rdquo; mean?</summary>
             <div class="faq-body">
-              <p><strong>It means Envoz 311 runs on MetaEngage.ai&rsquo;s civic AI infrastructure: the orchestration layer, Proxy Gate, audit system, and governed automation behind the product.</strong> MetaEngage.ai provides the engine; Envoz 311 is the 311-specific product built on top of it. The Proxy Gate is the control point where every AI action against a city system of record is checked and logged, which is how guarantees like &ldquo;case numbers only from the CRM&rdquo; are enforced in infrastructure rather than by policy alone. You&rsquo;ll see the mark as a subtle watermark across the platform — read how the layers fit together on the <a href="trust.html">Trust page</a>.</p>
+              <p><strong>It means Envoz 311 runs on MetaEngage.ai&rsquo;s civic AI infrastructure: the orchestration layer, Proxy Gate, audit system, and governed automation behind the product.</strong> MetaEngage.ai provides the engine; Envoz 311 is the 311-specific product built on top of it. The Proxy Gate is the control point where every AI action against a city system of record is checked and logged, which is how guarantees like &ldquo;case numbers only from the CRM&rdquo; are enforced in infrastructure rather than by policy alone. You&rsquo;ll see the mark as a subtle watermark across the platform. Read how the layers fit together on the <a href="trust.html">Trust page</a>.</p>
             </div>
           </details>
 
@@ -304,7 +304,7 @@
           <details class="faq-item" id="faq-staff-correct">
             <summary>Can staff correct the AI?</summary>
             <div class="faq-body">
-              <p><strong>Yes — correcting the AI is a first-class action in the staff triage console, and every correction becomes learning evidence.</strong> Staff choose the scope of what the system learns from each correction: this case only, a city-only rule, department memory, or global evidence, and nothing learned deploys without approval. In the demo, 19 water-pooling cases corrected from Streets to Utilities became a proposed storm-drain proximity rule that staff can sandbox-test before approving. Try the correction flow in <a href="staff-triage.html">Staff Triage</a>.</p>
+              <p><strong>Yes. Correcting the AI is a first-class action in the staff triage console, and every correction becomes learning evidence.</strong> Staff choose the scope of what the system learns from each correction: this case only, a city-only rule, department memory, or global evidence, and nothing learned deploys without approval. In the demo, 19 water-pooling cases corrected from Streets to Utilities became a proposed storm-drain proximity rule that staff can sandbox-test before approving. Try the correction flow in <a href="staff-triage.html">Staff Triage</a>.</p>
             </div>
           </details>
 
@@ -335,7 +335,7 @@
 
       <div id="faq-empty">
         <p style="margin-bottom:10px"><strong>No questions match that keyword.</strong></p>
-        <p class="small" style="margin-bottom:14px">Try &ldquo;overlay&rdquo;, &ldquo;confidence&rdquo;, or &ldquo;council&rdquo; — or ask Nico directly.</p>
+        <p class="small" style="margin-bottom:14px">Try &ldquo;overlay&rdquo;, &ldquo;confidence&rdquo;, or &ldquo;council&rdquo;, or ask Nico directly.</p>
         <button class="btn btn-secondary btn-sm" type="button" id="faq-clear">Clear filter</button>
       </div>
     </div>
@@ -347,7 +347,7 @@
       <div class="center reveal">
         <span class="eyebrow">Practical resources</span>
         <h2>Guides for the people doing the work</h2>
-        <p class="lede">Six working documents — open any of them right here. No forms, no PDFs, no dead links.</p>
+        <p class="lede">Six working documents: open any of them right here. No forms, no PDFs, no dead links.</p>
       </div>
       <div class="grid grid-3" style="margin-top:36px">
         <button class="card card-hover resource-card reveal" type="button" data-resource="pilot-playbook">
@@ -383,7 +383,7 @@
         <button class="card card-hover resource-card reveal" type="button" data-resource="glossary">
           <span class="icon-tile purple" data-icon="doc"></span>
           <h3>Glossary of civic AI terms</h3>
-          <p class="small" style="color:var(--muted)">CEL, Proxy Gate, containment, warm transfer, city-only rule, department memory, taxonomy candidate — defined.</p>
+          <p class="small" style="color:var(--muted)">CEL, Proxy Gate, containment, warm transfer, city-only rule, department memory, taxonomy candidate, defined.</p>
           <span class="resource-open">Open the glossary →</span>
         </button>
       </div>

@@ -139,6 +139,18 @@
     });
   }
 
+  /* ---------------- inline SVG icons (replace UI emoji) ---------------- */
+  function icon(name) { return (window.Envoz && window.Envoz.icon) ? window.Envoz.icon(name) : ""; }
+  function fillIcons() {
+    var nodes = document.querySelectorAll("[data-icon]");
+    Array.prototype.forEach.call(nodes, function (el) {
+      if (!el.dataset.iconFilled) {
+        el.innerHTML = icon(el.getAttribute("data-icon"));
+        el.dataset.iconFilled = "1";
+      }
+    });
+  }
+
   /* ---------------- demo metrics on the "what a pilot proves" checklist ---------------- */
   function fillDemoMetrics() {
     var metrics = (window.ENVOZ_DATA && window.ENVOZ_DATA.successMetrics) || {};
@@ -163,6 +175,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    fillIcons();
     FIELDS.forEach(wireField);
     fillDemoMetrics();
     wireNico();
