@@ -9,13 +9,13 @@
     ["platform.html", "Platform"],
     ["voice-ai.html", "Voice AI"],
     ["resident-services.html", "Services"],
-    ["configuration-studio.html", "Configuration"],
+    ["configuration-studio.html", "Config"],
     ["dashboards.html", "Dashboards"],
-    ["staff-triage.html", "Staff Triage"],
+    ["staff-triage.html", "Triage"],
     ["integrations.html", "Integrations"],
     ["trust.html", "Trust"],
-    ["customer-success.html", "Council Proof"],
-    ["pilot-pricing.html", "Pilot & Pricing"],
+    ["customer-success.html", "Council"],
+    ["pilot-pricing.html", "Pricing"],
     ["resources.html", "Resources"]
   ];
 
