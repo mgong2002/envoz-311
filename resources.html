@@ -170,7 +170,6 @@
   <!-- ================= FAQ ================= -->
   <section class="section" id="faq">
     <div class="container" style="max-width:900px">
-      <span class="eyebrow">Frequently asked questions</span>
       <h2>Everything cities ask before a pilot</h2>
       <p class="lede">Each answer starts with the short version. Follow the links for the interactive proof.</p>
 
@@ -206,21 +205,21 @@
           <details class="faq-item" id="faq-dashboards">
             <summary>What dashboards do city managers get?</summary>
             <div class="faq-body">
-              <p><strong>City managers get dashboards covering access, equity, speed, and cost — the four numbers councils actually ask about.</strong> That includes after-hours coverage, routing accuracy, SLA compliance, containment, and cost per interaction, alongside AI-discovered service gaps ranked by expected impact. The same console holds the learning ledger and the Nico Success Agent recommendation queue, so improvement work is visible in the same place as performance. One click generates a council-ready proof report from live evidence. <a href="dashboards.html">Open the City Manager Success Dashboard</a> to explore it with demo data.</p>
+              <p><strong>City managers get dashboards covering access, equity, speed, and cost: the four numbers councils actually ask about.</strong> That includes after-hours coverage, routing accuracy, SLA compliance, containment, and cost per interaction, alongside AI-discovered service gaps ranked by expected impact. The same console holds the CEL Ledger and Nico's improvement recommendations queue, so improvement work is visible in the same place as performance. One click generates a council-ready proof report from live evidence. <a href="dashboards.html">Open the City Manager Success Dashboard</a> to explore it with demo data.</p>
             </div>
           </details>
 
           <details class="faq-item" id="faq-multilingual">
             <summary>How does Envoz support multilingual residents?</summary>
             <div class="faq-body">
-              <p><strong>Envoz is 70+ language-ready, and every multilingual interaction is confidence-marked so staff can see language quality on the case itself.</strong> Residents report in their own language and get confirmations and SMS status updates in that language — in the demo, a Spanish streetlight report near a school zone becomes case VR-4330 with a visible 94% language-confidence mark. When language confidence dips, Nico asks a clarifying question or warm-transfers to a person instead of guessing at an address. See <a href="resident-services.html">Resident Services</a> for the full multilingual journey.</p>
+              <p><strong>Envoz is 70+ language-ready, and every multilingual interaction is confidence-marked so staff can see language quality on the case itself.</strong> Residents report in their own language and get confirmations and SMS status updates in that language. In the demo, a Spanish streetlight report near a school zone becomes case VR-4330 with a visible 94% language-confidence mark. When language confidence dips, Nico asks a clarifying question or warm-transfers to a person instead of guessing at an address. See <a href="resident-services.html">Resident Services</a> for the full multilingual journey.</p>
             </div>
           </details>
 
           <details class="faq-item" id="faq-config-speed">
             <summary>How quickly can a city configure Envoz?</summary>
             <div class="faq-body">
-              <p><strong>About 12 minutes of conversation with Nico produces a configured demo city; a working sandbox tenant is ready in roughly 48 hours; and a production MVP typically lands in about four weeks.</strong> Configuration is conversational — departments, taxonomy, GIS layers, and schedules are set up by talking to Nico, not by filling out spreadsheets. The four-week production timeline is usually governed by city data cleanup (neighborhood names, schedule data, asset layers) rather than by the software. <a href="configuration-studio.html?flow=harbor-mesa">Watch Harbor Mesa get onboarded</a> in the Configuration Studio.</p>
+              <p><strong>Minutes of guided conversation with Nico — the demo city configures in about 12 minutes.</strong> A working sandbox tenant is ready in roughly 48 hours, and a production MVP typically lands in about four weeks. Configuration is conversational: departments, taxonomy, GIS layers, and schedules are set up by talking to Nico rather than filling out spreadsheets. The four-week production timeline is usually governed by city data cleanup (neighborhood names, schedule data, asset layers) rather than by the software. <a href="configuration-studio.html?flow=harbor-mesa">Watch Harbor Mesa get onboarded</a> in the Configuration Studio.</p>
             </div>
           </details>
         </div>
@@ -232,14 +231,14 @@
           <details class="faq-item" id="faq-seeclickfix">
             <summary>How does Envoz integrate with SeeClickFix?</summary>
             <div class="faq-body">
-              <p><strong>Envoz writes cases directly into SeeClickFix through its write API, and SeeClickFix remains the system of record.</strong> Envoz answers the call, classifies the request against your taxonomy, and resolves the location; SeeClickFix then issues the real case number, which Nico reads back to the resident. Write-backs retry with idempotency, fall back to structured email if the connector is degraded, and every write is audited. Residents and staff keep the SeeClickFix tools they know — Envoz closes the voice-channel loop on top. See the <a href="integrations.html">Integrations page</a> for the full connector matrix.</p>
+              <p><strong>Envoz writes cases directly into SeeClickFix through its write API, and SeeClickFix remains the system of record.</strong> Envoz answers the call, classifies the request against your taxonomy, and resolves the location; SeeClickFix then issues the real case number, which Nico reads back to the resident. Write-backs retry with idempotency, fall back to structured email if the connector is degraded, and every write is audited. Residents and staff keep the SeeClickFix tools they know, and Envoz closes the voice-channel loop on top. See the <a href="integrations.html">Integrations page</a> for the full connector matrix.</p>
             </div>
           </details>
 
           <details class="faq-item" id="faq-no-crm">
             <summary>Can Envoz work without an existing CRM?</summary>
             <div class="faq-body">
-              <p><strong>Yes — Envoz standalone mode is built for cities that don&rsquo;t have a usable CRM today.</strong> It provides a lightweight <a href="staff-triage.html">staff triage console</a>, structured-email dispatch to departments, and thin case surfaces with local VR case numbers, so residents still get a real trackable case. Cities that later adopt a CRM can switch to overlay mode without re-onboarding residents or retraining staff. The <a href="platform.html">Platform page</a> explains when to choose each mode — and the decision guide below walks through the criteria.</p>
+              <p><strong>Yes — Envoz standalone mode is built for cities that don&rsquo;t have a usable CRM today.</strong> It provides a lightweight <a href="staff-triage.html">staff triage console</a>, structured-email dispatch to departments, and thin case surfaces with local VR case numbers, so residents still get a real trackable case. Cities that later adopt a CRM can switch to overlay mode without re-onboarding residents or retraining staff. The <a href="platform.html">Platform page</a> explains when to choose each mode, and the decision guide below walks through the criteria.</p>
             </div>
           </details>
 
@@ -253,7 +252,7 @@
           <details class="faq-item" id="faq-council-reporting">
             <summary>How does the platform support council reporting?</summary>
             <div class="faq-body">
-              <p><strong>Envoz generates council-ready proof reports directly from live evidence — access gains, routing accuracy, equity coverage, SLA compliance, and cost avoided.</strong> A city manager can produce a 90-day modernization report in one click, with every headline metric traceable back to the underlying cases and the evidence log. In the demo world, Vista Robles shows 93.4% SLA compliance and 327 after-hours calls captured — all marked as illustrative demo data. <a href="dashboards.html?tab=council&amp;generate=1">Generate the council report</a> yourself, or see how a city manager presents it on <a href="customer-success.html">Customer Success</a>.</p>
+              <p><strong>Envoz generates council-ready proof reports directly from live evidence: access gains, routing accuracy, equity coverage, SLA compliance, and cost avoided.</strong> A city manager can produce a 90-day modernization report in one click, with every headline metric traceable back to the underlying cases and the evidence log. In the demo world, Vista Robles shows 93.4% SLA compliance and 327 after-hours calls captured, all marked as illustrative demo data. <a href="dashboards.html?tab=council&amp;generate=1">Generate the council report</a> yourself, or see how a city manager presents it on <a href="customer-success.html">Customer Success</a>.</p>
             </div>
           </details>
         </div>
@@ -265,35 +264,35 @@
           <details class="faq-item" id="faq-hallucination">
             <summary>How does the voice agent prevent hallucinated case numbers?</summary>
             <div class="faq-body">
-              <p><strong>Nico can only read back a case number that was actually issued by the system of record — case numbers are never generated by the AI.</strong> The platform waits for write-back proof, like &ldquo;Case number issued by SeeClickFix at 9:44 PM&rdquo;, before confirming anything to the resident, and that proof strip is visible on every case. If the write fails, Envoz retries with idempotency or falls back to a structured email — and tells the resident the truth about what happened. The same rule applies to repair dates: if Envoz doesn&rsquo;t know, it says so. The <a href="trust.html">Trust page</a> documents every guardrail.</p>
+              <p><strong>Nico can only read back a case number that was actually issued by the system of record — case numbers are never generated by the AI.</strong> The platform waits for write-back proof, like &ldquo;Case number issued by SeeClickFix at 9:44 PM&rdquo;, before confirming anything to the resident, and that proof strip is visible on every case. If the write fails, Envoz retries with idempotency or falls back to a structured email, and tells the resident the truth about what happened. The same rule applies to repair dates: if Envoz doesn&rsquo;t know, it says so. The <a href="trust.html">Trust page</a> documents every guardrail.</p>
             </div>
           </details>
 
           <details class="faq-item" id="faq-emergencies">
             <summary>How does Envoz handle emergencies?</summary>
             <div class="faq-body">
-              <p><strong>Emergencies are redirected to 911 immediately, and no ordinary 311 case is created.</strong> Every call starts with a safety gate — &ldquo;Is anyone hurt or in immediate danger?&rdquo; — before any classification or routing happens. Emergency handling is the one path where the platform never attempts to automate an outcome; it gets the caller to emergency services and steps out of the way. You can see the safety gate fire first in <a href="voice-ai.html">every voice journey</a>.</p>
+              <p><strong>Emergencies are redirected to 911 immediately, and no ordinary 311 case is created.</strong> Every call starts with a safety gate, &ldquo;Is anyone hurt or in immediate danger?&rdquo;, before any classification or routing happens. Emergency handling is the one path where the platform never attempts to automate an outcome; it gets the caller to emergency services and steps out of the way. You can see the safety gate fire first in <a href="voice-ai.html">every voice journey</a>.</p>
             </div>
           </details>
 
           <details class="faq-item" id="faq-low-confidence">
             <summary>What happens when confidence is low?</summary>
             <div class="faq-body">
-              <p><strong>Low confidence triggers a warm transfer: Nico hands the caller to a person with full context attached — transcript, candidate classifications, and resolved location — so residents never repeat themselves.</strong> Non-urgent low-confidence reports are held in a human review queue instead of being routed on a guess: in the demo, a beehive in a bus shelter (41% confidence) waits in the learning queue with three candidate departments rather than becoming a misrouted case. Confidence thresholds are configured per city, and every below-threshold event becomes learning evidence. See it handled in <a href="staff-triage.html">Staff Triage</a>.</p>
+              <p><strong>Low confidence triggers a warm transfer: Nico hands the caller to a person with full context attached (transcript, candidate classifications, and resolved location) so residents never repeat themselves.</strong> A non-urgent report that still can't be classified is filed as other_unknown so a case number is always issued, then re-typed from the Unknowns queue rather than routed on a guess. In the demo, a beehive in a bus shelter (41% confidence) is filed as other_unknown, issued case VR-4320, and awaits human re-type with three candidate departments attached. Confidence thresholds are configured per city, and every below-threshold event becomes learning evidence. See it handled in <a href="staff-triage.html">Staff Triage</a>.</p>
             </div>
           </details>
 
           <details class="faq-item" id="faq-metaengage">
             <summary>What does &ldquo;Powered By MetaEngage.ai&rdquo; mean?</summary>
             <div class="faq-body">
-              <p><strong>It means Envoz 311 runs on MetaEngage.ai&rsquo;s civic AI infrastructure — the orchestration layer, Proxy Gate, audit system, and governed automation behind the product.</strong> MetaEngage.ai provides the engine; Envoz 311 is the 311-specific product built on top of it. The Proxy Gate is the control point where every AI action against a city system of record is checked and logged, which is how guarantees like &ldquo;case numbers only from the CRM&rdquo; are enforced in infrastructure rather than by policy alone. You&rsquo;ll see the mark as a subtle watermark across the platform — read how the layers fit together on the <a href="trust.html">Trust page</a>.</p>
+              <p><strong>It means Envoz 311 runs on MetaEngage.ai&rsquo;s civic AI infrastructure: the orchestration layer, Proxy Gate, audit system, and governed automation behind the product.</strong> MetaEngage.ai provides the engine; Envoz 311 is the 311-specific product built on top of it. The Proxy Gate is the control point where every AI action against a city system of record is checked and logged, which is how guarantees like &ldquo;case numbers only from the CRM&rdquo; are enforced in infrastructure rather than by policy alone. You&rsquo;ll see the mark as a subtle watermark across the platform — read how the layers fit together on the <a href="trust.html">Trust page</a>.</p>
             </div>
           </details>
 
           <details class="faq-item" id="faq-humans-in-control">
             <summary>How does Envoz keep humans in control?</summary>
             <div class="faq-body">
-              <p><strong>Envoz never changes its own behavior without human approval — staff approve every rule, taxonomy change, and deployment, with explicit scopes from a single case up to a city-wide rule.</strong> Confidence and rationale are visible on every routing decision, low confidence means a warm transfer to a person, and every action is written to the audit trail. Approved changes are sandbox-tested against historical cases and versioned before they touch production. The operating principle across the platform: Envoz recommends, city staff approve. See <a href="trust.html#governed-autonomy">governed autonomy</a> on the Trust page.</p>
+              <p><strong>Envoz never changes its own behavior without human approval: staff approve every rule, taxonomy change, and deployment, with explicit scopes from a single case up to a city-wide rule.</strong> Confidence and rationale are visible on every routing decision, low confidence means a warm transfer to a person, and every action is written to the audit trail. Approved changes are sandbox-tested against historical cases and versioned before they touch production. The operating principle across the platform: Envoz recommends, city staff approve. See <a href="trust.html#governed-autonomy">governed autonomy</a> on the Trust page.</p>
             </div>
           </details>
         </div>
@@ -305,29 +304,29 @@
           <details class="faq-item" id="faq-staff-correct">
             <summary>Can staff correct the AI?</summary>
             <div class="faq-body">
-              <p><strong>Yes — correcting the AI is a first-class action in the staff triage console, and every correction becomes learning evidence.</strong> Staff choose the scope of what the system learns from each correction: this case only, a city-only rule, department memory, or global evidence — and nothing learned deploys without approval. In the demo, 19 water-pooling cases corrected from Streets to Utilities became a proposed storm-drain proximity rule that staff can sandbox-test before approving. Try the correction flow in <a href="staff-triage.html">Staff Triage</a>.</p>
+              <p><strong>Yes — correcting the AI is a first-class action in the staff triage console, and every correction becomes learning evidence.</strong> Staff choose the scope of what the system learns from each correction: this case only, a city-only rule, department memory, or global evidence, and nothing learned deploys without approval. In the demo, 19 water-pooling cases corrected from Streets to Utilities became a proposed storm-drain proximity rule that staff can sandbox-test before approving. Try the correction flow in <a href="staff-triage.html">Staff Triage</a>.</p>
             </div>
           </details>
 
           <details class="faq-item" id="faq-service-gaps">
             <summary>How are service gaps discovered?</summary>
             <div class="faq-body">
-              <p><strong>Service gaps are discovered from evidence patterns in the Civic Evidence Log: repeated unknown phrases, clusters of staff corrections, duplicate report clusters, SLA disparities between neighborhoods, and language-confidence dips.</strong> In the demo, 14 &ldquo;storm grate burbling&rdquo; reports that fell below routing threshold surfaced a missing taxonomy category, and Spanish calls near school zones revealed an address-confidence gap. Each surfaced gap ships with its evidence, a suggested fix, expected impact, and a departmental owner — staff decide what to act on. <a href="dashboards.html?tab=gaps">See the AI-discovered gaps</a> for Vista Robles.</p>
+              <p><strong>Service gaps are discovered from evidence patterns in the Continuous Evaluation Loop: repeated unknown phrases, clusters of staff corrections, duplicate report clusters, SLA disparities between neighborhoods, and language-confidence dips.</strong> In the demo, 14 &ldquo;storm grate burbling&rdquo; reports that fell below routing threshold surfaced a missing taxonomy category, and Spanish calls near school zones revealed an address-confidence gap. Each surfaced gap ships with its evidence, a suggested fix, expected impact, and a departmental owner, so staff decide what to act on. <a href="dashboards.html?tab=gaps">See the AI-discovered gaps</a> for Vista Robles.</p>
             </div>
           </details>
 
           <details class="faq-item" id="faq-improvement-loop">
-            <summary>What is the Continuous Civic Improvement Loop?</summary>
+            <summary>What is the Continuous Evaluation Loop?</summary>
             <div class="faq-body">
-              <p><strong>The Continuous Civic Improvement Loop is the nine-step cycle — Listen, Understand, Route, Resolve, Measure, Learn, Recommend, Approve, Improve — that turns every 311 interaction into evidence and every pattern into an approvable improvement.</strong> Interactions are measured in the Civic Evidence Log, patterns become recommendations, and city staff approve every change before it is sandbox-tested, versioned, audited, and deployed. It is why an Envoz 311 program gets measurably better every week instead of just launching once.</p>
+              <p><strong>The Continuous Evaluation Loop (CEL) is how Envoz pictures continuous improvement: Listen, Understand, Route, Resolve, Measure, Learn, Recommend, Approve, Improve.</strong> Treat those stages as an illustration, not a spec'd product process. What actually happens is steady: every 311 interaction becomes evidence, patterns become recommendations, and city staff approve each change before it is sandbox-tested, versioned, audited, and deployed. It is why an Envoz 311 program gets measurably better over time instead of just launching once.</p>
               <button class="btn btn-secondary btn-sm" type="button" onclick="Envoz.openLoopModal()">View the loop ↻</button>
             </div>
           </details>
 
           <details class="faq-item" id="faq-nico-success-agent">
-            <summary>What is the Nico Success Agent?</summary>
+            <summary>What are Nico's improvement recommendations?</summary>
             <div class="faq-body">
-              <p><strong>The Nico Success Agent is the AI success agent assigned to your city, monitoring your 311 program 24/7 for routing accuracy, equity, surge patterns, and connector health.</strong> It drafts safe, evidence-linked improvement recommendations — new routing rules, vocabulary additions, taxonomy candidates, data-quality fixes — and queues them for staff approval with sample cases and sandbox results attached. It never deploys a change on its own. In the demo, Vista Robles has 6 open recommendations with 3 ready for approval, projected to save 42 staff hours per month. <a href="dashboards.html?tab=agent">Open the recommendation queue</a>.</p>
+              <p><strong>Nico's improvement recommendations are drawn from the Continuous Evaluation Loop (CEL): every routed case, staff correction, and SLA outcome becomes evidence Nico turns into proposals your staff approve.</strong> Nico drafts safe, evidence-linked suggestions like new routing rules, vocabulary additions, taxonomy candidates, and data-quality fixes, then queues them for staff approval with sample cases and sandbox results attached. Nothing deploys on its own. In the demo, Vista Robles has 6 open recommendations with 3 ready for approval. <a href="dashboards.html?tab=agent">Open the recommendation queue</a>.</p>
             </div>
           </details>
         </div>
@@ -352,37 +351,37 @@
       </div>
       <div class="grid grid-3" style="margin-top:36px">
         <button class="card card-hover resource-card reveal" type="button" data-resource="pilot-playbook">
-          <span class="icon-tile">🗓</span>
+          <span class="icon-tile" data-icon="clock"></span>
           <h3>90-day pilot playbook</h3>
-          <p class="small" style="color:var(--muted)">A phase-by-phase plan from kickoff to council report — including the metrics to agree on before day one.</p>
+          <p class="small" style="color:var(--muted)">A phase-by-phase plan from kickoff to council report, including the metrics to agree on before day one.</p>
           <span class="resource-open">Open the playbook →</span>
         </button>
         <button class="card card-hover resource-card reveal" type="button" data-resource="council-template">
-          <span class="icon-tile navy">🏛</span>
+          <span class="icon-tile navy" data-icon="building"></span>
           <h3>Council presentation template</h3>
-          <p class="small" style="color:var(--muted)">A slide-by-slide outline for briefing council on 311 modernization — built around proof, not promises.</p>
+          <p class="small" style="color:var(--muted)">A slide-by-slide outline for briefing council on 311 modernization, built around evidence you can defend.</p>
           <span class="resource-open">Open the outline →</span>
         </button>
         <button class="card card-hover resource-card reveal" type="button" data-resource="taxonomy-guide">
-          <span class="icon-tile ocean">🗂</span>
+          <span class="icon-tile ocean" data-icon="layers"></span>
           <h3>311 taxonomy starter guide</h3>
           <p class="small" style="color:var(--muted)">How to structure service categories, department ownership, and the unknowns queue before go-live.</p>
           <span class="resource-open">Open the guide →</span>
         </button>
         <button class="card card-hover resource-card reveal" type="button" data-resource="overlay-guide">
-          <span class="icon-tile amber">🧭</span>
+          <span class="icon-tile amber" data-icon="route"></span>
           <h3>Overlay vs standalone decision guide</h3>
-          <p class="small" style="color:var(--muted)">Five questions that settle which deployment mode fits your city — and how to switch later.</p>
+          <p class="small" style="color:var(--muted)">Five questions that settle which deployment mode fits your city, and how to switch later.</p>
           <span class="resource-open">Open the guide →</span>
         </button>
         <button class="card card-hover resource-card reveal" type="button" data-resource="trust-onepager">
-          <span class="icon-tile green">🛡</span>
+          <span class="icon-tile green" data-icon="shield"></span>
           <h3>Trust &amp; governance one-pager</h3>
-          <p class="small" style="color:var(--muted)">The guardrails in one page — safety gate, real case numbers, tenant scoping, approval gates, audit.</p>
+          <p class="small" style="color:var(--muted)">The guardrails in one page: safety gate, real case numbers, tenant scoping, approval gates, audit.</p>
           <span class="resource-open">Open the one-pager →</span>
         </button>
         <button class="card card-hover resource-card reveal" type="button" data-resource="glossary">
-          <span class="icon-tile purple">📖</span>
+          <span class="icon-tile purple" data-icon="doc"></span>
           <h3>Glossary of civic AI terms</h3>
           <p class="small" style="color:var(--muted)">CEL, Proxy Gate, containment, warm transfer, city-only rule, department memory, taxonomy candidate — defined.</p>
           <span class="resource-open">Open the glossary →</span>
@@ -391,15 +390,15 @@
     </div>
   </section>
 
-  <!-- ================= CTA ================= -->
-  <section class="section-tight">
+  <!-- ================= CLOSING CTA ================= -->
+  <section class="section section-dark grid-texture">
     <div class="container center reveal">
       <h2>Still have a question?</h2>
-      <p class="lede" style="margin:0 auto 22px">Ask Nico — or see the whole platform answer it for you in the live demo world.</p>
-      <div class="flex flex-wrap" style="justify-content:center">
-        <button class="btn btn-navy btn-lg" type="button" data-nico-open>🎙 Ask Nico</button>
-        <a class="btn btn-primary btn-lg" href="voice-ai.html?demo=pothole">▶ Watch the 90-second demo</a>
-        <a class="btn btn-secondary btn-lg" href="pilot-pricing.html">Explore a 90-day pilot</a>
+      <p class="lede" style="margin:0 auto 22px">Book a scoping call, watch the demo, or ask Nico to see it answer in your city.</p>
+      <div class="flex flex-wrap" style="justify-content:center;gap:12px">
+        <button class="btn btn-primary btn-lg" type="button" data-pilot-open data-tier="Mid-size city pilot">Book a 20-minute pilot scoping call</button>
+        <a class="btn btn-secondary btn-lg" href="voice-ai.html?demo=pothole">Watch the demo</a>
+        <button class="btn btn-navy btn-lg" type="button" data-nico-open><span data-icon="mic"></span> Ask Nico</button>
       </div>
     </div>
   </section>

@@ -33,7 +33,7 @@
       sla: "48h assessment · same-day if traffic hazard", ownership: "GIS road ownership layer",
       channels: ["Voice", "Web", "SMS"], photo: "optional",
       prompt: "I hit a huge pothole near the Alton ramp and almost swerved.",
-      dupe: "Open pothole cases within 250 ft are surfaced first — residents can follow the existing case instead of opening a duplicate.",
+      dupe: "Open pothole cases within 250 ft are surfaced first, so residents can follow the existing case instead of opening a duplicate.",
       source: null, gis: true, referral: true, review: false },
 
     { id: "streetlight", name: "Streetlight Outage", cat: "Roads & Transportation", dept: "Transportation",
@@ -65,7 +65,7 @@
       sla: "72h tag-and-notice", ownership: "Public right-of-way check (street centerline)",
       channels: ["Voice", "Web", "SMS"], photo: "required",
       prompt: "A gray sedan with flat tires has been parked on our street for nine days.",
-      dupe: "Plate or description match on the same block reuses the open case — and its 72-hour ordinance clock.",
+      dupe: "Plate or description match on the same block reuses the open case, and its 72-hour ordinance clock.",
       source: "Municode §10.32 (72-hour rule)", gis: true, referral: false, review: false },
 
     { id: "sweeping", name: "Street Sweeping Issue", cat: "Roads & Transportation", dept: "Public Works",
@@ -90,7 +90,7 @@
       sla: "2h emergency dispatch", ownership: "Sewer main layer (main vs private lateral)",
       channels: ["Voice", "Web"], photo: "optional",
       prompt: "Sewage is coming up in my shower drain and my neighbor has it too.",
-      dupe: "Two or more addresses on one main escalates to a mainline blockage — one crew, one parent case.",
+      dupe: "Two or more addresses on one main escalates to a mainline blockage: one crew, one parent case.",
       source: null, gis: true, referral: true, review: false },
 
     { id: "storm-drain", name: "Storm Drain Blockage", cat: "Utilities & Water", dept: "Utilities",
@@ -98,7 +98,7 @@
       sla: "24h assessment · surge triage during storms", ownership: "Storm-drain asset layer",
       channels: ["Voice", "Web", "SMS"], photo: "optional",
       prompt: "The storm grate on our corner is burbling and water’s coming back up.",
-      dupe: "Surge clustering: 14 similar reports in 48h become one parent event with followers, not 14 cases.",
+      dupe: "Surge clustering: 14 similar reports in 48h become one parent event with followers instead of 14 cases.",
       source: null, gis: true, referral: false, review: true },
 
     { id: "hydrant", name: "Hydrant Issue", cat: "Utilities & Water", dept: "Utilities",
@@ -111,10 +111,10 @@
 
     { id: "power-outage", name: "Power Outage Referral", cat: "Utilities & Water", dept: "County Partner",
       required: ["Address", "Outage extent (home / block)", "Any downed wires? (safety gate)"],
-      sla: "Immediate warm referral", ownership: "None — electric utility service territory",
+      sla: "Immediate warm referral", ownership: "None, electric utility service territory",
       channels: ["Voice", "Web", "SMS"], photo: "na",
-      prompt: "The power is out on our whole block — is that the city?",
-      dupe: "No city case is created — Nico shares the utility’s outage line and map link; wires down means 911 first.",
+      prompt: "The power is out on our whole block. Is that the city?",
+      dupe: "No city case is created. Nico shares the utility’s outage line and map link; wires down means 911 first.",
       source: "Utility outage map", gis: false, referral: true, review: false },
 
     /* ---------- Clean & Safe ---------- */
@@ -123,7 +123,7 @@
       sla: "72h removal", ownership: "Public right-of-way check",
       channels: ["Voice", "Web", "SMS"], photo: "required",
       prompt: "Somebody dumped a mattress and bags behind Paseo Market again.",
-      dupe: "Alley-level matching links repeat-dumping reports into a hotspot file — evidence for enforcement, not clutter.",
+      dupe: "Alley-level matching links repeat-dumping reports into a hotspot file: evidence for enforcement rather than clutter.",
       source: "Municode §8.12", gis: true, referral: false, review: false },
 
     { id: "graffiti", name: "Graffiti", cat: "Clean & Safe", dept: "Public Works",
@@ -205,7 +205,7 @@
       sla: "72h follow-up · active disturbances go to the non-emergency line", ownership: "Parcel layer",
       channels: ["Voice", "Web"], photo: "na",
       prompt: "Construction has been starting before 7 AM all week on our street.",
-      dupe: "Recurring complaints on the same parcel build one case history — pattern evidence, not pile-up.",
+      dupe: "Recurring complaints on the same parcel build one case history: pattern evidence rather than pile-up.",
       source: "Municode §9.40 quiet hours", gis: true, referral: false, review: true },
 
     { id: "str", name: "Short-Term Rental Concern", cat: "Code & Community", dept: "Code Enforcement",
@@ -221,7 +221,7 @@
       sla: "48h outreach referral", ownership: "Jurisdiction check (city vs county land)",
       channels: ["Voice", "Web"], photo: "na",
       prompt: "There’s a new encampment forming under the Alton overpass.",
-      dupe: "Location matching links reports to the active outreach file — a services-first response, coordinated with the county team.",
+      dupe: "Location matching links reports to the active outreach file: a services-first response, coordinated with the county team.",
       source: null, gis: true, referral: true, review: true },
 
     { id: "signage", name: "Business Signage Concern", cat: "Code & Community", dept: "Code Enforcement",
@@ -238,7 +238,7 @@
       sla: "Answered in-call", ownership: "None, knowledge",
       channels: ["Voice", "Web", "SMS"], photo: "na",
       prompt: "When is trash day on Mesa Ridge Road?",
-      dupe: "No case created.the answer is grounded in the current collection schedule, never guessed.",
+      dupe: "No case created. The answer is grounded in the current collection schedule, never guessed.",
       source: "City trash schedule", gis: false, referral: false, review: false },
 
     { id: "permit-status", name: "Permit Status", cat: "Info / Knowledge", dept: null,
@@ -246,7 +246,7 @@
       sla: "Answered in-call", ownership: "None, knowledge",
       channels: ["Voice", "Web"], photo: "na",
       prompt: "Can you check the status of my patio permit?",
-      dupe: "No case created.status is read live from the permit system; an unclear record goes to staff instead of a guess.",
+      dupe: "No case created. Status is read live from the permit system; an unclear record goes to staff instead of a guess.",
       source: "Permit system (read-only)", gis: false, referral: false, review: true },
 
     { id: "park-hours", name: "Park Hours", cat: "Info / Knowledge", dept: null,
@@ -254,7 +254,7 @@
       sla: "Answered in-call", ownership: "None, knowledge",
       channels: ["Voice", "Web", "SMS"], photo: "na",
       prompt: "What time does Harbor View Park close tonight?",
-      dupe: "No case created.seasonal hours come from the Parks page and refresh whenever the page changes.",
+      dupe: "No case created. Seasonal hours come from the Parks page and refresh whenever the page changes.",
       source: "Parks page", gis: false, referral: false, review: false },
 
     { id: "closures", name: "Street Closure Information", cat: "Info / Knowledge", dept: null,
@@ -262,13 +262,13 @@
       sla: "Answered in-call", ownership: "None, knowledge",
       channels: ["Voice", "Web", "SMS"], photo: "na",
       prompt: "Is Alton Parkway still closed for the resurfacing project?",
-      dupe: "No case created.if a closure isn’t in the feed, Nico says so and offers a callback; dates are never invented.",
+      dupe: "No case created. If a closure isn’t in the feed, Nico says so and offers a callback; dates are never invented.",
       source: "Public Works closure feed", gis: false, referral: false, review: false }
   ];
 
   var PHOTO_TEXT = {
-    required: "Required — Nico texts a secure upload link before the case is filed.",
-    optional: "Optional — a photo helps crews, but never blocks a report.",
+    required: "Required. Nico texts a secure upload link before the case is filed.",
+    optional: "Optional. A photo helps crews, but never blocks a report.",
     na: "Not applicable."
   };
 
@@ -449,7 +449,7 @@
       if (/clear (the )?filters?/i.test(t)) {
         resetFilters();
         e.detail.handled = true;
-        e.detail.reply = "Filters cleared — showing all " + SERVICES.length + " services in the Vista Robles demo catalog.";
+        e.detail.reply = "Filters cleared. Showing all " + SERVICES.length + " services in the Vista Robles demo catalog.";
         return;
       }
       if (!/(service|catalog)/i.test(t) || !/(show|filter|list|which)/i.test(t)) return;
@@ -459,7 +459,7 @@
           setCategory(CAT_KEYWORDS[i][1]);
           var n = SERVICES.filter(matches).length;
           e.detail.handled = true;
-          e.detail.reply = "Filtering the catalog to " + CAT_KEYWORDS[i][1] + " — " + n + " services. Expand any card to see its routing logic.";
+          e.detail.reply = "Filtering the catalog to " + CAT_KEYWORDS[i][1] + ": " + n + " services. Expand any card to see its routing logic.";
           var sec = document.getElementById("catalog");
           if (sec && sec.scrollIntoView) sec.scrollIntoView({ behavior: "smooth" });
           return;
