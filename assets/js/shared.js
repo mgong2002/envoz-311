@@ -95,14 +95,14 @@
       '<span class="brand-word" style="color:#fff">Envoz&nbsp;<span class="brand-311">311</span></span></span>' +
       '<p style="margin-top:14px;max-width:34ch">The civic intent-to-action routing brain with voice-first intake. One call. Correctly classified. Correctly routed. With confidence.</p>' +
       "</div>" +
-      "<div><h4>Product</h4>" +
+      '<div><p class="footer-col-h">Product</p>' +
       '<a href="platform.html">Platform</a><a href="voice-ai.html">Voice AI for 311</a>' +
       '<a href="resident-services.html">Resident Services</a><a href="configuration-studio.html">Configuration Studio</a>' +
       '<a href="dashboards.html">Dashboards &amp; AI Insights</a><a href="staff-triage.html">Staff Triage</a></div>' +
-      "<div><h4>Trust</h4>" +
+      '<div><p class="footer-col-h">Trust</p>' +
       '<a href="trust.html">Trust, Data &amp; Compliance</a><a href="integrations.html">Integrations</a>' +
       '<a href="trust.html#governed-autonomy">Governed autonomy</a><a href="trust.html#data-model">Data model</a></div>' +
-      "<div><h4>Company</h4>" +
+      '<div><p class="footer-col-h">Company</p>' +
       '<a href="customer-success.html">Customer Success</a><a href="pilot-pricing.html">Pilot &amp; Pricing</a>' +
       '<a href="resources.html">Resources / FAQ</a></div>' +
       "</div>" +

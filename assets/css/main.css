@@ -549,9 +549,9 @@ input[type="range"] { width: 100%; accent-color: var(--teal-600); }
   background: var(--navy-950); color: var(--slate-400);
   padding: 60px 0 32px; margin-top: 80px; font-size: 0.9rem;
 }
-.site-footer h4 {
+.site-footer h4, .site-footer .footer-col-h {
   color: #fff; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.1em;
-  margin-bottom: 14px;
+  margin: 0 0 14px; font-weight: 700;
 }
 .site-footer a { color: var(--slate-300); display: block; padding: 4px 0; }
 .site-footer a:hover { color: #fff; }
