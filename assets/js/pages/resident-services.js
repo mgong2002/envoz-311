@@ -235,34 +235,34 @@
     /* ---------- Info / Knowledge (grounded answers, no case) ---------- */
     { id: "trash-day", name: "Trash Day Lookup", cat: "Info / Knowledge", dept: null,
       required: ["Address"],
-      sla: "Answered in-call", ownership: "None — knowledge",
+      sla: "Answered in-call", ownership: "None, knowledge",
       channels: ["Voice", "Web", "SMS"], photo: "na",
       prompt: "When is trash day on Mesa Ridge Road?",
-      dupe: "No case created — the answer is grounded in the current collection schedule, never guessed.",
+      dupe: "No case created.the answer is grounded in the current collection schedule, never guessed.",
       source: "City trash schedule", gis: false, referral: false, review: false },
 
     { id: "permit-status", name: "Permit Status", cat: "Info / Knowledge", dept: null,
       required: ["Permit number or address"],
-      sla: "Answered in-call", ownership: "None — knowledge",
+      sla: "Answered in-call", ownership: "None, knowledge",
       channels: ["Voice", "Web"], photo: "na",
       prompt: "Can you check the status of my patio permit?",
-      dupe: "No case created — status is read live from the permit system; an unclear record goes to staff instead of a guess.",
+      dupe: "No case created.status is read live from the permit system; an unclear record goes to staff instead of a guess.",
       source: "Permit system (read-only)", gis: false, referral: false, review: true },
 
     { id: "park-hours", name: "Park Hours", cat: "Info / Knowledge", dept: null,
       required: ["Park name"],
-      sla: "Answered in-call", ownership: "None — knowledge",
+      sla: "Answered in-call", ownership: "None, knowledge",
       channels: ["Voice", "Web", "SMS"], photo: "na",
       prompt: "What time does Harbor View Park close tonight?",
-      dupe: "No case created — seasonal hours come from the Parks page and refresh whenever the page changes.",
+      dupe: "No case created.seasonal hours come from the Parks page and refresh whenever the page changes.",
       source: "Parks page", gis: false, referral: false, review: false },
 
     { id: "closures", name: "Street Closure Information", cat: "Info / Knowledge", dept: null,
       required: ["Street or area", "Date of travel"],
-      sla: "Answered in-call", ownership: "None — knowledge",
+      sla: "Answered in-call", ownership: "None, knowledge",
       channels: ["Voice", "Web", "SMS"], photo: "na",
       prompt: "Is Alton Parkway still closed for the resurfacing project?",
-      dupe: "No case created — if a closure isn’t in the feed, Nico says so and offers a callback; dates are never invented.",
+      dupe: "No case created.if a closure isn’t in the feed, Nico says so and offers a callback; dates are never invented.",
       source: "Public Works closure feed", gis: false, referral: false, review: false }
   ];
 
