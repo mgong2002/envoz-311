@@ -12,7 +12,7 @@
       chip: '<span class="chip chip-teal">Pilot planning</span>',
       html:
         '<p><strong>Days 1–14 · Configure and sandbox.</strong> Kick off with a working session where your 311 lead talks Nico through departments, service categories, GIS layers, and schedules — the Harbor Mesa demo shows this taking about 12 minutes of conversation, with a sandbox tenant standing about 48 hours later. Staff run test calls against the sandbox (like case HM-TEST-1042) and correct anything Nico gets wrong; every correction becomes tenant-scoped learning before a single resident ever calls.</p>' +
-        '<p><strong>Days 15–45 · Go live after hours.</strong> Route only evening, overnight, and weekend calls to Envoz first — the hours where the alternative is voicemail. This is the lowest-risk, highest-contrast slice: staff arrive each morning to a clean, prioritized queue instead of a tape of voicemails, and you accumulate before/after evidence without touching daytime operations. Review the learning ledger weekly and approve the improvements worth keeping.</p>' +
+        '<p><strong>Days 15–45 · Go live after hours.</strong> Route only evening, overnight, and weekend calls to Envoz first, the hours where the alternative is voicemail. This is the lowest-risk, highest-contrast slice: staff arrive each morning to a clean, prioritized queue instead of a tape of voicemails, and you accumulate before/after evidence without touching daytime operations. Review the CEL Ledger weekly and approve the improvements worth keeping.</p>' +
         '<p><strong>Days 46–90 · Expand coverage and prove it.</strong> Extend to daytime overflow, watch containment and routing accuracy trend in the dashboard, and let the Nico Success Agent queue up its first city-only rules. Before day one, agree on the pilot metrics in writing — after-hours capture rate, answer speed, routing accuracy, staff triage hours, and resident callbacks — so the day-90 council report is a comparison, not a claim. Then <a href="dashboards.html?tab=council&generate=1">generate the council report</a> from live evidence.</p>',
       cta: '<a class="btn btn-primary btn-sm" href="pilot-pricing.html">See pilot &amp; pricing</a> <a class="btn btn-secondary btn-sm" href="configuration-studio.html?flow=harbor-mesa">Run the onboarding demo</a>'
     },
@@ -31,14 +31,14 @@
       html:
         '<p><strong>Start from your top ~40 request types, not a 400-line wishlist.</strong> Pull twelve months of case history and rank by volume — in most cities, roughly 40 categories cover 90%+ of requests (potholes, streetlights, dumping, water issues, trees, abandoned vehicles, animal control, noise). Give every category exactly one owning department and an SLA; a category nobody owns is a case nobody closes. Ambiguous pairs — water pooling: Streets or Utilities? — deserve an explicit tie-breaker rule up front, because those are the cases staff will otherwise re-route by hand.</p>' +
         '<p><strong>Wire categories to your GIS layers before go-live.</strong> Road ownership, storm-drain assets, streetlight poles, parks boundaries, and school zones let Envoz resolve jurisdiction (&ldquo;city street or county road?&rdquo;) and priority (&ldquo;school-zone crosswalk&rdquo;) automatically. This is usually the data-cleanup work that sets the production timeline, so start it in week one.</p>' +
-        '<p><strong>Plan for the unknowns queue — it is a feature, not a failure.</strong> Requests that don&rsquo;t confidently match any category (the beehive in a bus shelter) are held for human review instead of being force-fitted, and repeated unmatched phrases become taxonomy candidates: 14 &ldquo;storm grate burbling&rdquo; reports in the demo produced a proposed storm-drain backup subcategory that staff approve into the taxonomy. Your taxonomy is a living document; the <a href="dashboards.html?tab=cel">learning ledger</a> shows it evolving.</p>',
+        '<p><strong>Plan for the unknowns queue: it is a feature, not a failure.</strong> Requests that don&rsquo;t confidently match any category (the beehive in a bus shelter) are filed as other_unknown with a case number and held for human review instead of being force-fitted, and repeated unmatched phrases become taxonomy candidates: 14 &ldquo;storm grate burbling&rdquo; reports in the demo produced a proposed storm-drain backup subcategory that staff approve into the taxonomy. Your taxonomy is a living document; the <a href="dashboards.html?tab=cel">CEL Ledger</a> shows it evolving.</p>',
       cta: '<a class="btn btn-primary btn-sm" href="configuration-studio.html">Open Configuration Studio</a>'
     },
     "overlay-guide": {
       title: "Overlay vs standalone — a decision guide",
       chip: '<span class="chip chip-amber">Deployment</span>',
       html:
-        '<p><strong>Choose overlay if your CRM works and people use it.</strong> Ask five questions: Do staff live in the CRM daily? Does it have a usable write API (SeeClickFix, Tyler, Granicus, QAlert, Salesforce, Accela, Cityworks, OpenGov EAM all qualify)? Do residents recognize its case numbers? Is the contract healthy for 18+ months? Is the data worth keeping? Mostly yes → overlay. Envoz answers the voice channel, classifies and routes, and writes cases into your CRM — the CRM issues the case number and remains the system of record. Nothing about staff workflow changes except the quality of what arrives.</p>' +
+        '<p><strong>Choose overlay if your CRM works and people use it.</strong> Ask five questions: Do staff live in the CRM daily? Does it expose a usable write API? (SeeClickFix and Open311 systems are the production reference today; Accela and Salesforce connect via partner API; Tyler, QAlert, Cityworks, and OpenGov EAM are on the Open311-style roadmap.) Do residents recognize its case numbers? Is the contract healthy for 18+ months? Is the data worth keeping? Mostly yes → overlay. Envoz answers the voice channel, classifies and routes, and writes cases into your CRM: the CRM issues the case number and remains the system of record. Nothing about staff workflow changes except the quality of what arrives.</p>' +
         '<p><strong>Choose standalone if there is no usable system to arm.</strong> Cities running on shared inboxes and sticky notes — or with a CRM staff have quietly abandoned — get a lightweight staff triage console, structured-email dispatch to departments, and thin case surfaces with local VR case numbers. It is deliberately thin: enough to give residents a trackable case and staff a clean queue, without becoming the CRM project you were avoiding.</p>' +
         '<p><strong>You are not locked in either way.</strong> Standalone cities that later buy a CRM flip to overlay mode without re-onboarding residents; overlay cities changing CRM vendors keep Envoz constant while the system of record changes underneath. The taxonomy, learned rules, and evidence history carry over because they are tenant assets, not CRM assets. Compare the modes on <a href="platform.html">Platform</a> and the connectors on <a href="integrations.html">Integrations</a>.</p>',
       cta: '<a class="btn btn-primary btn-sm" href="integrations.html">Explore integrations</a> <button class="btn btn-secondary btn-sm" type="button" onclick="Envoz.openCompareModal()">Compare with SeeClickFix</button>'
@@ -138,8 +138,19 @@
     });
   }
 
+  /* ---------------- Fill data-icon placeholders with shared SVG icons ---------------- */
+  function fillIcons() {
+    if (!window.Envoz || !window.Envoz.icon) return;
+    document.querySelectorAll("[data-icon]").forEach(function (el) {
+      var name = el.getAttribute("data-icon");
+      if (name) el.innerHTML = window.Envoz.icon(name);
+    });
+  }
+
   /* ---------------- Init ---------------- */
   document.addEventListener("DOMContentLoaded", function () {
+    fillIcons();
+
     // Resource modals
     document.querySelectorAll("[data-resource]").forEach(function (btn) {
       btn.addEventListener("click", function () {
