@@ -171,13 +171,13 @@
 
   function dqRowHTML() {
     var body = dqDone
-      ? '<div class="proof-strip"><span class="proof-icon">✓</span>Cleanup task list created and assigned to Sanitation · logged as LL-1046 in the Learning Ledger.</div>'
+      ? '<div class="proof-strip"><span class="proof-icon">✓</span>Cleanup task list created and assigned to Sanitation · logged as CEL-1046 in the CEL Ledger.</div>'
       : '<div class="flex flex-wrap" style="gap:8px">' +
         '<button type="button" class="btn btn-primary btn-sm" data-action="dq-task">Create cleanup task list</button>' +
-        '<a class="btn btn-ghost btn-sm" href="dashboards.html?tab=cel">View in Learning Ledger →</a></div>';
+        '<a class="btn btn-ghost btn-sm" href="dashboards.html?tab=cel">View in CEL Ledger →</a></div>';
     return '<tr><td colspan="7">' +
       '<div style="display:flex;flex-direction:column;gap:10px;padding:6px 2px">' +
-      '<div class="flex flex-wrap" style="gap:8px"><span class="chip chip-amber">Data quality task</span><span class="chip chip-outline">Assigned · audit LL-1046</span></div>' +
+      '<div class="flex flex-wrap" style="gap:8px"><span class="chip chip-amber">Data quality task</span><span class="chip chip-outline">Assigned · audit CEL-1046</span></div>' +
       "<strong>Normalize 17 inconsistent trash-schedule neighborhood names</strong>" +
       '<span class="small" style="color:var(--muted)">Imported from a spreadsheet during onboarding. Inconsistent names cause grounded-answer escalations on trash-day questions. Nico flagged it before residents ever noticed.</span>' +
       body + "</div></td></tr>";
@@ -453,7 +453,7 @@
     if (action === "dq-task") {
       dqDone = true;
       renderTable();
-      window.Envoz.nicoSay("Cleanup task list created for the 17 inconsistent trash-schedule neighborhood names, assigned to Sanitation and logged as LL-1046.");
+      window.Envoz.nicoSay("Cleanup task list created for the 17 inconsistent trash-schedule neighborhood names, assigned to Sanitation and logged as CEL-1046.");
       return;
     }
 
