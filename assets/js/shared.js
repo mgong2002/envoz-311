@@ -57,16 +57,17 @@
       "</a>" +
       '<nav class="main-nav" aria-label="Primary">' + navLinks + "</nav>" +
       '<div class="header-ctas">' +
-      '<a class="btn btn-secondary btn-sm" href="configuration-studio.html">Configure a city</a>' +
-      '<a class="btn btn-primary btn-sm" href="voice-ai.html?demo=pothole">Watch demo</a>' +
-      '<button class="btn btn-navy btn-sm" type="button" data-nico-open>🎙 Talk to Nico</button>' +
+      '<a class="btn btn-ghost btn-sm" href="voice-ai.html?demo=pothole">Watch demo</a>' +
+      '<button class="btn btn-primary btn-sm" type="button" data-pilot-open>Book a pilot call</button>' +
+      '<button class="btn btn-navy btn-sm" type="button" data-nico-open>' + icon("mic") + ' Talk to Nico</button>' +
       "</div>" +
       '<button class="nav-toggle" type="button" aria-expanded="false" aria-controls="mobile-drawer" aria-label="Open menu">☰</button>' +
       "</div>" +
       '<div class="mobile-drawer" id="mobile-drawer">' + navLinks +
       '<div style="display:flex;gap:10px;margin-top:16px;flex-wrap:wrap">' +
-      '<a class="btn btn-primary btn-sm" href="voice-ai.html?demo=pothole">Watch demo</a>' +
-      '<button class="btn btn-navy btn-sm" type="button" data-nico-open>🎙 Talk to Nico</button></div>' +
+      '<button class="btn btn-primary btn-sm" type="button" data-pilot-open>Book a pilot call</button>' +
+      '<a class="btn btn-secondary btn-sm" href="voice-ai.html?demo=pothole">Watch demo</a>' +
+      '<button class="btn btn-navy btn-sm" type="button" data-nico-open>' + icon("mic") + ' Talk to Nico</button></div>' +
       poweredPill(false) +
       "</div>" +
       (document.body.dataset.marketing === "true"
@@ -140,14 +141,14 @@
     { label: "Generate a council proof report", match: /council/i,
       reply: "Generating the council-ready proof report for Vista Robles…",
       go: "dashboards.html?tab=council&generate=1" },
-    { label: "Show the Continuous Civic Improvement Loop", match: /loop|improvement loop|civic improvement/i,
-      reply: "Here’s the Continuous Civic Improvement Loop — every step is evidence-logged and approval-gated.",
+    { label: "Show the Continuous Evaluation Loop", match: /loop|improvement loop|civic improvement|evaluation loop/i,
+      reply: "Here’s how we picture the Continuous Evaluation Loop (CEL) in action. Every step is evidence-logged and approval-gated.",
       action: "loop" },
-    { label: "What has Nico learned this week?", match: /learned|learning ledger|ledger/i,
-      reply: "Opening this week’s Learning Ledger…",
+    { label: "What has Nico learned this week?", match: /learned|learning ledger|cel ledger|ledger/i,
+      reply: "Opening this week’s CEL Ledger…",
       go: "dashboards.html?tab=cel" },
-    { label: "Show my 311 improvement plan", match: /improvement plan|success agent/i,
-      reply: "Opening your Nico Success Agent improvement plan…",
+    { label: "Show my 311 improvement plan", match: /improvement plan|success agent|recommendations/i,
+      reply: "Opening Nico’s CEL-driven improvement recommendations…",
       go: "dashboards.html?tab=agent" },
     { label: "Create a city-only rule from staff corrections", match: /city.?only rule|staff correction/i,
       reply: "19 water-pooling cases were corrected from Streets to Utilities — here’s the proposed storm-drain proximity rule.",
@@ -159,7 +160,7 @@
       reply: "Opening evidence, approval scope, and the audit trail for this recommendation…",
       go: "dashboards.html?tab=agent&rec=rec-storm-drain&evidence=1" },
     { label: "What changes still need approval?", match: /need approval|approval/i,
-      reply: "Three changes are ready for approval — nothing deploys to production without city sign-off.",
+      reply: "Three changes are ready for approval. Nothing deploys to production without city sign-off.",
       go: "dashboards.html?tab=agent&filter=ready" }
   ];
 
@@ -167,7 +168,7 @@
     "Show me the city manager dashboard", "Run a pothole report demo", "Configure Harbor Mesa",
     "Show after-hours surge", "Compare Envoz to SeeClickFix", "Open staff triage",
     "What service gaps should we fix?", "Generate a council proof report",
-    "Show the Continuous Civic Improvement Loop", "What has Nico learned this week?",
+    "Show the Continuous Evaluation Loop", "What has Nico learned this week?",
     "Show my 311 improvement plan", "Run this recommendation in sandbox",
     "Explain why this recommendation is safe", "What changes still need approval?"
   ];
@@ -238,6 +239,11 @@
     document.addEventListener("click", function (e) {
       const opener = e.target.closest("[data-nico-open]");
       if (opener) toggle(true);
+      const pilot = e.target.closest("[data-pilot-open]");
+      if (pilot) {
+        e.preventDefault();
+        openPilotForm({ tier: pilot.getAttribute("data-tier") || "" });
+      }
     });
     document.addEventListener("keydown", function (e) {
       if (e.key === "Escape" && panel.classList.contains("open")) toggle(false);
@@ -331,6 +337,7 @@
     }).join('<div class="wf-connector" style="margin-left:25px"></div>');
     return (
       '<div id="' + id + '">' +
+      '<p class="small" style="color:var(--muted);margin:0 0 12px">How we picture the Continuous Evaluation Loop in action: an illustration of how evidence becomes approved improvements.</p>' +
       '<div class="chip-row" style="margin-bottom:14px"><span class="chip chip-teal">Listen → Understand → Route → Resolve → Measure → Learn → Recommend → Approve → Improve</span></div>' +
       steps +
       '<div class="audit-ribbon" style="margin-top:16px"><span>🛡</span><span><strong style="color:#fff">Envoz recommends. City staff approve.</strong> Every change is audited.</span></div></div>'
@@ -359,10 +366,10 @@
 
   function openLoopModal() {
     openModal(
-      "<h3>The 311 program that improves itself — safely.</h3>" +
-      '<p class="small" style="color:var(--muted)">Envoz learns from every routed case, staff correction, SLA outcome, and unknown category — then recommends improvements city staff can approve.</p>' +
+      "<h3>The 311 program that improves itself, safely.</h3>" +
+      '<p class="small" style="color:var(--muted)">Every routed case, staff correction, SLA outcome, and unknown category becomes evidence Nico turns into improvements city staff approve.</p>' +
       loopHTML("loop-modal-viz") +
-      '<div style="margin-top:16px"><a class="btn btn-primary btn-sm" href="dashboards.html?tab=cel">Open the Learning Ledger</a></div>'
+      '<div style="margin-top:16px"><a class="btn btn-primary btn-sm" href="dashboards.html?tab=cel">Open the CEL Ledger</a></div>'
     );
     const viz = document.getElementById("loop-modal-viz");
     if (viz) setTimeout(function () { animateLoop(viz); }, 350);
@@ -390,6 +397,120 @@
     document.removeEventListener("keydown", escClose);
   }
 
+  /* ---------------- Inline SVG icon set ----------------
+     Replaces emoji used as UI iconography. Monochrome, currentColor,
+     sized to 1em. Keep emoji only inside simulated chat/call transcripts. */
+  const ICON_PATHS = {
+    mic: '<path d="M12 3a3 3 0 0 0-3 3v6a3 3 0 0 0 6 0V6a3 3 0 0 0-3-3z"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
+    phone: '<path d="M6.5 4h3l1.5 4-2 1.5a11 11 0 0 0 5 5l1.5-2 4 1.5v3a2 2 0 0 1-2 2A16 16 0 0 1 4.5 6a2 2 0 0 1 2-2z"/>',
+    pin: '<path d="M12 21s7-5.5 7-11a7 7 0 0 0-14 0c0 5.5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/>',
+    check: '<path d="M20 6 9 17l-5-5"/>',
+    warning: '<path d="M12 3 2 20h20L12 3z"/><path d="M12 10v4M12 17.5v.5"/>',
+    shield: '<path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6l7-3z"/><path d="M9 12l2 2 4-4"/>',
+    chart: '<path d="M4 20V4M4 20h16M8 16v-4M12 16V8M16 16v-6"/>',
+    gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/>',
+    doc: '<path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4M9 13h6M9 17h6M9 9h2"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/>',
+    route: '<circle cx="6" cy="18" r="2.4"/><circle cx="18" cy="6" r="2.4"/><path d="M8 16.5 15.5 8M8 8h5a3 3 0 0 1 0 6"/>',
+    building: '<path d="M4 21V5l8-3 8 3v16M9 21v-4h6v4M8 8h1M8 12h1M15 8h1M15 12h1"/>',
+    wrench: '<path d="M15 6a4 4 0 0 0-5 5L4 17l3 3 6-6a4 4 0 0 0 5-5l-2.5 2.5L13 9l1.5-3z"/>',
+    bell: '<path d="M18 15V10a6 6 0 0 0-12 0v5l-2 2h16l-2-2z"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+    users: '<circle cx="9" cy="8" r="3"/><path d="M3 20c0-3.5 3-5 6-5s6 1.5 6 5"/><path d="M16 6a3 3 0 0 1 0 6M21 20c0-2.5-1.5-4-4-4.5"/>',
+    layers: '<path d="M12 3 3 8l9 5 9-5-9-5z"/><path d="M3 13l9 5 9-5M3 8v5M21 8v5"/>',
+    play: '<path d="M7 4v16l13-8z"/>',
+    scale: '<path d="M12 3v18M6 21h12M4 8h16M8 8l-4 7a4 4 0 0 0 8 0L8 8zM16 8l4 7a4 4 0 0 0-8 0l4-7z"/>',
+    lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/>',
+    sparkle: '<path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8L12 3z"/>',
+    map: '<path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>',
+    flag: '<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>'
+  };
+  function icon(name, cls) {
+    const p = ICON_PATHS[name];
+    if (!p) return "";
+    return '<svg class="i-icon' + (cls ? " " + cls : "") + '" viewBox="0 0 24 24" width="1em" height="1em" fill="none" ' +
+      'stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" ' +
+      'aria-hidden="true" focusable="false">' + p + "</svg>";
+  }
+
+  /* ---------------- Pilot scoping form (primary commercial CTA) ---------------- */
+  function openPilotForm(prefill) {
+    const tier = prefill && prefill.tier ? prefill.tier : "";
+    openModal(
+      '<h3 style="margin-bottom:4px">Book a 20-minute pilot scoping call</h3>' +
+      '<p class="small" style="color:var(--muted);margin-bottom:18px">Tell us about your city and we reply within 2 business days with a scoped pilot outline. No obligation.</p>' +
+      '<form id="pilot-form" novalidate>' +
+      (tier ? '<input type="hidden" name="tier" value="' + tier.replace(/"/g, "&quot;") + '">' : "") +
+      '<div class="grid grid-2" style="gap:14px">' +
+      '<div><label class="field-label" for="pf-name">Your name</label><input id="pf-name" name="name" type="text" required autocomplete="name"></div>' +
+      '<div><label class="field-label" for="pf-city">City / county</label><input id="pf-city" name="city" type="text" required autocomplete="organization"></div>' +
+      '<div><label class="field-label" for="pf-pop">Population served</label><input id="pf-pop" name="population" type="text" inputmode="numeric" placeholder="e.g. 120,000"></div>' +
+      '<div><label class="field-label" for="pf-crm">Current 311 CRM</label><select id="pf-crm" name="crm">' +
+      '<option value="">Select…</option><option>SeeClickFix / CivicPlus</option><option>Tyler</option><option>Granicus</option>' +
+      '<option>QAlert / Catalis</option><option>Salesforce</option><option>Accela</option><option>Cityworks</option>' +
+      '<option>Other</option><option>None / voicemail today</option></select></div>' +
+      '<div style="grid-column:1/-1"><label class="field-label" for="pf-email">Work email</label><input id="pf-email" name="email" type="email" required autocomplete="email"></div>' +
+      "</div>" +
+      '<div id="pf-error" class="small" style="color:var(--red-700);margin-top:10px;display:none" role="alert"></div>' +
+      '<div class="flex flex-wrap" style="margin-top:18px;gap:10px">' +
+      '<button class="btn btn-primary" type="submit">Request scoping call</button>' +
+      '<a class="btn btn-secondary" href="voice-ai.html?demo=pothole">Watch the demo first</a>' +
+      "</div>" +
+      '<p class="small" style="color:var(--muted);margin-top:14px">We will never assert certifications we do not hold. Ask us for the security roadmap.</p>' +
+      "</form>"
+    );
+    const form = document.getElementById("pilot-form");
+    if (!form) return;
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const name = form.name.value.trim(), city = form.city.value.trim(), email = form.email.value.trim();
+      const err = document.getElementById("pf-error");
+      if (!name || !city || !/.+@.+\..+/.test(email)) {
+        err.textContent = "Please add your name, city, and a valid work email.";
+        err.style.display = "block";
+        return;
+      }
+      /* DEMO PROTOTYPE: no live endpoint. Swap the block below for a real
+         POST or calendar URL (e.g. window.location = 'https://cal.example/envoz').
+         mailto: is the working fallback. */
+      const subject = encodeURIComponent("Pilot scoping call — " + city);
+      const body = encodeURIComponent(
+        "Name: " + name + "\nCity/county: " + city +
+        "\nPopulation: " + form.population.value.trim() +
+        "\nCurrent CRM: " + form.crm.value + "\nEmail: " + email +
+        (tier ? "\nInterested tier: " + tier : "")
+      );
+      openModal(
+        '<div class="center" style="padding:8px 0">' +
+        '<div class="icon-tile green" style="margin:0 auto 14px">' + icon("check") + "</div>" +
+        "<h3>Thanks, " + escHtml(name) + ".</h3>" +
+        '<p style="max-width:46ch;margin:0 auto 8px">This is a demonstration prototype, so nothing was sent automatically. In production, this books a 20-minute scoping call and we reply within 2 business days with a scoped pilot outline for ' + escHtml(city) + ".</p>" +
+        '<p class="small" style="color:var(--muted);max-width:46ch;margin:0 auto 18px">To reach us now, use the email below — it is pre-filled with what you entered.</p>' +
+        '<a class="btn btn-primary" href="mailto:pilots@envoz311.example.com?subject=' + subject + "&body=" + body + '">Open pre-filled email</a>' +
+        "</div>"
+      );
+    });
+    const first = document.getElementById("pf-name");
+    if (first) first.focus();
+  }
+  function escHtml(s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); }
+
+  /* ---------------- Standard closing CTA band ---------------- */
+  function closingCTA(opts) {
+    opts = opts || {};
+    const heading = opts.heading || "Ready to see it in your city?";
+    const sub = opts.sub || "Start with a 90-day pilot, scoped to fit under most cities’ small-purchase authority.";
+    return (
+      '<section class="section section-dark grid-texture"><div class="container center">' +
+      '<h2>' + heading + "</h2>" +
+      '<p class="lede" style="margin:0 auto 22px">' + sub + "</p>" +
+      '<div class="flex flex-wrap" style="justify-content:center;gap:12px">' +
+      '<button class="btn btn-primary btn-lg" type="button" data-pilot-open>Book a 20-minute pilot scoping call</button>' +
+      '<a class="btn btn-secondary btn-lg" href="voice-ai.html?demo=pothole">Watch the demo</a>' +
+      "</div></div></section>"
+    );
+  }
+
   /* ---------------- Reveal on scroll ---------------- */
   function initReveal() {
     const els = document.querySelectorAll(".reveal");
@@ -414,11 +535,14 @@
     loopHTML: loopHTML,
     animateLoop: animateLoop,
     poweredPill: poweredPill,
+    icon: icon,
+    openPilotForm: openPilotForm,
+    closingCTA: closingCTA,
     nicoSay: function (t) { toggle(true); nicoSay(t); },
     nicoCommand: handleCommand,
     param: function (k) { return new URLSearchParams(location.search).get(k); },
     confidenceChip: function (pct) {
-      const low = pct < 70;
+      const low = pct < 60;
       return '<span class="chip chip-confidence' + (low ? " low" : "") + '" title="AI routing confidence">' +
         (low ? "◔" : "●") + " " + pct + "% confidence</span>";
     }

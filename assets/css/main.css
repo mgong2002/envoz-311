@@ -3,6 +3,23 @@
    Calm, premium, public-sector SaaS.
    ============================================================ */
 
+/* Public Sans — the U.S. government's open typeface (OFL).
+   Vendored as variable woff2 (self-hosted; no external requests). */
+@font-face {
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/public-sans-latin.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Public Sans";
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../fonts/public-sans-latin-italic.woff2") format("woff2");
+}
+
 :root {
   /* Palette */
   --navy-950: #081527;
@@ -52,8 +69,8 @@
   --brand-ink: var(--navy-900);
   --link: var(--ocean-600);
 
-  /* Type */
-  --font: "Inter", "Public Sans", "Source Sans 3", "SF Pro Text", -apple-system,
+  /* Type — Public Sans (U.S. gov open typeface) leads the stack */
+  --font: "Public Sans", "Inter", "Source Sans 3", "SF Pro Text", -apple-system,
     BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: "SF Mono", "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo,
     Consolas, monospace;
@@ -771,6 +788,32 @@ details.faq-item .faq-body { padding: 0 20px 18px; color: var(--body); }
   pointer-events: none;
 }
 .infra-watermark svg, .infra-watermark img { height: 10px; width: auto; opacity: 0.7; }
+
+/* ---------------- Inline SVG icons ---------------- */
+.i-icon { flex-shrink: 0; vertical-align: -0.14em; overflow: visible; }
+.icon-tile .i-icon { width: 1.15em; height: 1.15em; }
+.btn .i-icon { width: 1.05em; height: 1.05em; }
+.chip .i-icon { width: 0.95em; height: 0.95em; }
+
+/* ---------------- Tinted emphasis panels (replaces colored left-rail cards) ---------------- */
+.tinted-panel { border-radius: var(--r-lg); padding: 18px 20px; border: 1px solid var(--line); background: var(--offwhite); }
+.tinted-panel.teal { background: var(--aqua-50); border-color: var(--teal-100); }
+.tinted-panel.amber { background: var(--amber-100); border-color: rgba(180, 83, 9, 0.25); }
+.tinted-panel.red { background: var(--red-100); border-color: rgba(180, 35, 24, 0.28); }
+.tinted-panel.purple { background: var(--purple-100); border-color: rgba(109, 91, 208, 0.22); }
+.tinted-panel.green { background: var(--green-100); border-color: rgba(18, 128, 92, 0.22); }
+
+/* ---------------- Tap targets (WCAG 2.5.8) ---------------- */
+a.small:not(.btn), .card > a:not(.btn), .link-arrow { padding-block: 4px; }
+.site-footer a { padding: 6px 0; min-height: 24px; }
+
+/* ---------------- Tabs: mobile scroll affordance ---------------- */
+@media (max-width: 720px) {
+  .tabs {
+    -webkit-mask-image: linear-gradient(90deg, #000 88%, transparent);
+    mask-image: linear-gradient(90deg, #000 88%, transparent);
+  }
+}
 
 /* ---------------- Responsive safety overrides (keep last) ---------------- */
 /* Grid/flex items must be allowed to shrink; inner scroll containers handle wide content */

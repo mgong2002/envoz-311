@@ -38,7 +38,7 @@ window.ENVOZ_DATA = {
     },
     {
       id: "VR-4293", type: "Illegal Dumping / Bulk Waste", location: "Paseo Market alley",
-      neighborhood: "Paseo Market Corridor", confidence: 91, priority: "Medium", dept: "Sanitation",
+      neighborhood: "Paseo Market Corridor", confidence: 91, priority: "Normal", dept: "Sanitation",
       status: "New", action: "Approve", queue: "New", channel: "Voice",
       time: "7:12 AM", proof: "Case number issued by SeeClickFix at 7:14 AM",
       rationale: "Bulk items on public right-of-way; matches dumping pattern behind commercial corridor.",
@@ -70,7 +70,7 @@ window.ENVOZ_DATA = {
     },
     {
       id: "VR-4317", type: "Water Pooling", location: "Oak Bluff Dr near storm drain #SD-2214",
-      neighborhood: "Oak Bluff", confidence: 76, priority: "Medium", dept: "Utilities?",
+      neighborhood: "Oak Bluff", confidence: 76, priority: "Normal", flag: "SLA Risk", dept: "Utilities?",
       status: "SLA Risk", action: "Reroute", queue: "SLA Risk", channel: "Voice",
       time: "8:20 PM", proof: "Case number issued by SeeClickFix at 8:22 PM",
       rationale: "Initially routed to Streets; pooling within 30 ft of storm-drain asset suggests Utilities per city correction history.",
@@ -86,23 +86,23 @@ window.ENVOZ_DATA = {
     },
     {
       id: "VR-4320", type: "Unknown / Beehive in Bus Shelter", location: "Jeffrey Transit Stop",
-      neighborhood: "School Zone South", confidence: 41, priority: "Needs Review", dept: "Unknowns",
+      neighborhood: "School Zone South", confidence: 41, priority: "Normal", flag: "Needs Review", dept: "Unknowns",
       status: "Needs Review", action: "Route", queue: "Unknowns", channel: "Voice",
-      time: "3:45 PM", proof: "Held in learning queue · no CRM case yet",
-      rationale: "No confident taxonomy match; three candidate classifications below routing threshold.",
+      time: "3:45 PM", proof: "Filed as other_unknown · VR-4320 issued · awaiting human re-type",
+      rationale: "No confident taxonomy match; three candidates below the 0.60 routing threshold. Filed as other_unknown so a case number is always issued, then re-typed from the Unknowns queue.",
       summary: "Resident reports a basketball-sized beehive inside the bus shelter at Jeffrey Transit Stop. Active bees; shelter in daily use.",
       transcript: [
         ["Resident", "There's a basketball-sized beehive in the bus shelter."],
         ["Nico", "Thanks — is anyone being stung or having an allergic reaction right now?"],
         ["Resident", "No, people are just avoiding the shelter."]
       ],
-      fields: { size: "~Basketball", activity: "Active", structure: "Transit shelter (city asset)" },
+      fields: { size: "~Basketball", activity: "Active", structure: "Transit shelter (city asset)", caseState: "other_unknown" },
       candidates: [["Parks Maintenance", 41], ["Code Enforcement", 33], ["Animal / Vector Control", 29]],
-      related: [], sla: "Human review · 4h target", sources: []
+      related: [], sla: "Human review today · set by tenant config", sources: ["SeeClickFix write API"]
     },
     {
       id: "VR-4330", type: "Streetlight Outage", location: "School Zone South crosswalk, Maple & 3rd",
-      neighborhood: "School Zone South", confidence: 89, priority: "Medium", dept: "Transportation",
+      neighborhood: "School Zone South", confidence: 89, priority: "Normal", dept: "Transportation",
       status: "New", action: "Approve", queue: "New", channel: "Voice · Spanish",
       time: "8:51 PM", proof: "Case number issued by SeeClickFix at 8:53 PM",
       rationale: "City-owned luminaire at school crosswalk; elevated priority due to school-zone flag.",
@@ -117,7 +117,7 @@ window.ENVOZ_DATA = {
     },
     {
       id: "VR-4337", type: "Abandoned Vehicle", location: "Mesa Ridge Rd, block 400",
-      neighborhood: "Mesa Ridge", confidence: 83, priority: "Medium", dept: "Code Enforcement",
+      neighborhood: "Mesa Ridge", confidence: 83, priority: "Normal", dept: "Code Enforcement",
       status: "Needs Review", action: "Review", queue: "Needs Review", channel: "Web",
       time: "11:05 AM", proof: "Case number issued by SeeClickFix at 11:05 AM",
       rationale: "Vehicle stationary 9+ days per resident; 72-hour ordinance applies on public street.",
@@ -128,10 +128,10 @@ window.ENVOZ_DATA = {
     },
     {
       id: "VR-4342", type: "Storm Drain Burbling", location: "Oak Bluff Dr & Canyon Way",
-      neighborhood: "Oak Bluff", confidence: 64, priority: "Surge Cluster", dept: "Public Works?",
+      neighborhood: "Oak Bluff", confidence: 64, priority: "Normal", flag: "Surge Cluster", dept: "Public Works?",
       status: "Needs Review", action: "Review", queue: "Unknowns", channel: "Voice · after-hours",
       time: "10:31 PM", proof: "Case number issued by SeeClickFix at 10:33 PM",
-      rationale: "Phrase “storm grate burbling” matched provisional surge cluster (14 similar reports); below confident-routing threshold.",
+      rationale: "Routed to Public Works on a 0.64 match, then held by the surge-cluster monitor: 14 “storm grate burbling” reports in 48h are likely one event, not fourteen cases.",
       summary: "Resident reports gurgling sound and slow backflow at a storm grate during rain. Part of a 14-report cluster in Oak Bluff.",
       transcript: [
         ["Resident", "The storm grate on our corner is burbling and water's coming back up."],
@@ -147,19 +147,19 @@ window.ENVOZ_DATA = {
   ledger: [
     { date: "Jul 2", signal: "Staff correction", evidence: "19 water-pooling reroutes",
       change: "Add storm-drain proximity rule", scope: "City-only", status: "Ready for approval",
-      impact: "-14% reroutes", audit: "LL-1042" },
+      impact: "-14% reroutes", audit: "CEL-1042" },
     { date: "Jul 3", signal: "Language audit", evidence: "Spanish calls near schools",
       change: "Add local landmark vocabulary", scope: "Department memory", status: "In sandbox",
-      impact: "+11% address confidence", audit: "LL-1043" },
+      impact: "+11% address confidence", audit: "CEL-1043" },
     { date: "Jul 4", signal: "Surge pattern", evidence: "“storm grate burbling” cluster",
       change: "Add storm-drain backup subcategory", scope: "City taxonomy", status: "Approved",
-      impact: "Faster winter triage", audit: "LL-1044" },
+      impact: "Faster winter triage", audit: "CEL-1044" },
     { date: "Jul 5", signal: "Connector health", evidence: "SeeClickFix API retry spike",
       change: "Adjust retry window", scope: "Tenant config", status: "Completed",
-      impact: "No duplicate confirmations", audit: "LL-1045" },
+      impact: "No duplicate confirmations", audit: "CEL-1045" },
     { date: "Jul 6", signal: "Knowledge gap", evidence: "Trash schedule ambiguity",
       change: "Normalize neighborhood names", scope: "Data quality", status: "Assigned",
-      impact: "Lower escalation rate", audit: "LL-1046" }
+      impact: "Lower escalation rate", audit: "CEL-1046" }
   ],
 
   recommendations: [
@@ -217,7 +217,7 @@ window.ENVOZ_DATA = {
   successMetrics: {
     coverage: "100%", answeredBeforeSecondRing: "98.7%", avgHold: "0:04",
     containment: "76%", requestsCreated: "1,248", avgHandle: "2:18",
-    routingAccuracy: "91.6%", slaCompliance: "93.4%", costPerInteraction: "$0.42",
+    routingAccuracy: "91.6%", slaCompliance: "93.4%", costPerInteraction: "$0.50",
     staffHoursSaved: "312", csat: "4.6 / 5", languages: "18",
     afterHoursCaptured: "327", unknownRate: "3.8%"
   },
@@ -256,9 +256,9 @@ window.ENVOZ_DATA = {
   ],
 
   agent: {
-    status: "Monitoring 24/7", lastReview: "Today, 7:12 AM",
+    status: "Drawing on CEL evidence", lastReview: "Today, 7:12 AM",
     focus: "Reducing storm-drain misroutes before winter surge",
     confidence: "89%", openRecs: 6, readyForApproval: 3,
-    hoursSavedIfApproved: "42/month", nextCouncilUpdate: "Friday"
+    nextCouncilUpdate: "Friday"
   }
 };
