@@ -130,7 +130,7 @@
     if (!li || li.classList.contains("done")) return;
     li.classList.add("done");
     var sr = li.querySelector(".ck-sr");
-    if (sr) sr.textContent = "— complete";
+    if (sr) sr.textContent = "· complete";
   }
 
   function uncheckAll() {
@@ -138,7 +138,7 @@
     items.forEach(function (li) {
       li.classList.remove("done");
       var sr = li.querySelector(".ck-sr");
-      if (sr) sr.textContent = "— pending";
+      if (sr) sr.textContent = "· pending";
     });
   }
 
@@ -420,8 +420,8 @@
     "Accela": { g: "Systems of Record", d: "Creates Accela records for code-enforcement-shaped requests, with parcel context from your GIS layers." },
     "OpenGov EAM": { g: "Systems of Record", d: "Turns confirmed infrastructure requests into OpenGov EAM work orders against the right asset." },
     "Cityworks": { g: "Systems of Record", d: "Creates Cityworks service requests tied to GIS assets — the crew sees the same pin the resident described." },
-    "Twilio": { g: "Telephony & Voice", d: "Voice and SMS transport. Your existing 311 number can forward after-hours calls in one afternoon." },
-    "Telnyx": { g: "Telephony & Voice", d: "Alternative carrier with number porting and global SIP — useful for redundancy requirements." },
+    "Twilio": { g: "Telephony & Voice", badge: "Supported option", badgeClass: "chip-teal", d: "Voice and SMS transport, offered as a supported carrier option rather than a committed carrier. Your existing 311 number can forward after-hours calls in one afternoon." },
+    "Telnyx": { g: "Telephony & Voice", badge: "Supported option", badgeClass: "chip-teal", d: "Alternative carrier with number porting and global SIP, a supported option useful for redundancy requirements." },
     "SIP trunk": { g: "Telephony & Voice", d: "Bring your own trunk: Envoz registers against your PBX so nothing about your phone bill changes." },
     "TTY/RTT": { g: "Telephony & Voice", d: "Text telephone and real-time text support, so accessible channels run through the same safety-gated pipeline." },
     "Esri / ArcGIS": { g: "GIS & Maps", d: "First-class support for the layers most cities already maintain — including the road ownership layer Harbor Mesa linked in this demo." },
@@ -449,7 +449,7 @@
       "<h3>" + name + "</h3>" +
       '<div class="chip-row" style="margin:8px 0 14px">' +
       '<span class="chip ' + g.chip + '">' + c.g + "</span>" +
-      '<span class="chip chip-outline">Available in sandbox</span>' +
+      '<span class="chip ' + (c.badgeClass || "chip-outline") + '">' + (c.badge || "Available in sandbox") + "</span>" +
       "</div>" +
       "<p>" + c.d + "</p>" +
       '<div class="table-wrap" style="margin:16px 0"><table class="data-table"><tbody>' +
@@ -489,8 +489,19 @@
     }
   });
 
+  /* ---------------- Fill static data-icon placeholders with inline SVG ---------------- */
+  function fillIcons(root) {
+    if (!window.Envoz || !window.Envoz.icon) return;
+    (root || document).querySelectorAll("[data-icon]").forEach(function (el) {
+      if (el.getAttribute("data-icon-done")) return;
+      el.innerHTML = window.Envoz.icon(el.getAttribute("data-icon"));
+      el.setAttribute("data-icon-done", "1");
+    });
+  }
+
   /* ---------------- Init ---------------- */
   document.addEventListener("DOMContentLoaded", function () {
+    fillIcons();
     convo = document.getElementById("convo");
     btnContinue = document.getElementById("btn-continue");
     btnAuto = document.getElementById("btn-auto");

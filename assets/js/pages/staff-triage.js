@@ -13,13 +13,13 @@
   var QUEUES = ["All", "New", "Needs Review", "Unknowns", "SLA Risk", "Resolved", "External Referrals", "Data Quality"];
 
   var QUEUE_NOTES = {
-    "All": "Every case arrives classified, geo-tagged, and confidence-scored — clean cases, not chaotic transcripts.",
+    "All": "Every case arrives classified, geo-tagged, and confidence-scored. Clean cases instead of chaotic transcripts.",
     "New": "Clean, high-confidence cases ready for one-click approval.",
-    "Needs Review": "Nico routed these but wants a human eye — ordinance nuance or borderline confidence.",
-    "Unknowns": "Below the routing threshold, so Nico refused to guess. Your correction teaches the system — on your terms.",
-    "SLA Risk": "The clock is running — earliest deadline first.",
+    "Needs Review": "Nico routed these but wants a human eye: ordinance nuance or borderline confidence.",
+    "Unknowns": "Below the routing threshold, so Nico refused to guess. Your correction teaches the system on your terms.",
+    "SLA Risk": "The clock is running. Earliest deadline first.",
     "Resolved": "Illustrative resolved sample. The full history stays in SeeClickFix, your system of record.",
-    "External Referrals": "Outside city jurisdiction — warm-referred with full context so residents never repeat themselves.",
+    "External Referrals": "Outside city jurisdiction. Warm-referred with full context so residents never repeat themselves.",
     "Data Quality": "Nico flags data problems before they become resident problems."
   };
 
@@ -37,11 +37,11 @@
 
   /* Small illustrative sets for informational queues (not full cases) */
   var RESOLVED_ROWS = [
-    { id: "VR-4262", type: "Pothole / Road Hazard", location: "Alton Pkwy corridor", confidence: 94, priority: "Medium", dept: "Public Works", note: "Resolved Jun 12" },
-    { id: "VR-4144", type: "Illegal Dumping / Bulk Waste", location: "Paseo Market alley", confidence: 90, priority: "Medium", dept: "Sanitation", note: "Resolved Jun 16" }
+    { id: "VR-4262", type: "Pothole / Road Hazard", location: "Alton Pkwy corridor", confidence: 94, priority: "Normal", dept: "Public Works", note: "Resolved Jun 12" },
+    { id: "VR-4144", type: "Illegal Dumping / Bulk Waste", location: "Paseo Market alley", confidence: 90, priority: "Normal", dept: "Sanitation", note: "Resolved Jun 16" }
   ];
   var REFERRAL_ROWS = [
-    { id: "VR-4306", type: "Freeway Ramp Debris", location: "I-405 SB ramp at Alton", confidence: 88, priority: "Medium", dept: "County Partner", note: "Warm-referred · resident kept one status link" }
+    { id: "VR-4306", type: "Freeway Ramp Debris", location: "I-405 SB ramp at Alton", confidence: 88, priority: "Normal", dept: "County Partner", note: "Warm-referred · resident kept one status link" }
   ];
 
   var cases = {};        // id -> shared data object (read-only)
@@ -90,12 +90,20 @@
       .replace(/^./, function (m) { return m.toUpperCase(); });
   }
 
-  function priorityHTML(p) {
-    if (p === "High") return '<span class="priority-high">High</span>';
-    if (p === "Medium") return '<span class="priority-medium">Medium</span>';
-    if (p === "Low") return '<span class="priority-low">Low</span>';
-    if (p === "Surge Cluster") return '<span class="chip chip-ocean">Surge Cluster</span>';
-    return '<span class="chip chip-amber">' + p + "</span>";
+  function ic(name) {
+    return (window.Envoz && window.Envoz.icon) ? window.Envoz.icon(name) : "";
+  }
+
+  // Priority is High / Normal / Low. An optional queue flag
+  // ("SLA Risk" / "Needs Review" / "Surge Cluster") renders as a
+  // separate chip beside it — a flag is never a priority.
+  function priorityHTML(p, flag) {
+    var pr;
+    if (p === "High") pr = '<span class="priority-high">High</span>';
+    else if (p === "Low") pr = '<span class="priority-low">Low</span>';
+    else pr = '<span class="priority-low">' + (p || "Normal") + "</span>";
+    var fl = flag ? ' <span class="chip chip-amber">' + flag + "</span>" : "";
+    return pr + fl;
   }
 
   function statusClass(s) {
@@ -108,9 +116,9 @@
   function actionChip(a) {
     var cls = "chip-outline";
     if (a === "Approve") cls = "chip-green";
-    if (a === "Reroute" || a === "Route") cls = "chip-amber";
-    if (a === "Review") cls = "chip-ocean";
-    if (/✓|Merged|Escalated/.test(a)) cls = "chip-teal";
+    else if (a === "Reroute" || a === "Route") cls = "chip-amber";
+    else if (a === "Review") cls = "chip-ocean";
+    else if (/Approved|Rerouted|Merged|Escalated|Routed|Corrected/.test(a)) cls = "chip-teal";
     return '<span class="chip ' + cls + '">' + a + "</span>";
   }
 
@@ -171,7 +179,7 @@
       '<div style="display:flex;flex-direction:column;gap:10px;padding:6px 2px">' +
       '<div class="flex flex-wrap" style="gap:8px"><span class="chip chip-amber">Data quality task</span><span class="chip chip-outline">Assigned · audit LL-1046</span></div>' +
       "<strong>Normalize 17 inconsistent trash-schedule neighborhood names</strong>" +
-      '<span class="small" style="color:var(--muted)">Imported from a spreadsheet during onboarding. Inconsistent names cause grounded-answer escalations on trash-day questions — Nico flagged it before residents ever noticed.</span>' +
+      '<span class="small" style="color:var(--muted)">Imported from a spreadsheet during onboarding. Inconsistent names cause grounded-answer escalations on trash-day questions. Nico flagged it before residents ever noticed.</span>' +
       body + "</div></td></tr>";
   }
 
@@ -179,12 +187,12 @@
     var st = state[c.id];
     var sel = c.id === selectedId ? " selected" : "";
     return '<tr class="clickable' + sel + '" data-case="' + c.id + '" tabindex="0" role="button" ' +
-      'aria-label="Open case ' + c.id + " — " + c.type + '">' +
+      'aria-label="Open case ' + c.id + ": " + c.type + '">' +
       '<td><strong class="mono">' + c.id + '</strong><div class="small ' + statusClass(st.status) + '">' + st.status + "</div></td>" +
       "<td>" + c.type + '<div class="small" style="color:var(--muted)">' + c.channel + " · " + c.time + "</div></td>" +
       "<td>" + c.location + "</td>" +
       "<td>" + window.Envoz.confidenceChip(c.confidence) + "</td>" +
-      "<td>" + priorityHTML(st.priority) + "</td>" +
+      "<td>" + priorityHTML(st.priority, c.flag) + "</td>" +
       "<td>" + st.dept + "</td>" +
       "<td>" + actionChip(st.action) + "</td></tr>";
   }
@@ -200,13 +208,13 @@
 
     if (activeQueue === "Resolved") {
       body.innerHTML = RESOLVED_ROWS.map(infoRowHTML).join("") +
-        noteRow("Illustrative resolved sample — Envoz writes the outcome back, but the full case history lives in SeeClickFix, your system of record.");
+        noteRow("Illustrative resolved sample. Envoz writes the outcome back, but the full case history lives in SeeClickFix, your system of record.");
       chip.textContent = RESOLVED_ROWS.length + " illustrative cases";
       return;
     }
     if (activeQueue === "External Referrals") {
       body.innerHTML = REFERRAL_ROWS.map(infoRowHTML).join("") +
-        noteRow("This ramp is state-owned, so no city 311 case was forced through. Nico warm-referred it to the county partner with the transcript and location attached — the resident kept a single status link.");
+        noteRow("This ramp is state-owned, so no city 311 case was forced through. Nico warm-referred it to the county partner with the transcript and location attached, and the resident kept a single status link.");
       chip.textContent = REFERRAL_ROWS.length + " referral this week";
       return;
     }
@@ -242,7 +250,7 @@
       '<div class="map-grid" aria-hidden="true"></div>' +
       '<div class="map-label" style="top:10px;left:10px">Vista Robles GIS</div>' +
       '<div class="map-pin ' + p.cls + '" style="left:' + p.left + ";top:" + p.top + '"><span class="pin-head"></span></div>' +
-      '<div class="map-label" style="left:12px;bottom:10px;font-weight:700;color:var(--teal-700)">📍 ' + c.location + "</div></div>";
+      '<div class="map-label" style="left:12px;bottom:10px;font-weight:700;color:var(--teal-700)">' + ic("pin") + " " + c.location + "</div></div>";
   }
 
   function transcriptHTML(c) {
@@ -268,8 +276,8 @@
     var decided = ["Approved", "Merged", "Corrected"].indexOf(st.status) !== -1;
     var h = "<h4>Decide</h4>" +
       '<div class="flex flex-wrap" style="gap:8px">' +
-      actBtn("approve", "btn-primary", st.status === "Approved" ? "Approved ✓" : "✓ Approve route", st.status === "Approved") +
-      actBtn("reroute-open", "btn-secondary", "⇄ Reroute…", false) +
+      actBtn("approve", "btn-primary", st.status === "Approved" ? "Approved " + ic("check") : ic("check") + " Approve route", st.status === "Approved") +
+      actBtn("reroute-open", "btn-secondary", ic("route") + " Reroute…", false) +
       "</div>";
     if (st.rerouteOpen) {
       h += '<div style="margin-top:10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap">' +
@@ -279,13 +287,13 @@
     }
     h += "<h4>Queue hygiene</h4>" +
       '<div class="flex flex-wrap" style="gap:8px">' +
-      actBtn("merge", "btn-secondary", st.status === "Merged" ? "Merged ✓" : "Merge as duplicate", st.status === "Merged") +
+      actBtn("merge", "btn-secondary", st.status === "Merged" ? "Merged " + ic("check") : "Merge as duplicate", st.status === "Merged") +
       actBtn("related", "btn-secondary", "Keep as related", false) +
-      actBtn("escalate", "btn-secondary", "▲ Escalate", st.status === "Escalated") +
+      actBtn("escalate", "btn-secondary", ic("bell") + " Escalate", st.status === "Escalated") +
       "</div>" +
       "<h4>Teach Nico</h4>" +
       '<div class="flex flex-wrap" style="gap:8px">' +
-      actBtn("rule", "btn-secondary", "＋ Add city-only rule", false) +
+      actBtn("rule", "btn-secondary", ic("sparkle") + " Add city-only rule", false) +
       actBtn("taxonomy", "btn-secondary", "Submit as taxonomy candidate", false) +
       "</div>";
     void decided;
@@ -297,7 +305,7 @@
     var h = '<div class="case-detail" data-detail-case="' + c.id + '">';
 
     if (st.ribbon) {
-      h += '<div class="audit-ribbon detail-ribbon" tabindex="-1" role="status" style="margin-bottom:14px"><span aria-hidden="true">🛡</span><span>' + st.ribbon + "</span></div>";
+      h += '<div class="audit-ribbon detail-ribbon" tabindex="-1" role="status" style="margin-bottom:14px">' + ic("shield") + "<span>" + st.ribbon + "</span></div>";
     }
 
     h += '<div class="flex space-between flex-wrap" style="gap:8px">' +
@@ -309,8 +317,9 @@
       window.Envoz.confidenceChip(c.confidence) +
       '<span class="chip chip-navy">' + st.dept + "</span>" +
       (st.priority === "High" ? '<span class="chip chip-red">High priority</span>'
-        : st.priority === "Medium" ? '<span class="chip chip-amber">Medium priority</span>'
-        : '<span class="chip chip-ocean">' + st.priority + "</span>") +
+        : st.priority === "Low" ? '<span class="chip chip-outline">Low priority</span>'
+        : '<span class="chip chip-outline">Normal priority</span>') +
+      (c.flag ? '<span class="chip chip-amber">' + c.flag + "</span>" : "") +
       "</div>";
 
     h += "<h4>AI summary</h4><p class=\"small\" style=\"margin:0;color:var(--navy-800)\">" + c.summary + "</p>";
@@ -328,8 +337,8 @@
 
     h += "<h4>SLA timer</h4>";
     h += c.status === "SLA Risk"
-      ? '<div class="caution-strip"><span aria-hidden="true">⏱</span>' + c.sla + "</div>"
-      : '<div class="small" style="color:var(--navy-800)"><span class="chip chip-teal">⏱ ' + c.sla + "</span></div>";
+      ? '<div class="caution-strip">' + ic("clock") + "<span>" + c.sla + "</span></div>"
+      : '<div class="small" style="color:var(--navy-800)"><span class="chip chip-teal">' + ic("clock") + " " + c.sla + "</span></div>";
 
     var rationaleVal = st.draft !== null ? st.draft : st.rationale;
     h += "<h4>Why Nico routed it this way <span style=\"text-transform:none;letter-spacing:0\">· editable</span></h4>" +
@@ -339,7 +348,7 @@
     h += "<h4>Sources</h4>";
     h += c.sources.length
       ? '<div class="chip-row">' + c.sources.map(function (s) { return '<span class="chip chip-source">' + s + "</span>"; }).join("") + "</div>"
-      : '<p class="small" style="color:var(--muted);margin:0">No source layers consulted — held in the learning queue until a human routes it.</p>';
+      : '<p class="small" style="color:var(--muted);margin:0">No source layers consulted. Held in the learning queue until a human routes it.</p>';
 
     h += "<h4>Proof</h4>" +
       '<div class="proof-strip"><span class="proof-icon">✓</span>' + c.proof + "</div>";
@@ -350,7 +359,7 @@
       : '<p class="small" style="color:var(--muted);margin:0">No related cases within 0.5 mi in the last 30 days.</p>';
 
     if (c.id === "VR-4342" && st.status !== "Merged") {
-      h += '<div class="follower-box" style="margin-top:12px"><strong>🔁 13 similar reports — likely one event.</strong> Merge as follower? ' +
+      h += '<div class="follower-box" style="margin-top:12px"><strong>' + ic("layers") + ' 13 similar reports, likely one event.</strong> Merge as follower? ' +
         "Followers keep their own status link while crews work one parent case." +
         '<div class="flex flex-wrap" style="gap:8px;margin-top:10px">' +
         actBtn("merge", "btn-navy", "Merge as follower", false) +
@@ -358,7 +367,7 @@
     }
 
     if (c.id === "VR-4320") {
-      h += '<div class="caution-strip" style="margin-top:12px"><span aria-hidden="true">⚠</span><span>Human review required — this case is in the <a href="#learning-queue">unknowns learning queue</a> below.</span></div>';
+      h += '<div class="caution-strip" style="margin-top:12px">' + ic("warning") + '<span>Human review required. This case is in the <a href="#learning-queue">unknowns learning queue</a> below.</span></div>';
     }
 
     h += actionsHTML(c, st);
@@ -366,7 +375,7 @@
     h += "<h4>CEL event history</h4><ol class=\"cel-list\">" +
       st.cel.map(function (e) { return '<li><span class="t">' + e.t + "</span><span>" + e.txt + "</span></li>"; }).join("") +
       "</ol>" +
-      '<p class="small" style="color:var(--muted);margin-top:10px">Civic Evidence Ledger · every event reversible, versioned, audited · illustrative demo data.</p>';
+      '<p class="small" style="color:var(--muted);margin-top:10px">CEL · every event reversible, versioned, audited · illustrative demo data.</p>';
 
     h += "</div>";
     return h;
@@ -444,7 +453,7 @@
     if (action === "dq-task") {
       dqDone = true;
       renderTable();
-      window.Envoz.nicoSay("Cleanup task list created for the 17 inconsistent trash-schedule neighborhood names — assigned to Sanitation and logged as LL-1046.");
+      window.Envoz.nicoSay("Cleanup task list created for the 17 inconsistent trash-schedule neighborhood names, assigned to Sanitation and logged as LL-1046.");
       return;
     }
 
@@ -458,7 +467,7 @@
     switch (action) {
       case "approve":
         st.status = "Approved";
-        st.action = "Approved ✓";
+        st.action = "Approved " + ic("check");
         st.rerouteOpen = false;
         st.ribbon = "Route approved → " + st.dept + " · written back to SeeClickFix · <span class=\"mono\">" + ev + "</span> logged.";
         pushCel(st, "Staff approved route to " + st.dept + " · " + ev);
@@ -478,16 +487,16 @@
         var oldDept = st.dept;
         st.dept = newDept;
         st.status = "Rerouted";
-        st.action = "Rerouted ✓";
+        st.action = "Rerouted " + ic("check");
         st.rerouteOpen = false;
-        st.ribbon = "Rerouted " + oldDept + " → " + newDept + " · correction captured in <span class=\"mono\">" + ev + "</span> — Nico watches for a pattern before proposing any rule.";
+        st.ribbon = "Rerouted " + oldDept + " → " + newDept + " · correction captured in <span class=\"mono\">" + ev + "</span>. Nico watches for a pattern before proposing any rule.";
         pushCel(st, "Staff rerouted " + oldDept + " → " + newDept + " · correction evidence " + ev);
         break;
       }
 
       case "merge":
         st.status = "Merged";
-        st.action = "Merged ✓";
+        st.action = "Merged " + ic("check");
         st.ribbon = (id === "VR-4342"
           ? "Merged as follower of the Oak Bluff parent case (14 reports → 1 work order). Each resident keeps their own status link. "
           : "Merged as duplicate of the nearest related case. The resident still gets status updates. ") +
@@ -496,25 +505,25 @@
         break;
 
       case "related":
-        st.ribbon = "Kept as related — cross-linked, not merged. Nico records the decision so future clusters ask before assuming. <span class=\"mono\">" + ev + "</span> logged.";
+        st.ribbon = "Kept as related. Cross-linked rather than merged. Nico records the decision so future clusters ask before assuming. <span class=\"mono\">" + ev + "</span> logged.";
         pushCel(st, "Marked related (no merge) · " + ev);
         break;
 
       case "escalate":
         st.priority = "High";
         st.status = "Escalated";
-        st.action = "Escalated ▲";
-        st.ribbon = "Escalated to the duty supervisor with full transcript, fields, and map context — no one re-asks the resident anything. <span class=\"mono\">" + ev + "</span> logged.";
+        st.action = "Escalated " + ic("bell");
+        st.ribbon = "Escalated to the duty supervisor with full transcript, fields, and map context. No one re-asks the resident anything. <span class=\"mono\">" + ev + "</span> logged.";
         pushCel(st, "Escalated to supervisor · priority raised to High · " + ev);
         break;
 
       case "rule":
-        st.ribbon = "Draft city-only rule created from this case — scoped to Vista Robles, pending staff approval. <a href=\"dashboards.html?tab=agent&rec=rec-storm-drain\">Review in Nico’s queue →</a> <span class=\"mono\">" + ev + "</span>.";
+        st.ribbon = "Draft city-only rule created from this case. Scoped to Vista Robles, pending staff approval. <a href=\"dashboards.html?tab=agent&rec=rec-storm-drain\">Review in Nico’s queue →</a> <span class=\"mono\">" + ev + "</span>.";
         pushCel(st, "City-only rule drafted (pending approval) · " + ev);
         break;
 
       case "taxonomy":
-        st.ribbon = "Submitted as a global taxonomy candidate — anonymized evidence only. Nothing changes in any city without human review. <span class=\"mono\">" + ev + "</span> logged.";
+        st.ribbon = "Submitted as a global taxonomy candidate. Anonymized evidence only. Nothing changes in any city without human review. <span class=\"mono\">" + ev + "</span> logged.";
         pushCel(st, "Submitted as global taxonomy evidence (anonymized) · " + ev);
         break;
 
@@ -537,8 +546,8 @@
 
   var SCOPE_COPY = {
     "case": "Correction applied to VR-4320 only. The global model is untouched.",
-    "rule": "Draft city-only rule created for Vista Robles — “beehive / wasp nest on a transit asset” — pending staff approval in Nico’s recommendation queue.",
-    "dept": "Added to department memory — tenant-scoped vocabulary for the receiving department. No other city is affected.",
+    "rule": "Draft city-only rule created for Vista Robles: “beehive / wasp nest on a transit asset,” pending staff approval in Nico’s recommendation queue.",
+    "dept": "Added to department memory: tenant-scoped vocabulary for the receiving department. No other city is affected.",
     "global": "Submitted as anonymized global taxonomy evidence. The review board decides; nothing changes without human approval."
   };
 
@@ -571,14 +580,14 @@
       var st = state["VR-4320"];
       st.dept = dept;
       st.status = "Corrected";
-      st.action = "Routed ✓";
+      st.action = "Routed " + ic("check");
       st.ribbon = "Unknown resolved: routed to " + dept + " · scope: " + scopeInput.closest(".scope-option").querySelector("strong").textContent + " · <span class=\"mono\">" + ev + "</span> logged.";
       pushCel(st, "Staff correction: routed to " + dept + " · scope “" + scope + "” · " + ev);
 
       var result = document.getElementById("correction-result");
       result.innerHTML =
         '<div class="proof-strip"><span class="proof-icon">✓</span>' + SCOPE_COPY[scope] + "</div>" +
-        '<div class="audit-ribbon" style="margin-top:8px"><span aria-hidden="true">🛡</span><span>VR-4320 routed to ' + dept +
+        '<div class="audit-ribbon" style="margin-top:8px">' + ic("shield") + "<span>VR-4320 routed to " + dept +
         " · <span class=\"mono\">" + ev + "</span> · reversible · versioned · audited. Corrections never blindly overwrite the global model.</span></div>" +
         (scope === "rule"
           ? '<div style="margin-top:10px"><a class="btn btn-secondary btn-sm" href="dashboards.html?tab=agent">Review the drafted rule in Nico’s queue →</a></div>'
@@ -594,17 +603,17 @@
 
   var CCIL_STEPS = [
     ["Correction spotted", "VR-4317 · “Water pooling on Oak Bluff Dr” was initially routed to <strong>Streets</strong>."],
-    ["Staff reroute", "A staff member reroutes it to <strong>Utilities</strong> — “water pooling near a storm drain” is usually Utilities in Vista Robles."],
-    ["Evidence logged", "The Civic Evidence Ledger captures the correction — who, what, and why — alongside the 19 similar corrections made in the last 90 days."],
+    ["Staff reroute", "A staff member reroutes it to <strong>Utilities</strong>. “Water pooling near a storm drain” is usually Utilities in Vista Robles."],
+    ["Evidence logged", "The CEL captures the correction (who, what, and why) alongside the 19 similar corrections made in the last 90 days."],
     ["Nico proposes a city-only rule", "“When water pooling is reported within 30 feet of a storm-drain asset, route to Utilities unless the resident mentions pavement damage.” Scoped to Vista Robles. Nothing global."],
     ["Staff choose the scope", "Nothing deploys itself. Pick how far this correction reaches:"],
     ["Sandbox proof", ""]
   ];
 
   var CCIL_OUTCOMES = {
-    sandbox: "Sandbox run complete — zero production impact until a human approves.",
+    sandbox: "Sandbox run complete. Zero production impact until a human approves.",
     rule: "City-only rule drafted · status: Ready for approval · scoped to Vista Robles only.",
-    once: "Correction stays on VR-4317 only — no rule created. Nico keeps the evidence in case the pattern grows."
+    once: "Correction stays on VR-4317 only. No rule created. Nico keeps the evidence in case the pattern grows."
   };
 
   function ccilStepHTML(i, s) {
@@ -630,7 +639,7 @@
       '<div style="margin-top:14px">' +
       CCIL_STEPS.map(function (s, i) { return ccilStepHTML(i, s); }).join('<div class="ccil-connector" aria-hidden="true"></div>') +
       "</div>" +
-      '<div class="audit-ribbon" style="margin-top:16px"><span aria-hidden="true">🛡</span><span><strong style="color:#fff">Envoz recommends. City staff approve.</strong> Every change is versioned, sandbox-tested, and audited.</span></div>';
+      '<div class="audit-ribbon" style="margin-top:16px">' + ic("shield") + '<span><strong style="color:#fff">Envoz recommends. City staff approve.</strong> Every change is versioned, sandbox-tested, and audited.</span></div>';
     window.Envoz.openModal(html);
 
     for (var i = 0; i < 5; i++) {
@@ -666,7 +675,7 @@
   document.addEventListener("nico:command", function (e) {
     if (/triage/i.test(e.detail.text)) {
       e.detail.handled = true;
-      e.detail.reply = "You’re already in the staff triage console — I’ve focused the Needs Review queue. Two cases are waiting for a human decision.";
+      e.detail.reply = "You’re already in the staff triage console. I’ve focused the Needs Review queue. Two cases are waiting for a human decision.";
       setQueue("Needs Review");
       var consoleEl = document.getElementById("console");
       if (consoleEl) consoleEl.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -676,6 +685,11 @@
   /* ---------------- Wiring ---------------- */
 
   document.addEventListener("DOMContentLoaded", function () {
+    // Fill static [data-icon] placeholders (chrome icons authored in HTML).
+    document.querySelectorAll("[data-icon]").forEach(function (el) {
+      el.innerHTML = ic(el.getAttribute("data-icon"));
+    });
+
     renderRail();
     selectedId = "VR-4281";
     renderTable();

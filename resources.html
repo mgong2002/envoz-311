@@ -20,7 +20,7 @@
     {
       "@type": "Question",
       "name": "Is Envoz a CRM replacement?",
-      "acceptedAnswer": { "@type": "Answer", "text": "No — Envoz is overlay-first and is designed to arm the CRM a city already owns, not replace it. It writes cases into systems like SeeClickFix, Tyler, Granicus, QAlert, Salesforce, Accela, Cityworks, and OpenGov EAM, so residents and staff keep the tools they know. A standalone mode exists for cities without a usable CRM, but the default posture is no rip-and-replace." }
+      "acceptedAnswer": { "@type": "Answer", "text": "No. Envoz is overlay-first, designed to arm the CRM a city already owns rather than replace it. Envoz writes into SeeClickFix today, with Accela and Salesforce via partner API, and is built on an Open311-style contract designed to extend to Tyler, QAlert, Cityworks, and OpenGov EAM. So residents and staff keep the tools they know. A standalone mode exists for cities without a usable CRM, but the default posture is no rip-and-replace." }
     },
     {
       "@type": "Question",
@@ -40,7 +40,7 @@
     {
       "@type": "Question",
       "name": "How does Envoz handle emergencies?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Emergencies are redirected to 911 immediately, and no ordinary 311 case is created. Every call begins with a safety gate — 'Is anyone hurt or in immediate danger?' — before any classification happens. Emergency handling is the one path where the platform never attempts to automate an outcome." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Emergencies are redirected to 911 immediately, and no ordinary 311 case is created. Every call begins with a safety gate, 'Is anyone hurt or in immediate danger?', before any classification happens. Emergency handling is the one path where the platform never attempts to automate an outcome." }
     },
     {
       "@type": "Question",
@@ -50,22 +50,22 @@
     {
       "@type": "Question",
       "name": "What dashboards do city managers get?",
-      "acceptedAnswer": { "@type": "Answer", "text": "City managers get dashboards covering access, equity, speed, and cost — the numbers councils actually ask about. That includes after-hours coverage, routing accuracy, SLA compliance, containment, cost per interaction, AI-discovered service gaps, the learning ledger, and the Nico Success Agent recommendation queue, plus one-click council-ready proof reports." }
+      "acceptedAnswer": { "@type": "Answer", "text": "City managers get dashboards covering access, equity, speed, and cost: the numbers councils actually ask about. That includes after-hours coverage, routing accuracy, SLA compliance, containment, cost per interaction, AI-discovered service gaps, the CEL Ledger, and Nico's improvement recommendations queue, plus one-click council-ready proof reports." }
     },
     {
       "@type": "Question",
       "name": "How quickly can a city configure Envoz?",
-      "acceptedAnswer": { "@type": "Answer", "text": "About 12 minutes of guided conversation with Nico produces a configured demo city; a working sandbox tenant is ready in roughly 48 hours; and a production MVP typically lands in about four weeks. The four-week timeline is usually governed by city data cleanup — taxonomy, GIS layers, and schedule data — rather than by the software itself." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Minutes of guided conversation with Nico — the demo city configures in about 12 minutes. A working sandbox tenant is ready in roughly 48 hours, and a production MVP typically lands in about four weeks. The four-week timeline is usually governed by city data cleanup (taxonomy, GIS layers, and schedule data) rather than by the software itself." }
     },
     {
       "@type": "Question",
       "name": "What data does Envoz collect?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Envoz collects what a 311 case needs — the request, its location, and optional contact details for status updates — with consent records logged for every interaction. All data is tenant-scoped to a single city and never mixed across tenants, and the city owns its data outright, including transcripts, cases, and learning evidence." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Envoz collects what a 311 case needs: the request, its location, and optional contact details for status updates, with consent records logged for every interaction. All data is tenant-scoped to a single city and never mixed across tenants, and the city owns its data outright, including transcripts, cases, and learning evidence." }
     },
     {
       "@type": "Question",
       "name": "What happens when confidence is low?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Low confidence triggers a warm transfer: Nico hands the caller to a person with the full context attached — transcript, candidate classifications, and resolved location — so residents never repeat themselves. Non-urgent low-confidence reports are held in a human review queue rather than routed on a guess, and confidence thresholds are configured per city." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Low confidence triggers a warm transfer: Nico hands the caller to a person with the full context attached (transcript, candidate classifications, and resolved location) so residents never repeat themselves. A non-urgent report that still cannot be classified is filed as other_unknown so a case number is always issued, then re-typed from the Unknowns queue rather than routed on a guess. Confidence thresholds are configured per city." }
     },
     {
       "@type": "Question",
@@ -75,22 +75,22 @@
     {
       "@type": "Question",
       "name": "How are service gaps discovered?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Service gaps are discovered from evidence patterns in the Civic Evidence Log: repeated unknown phrases, clusters of staff corrections, duplicate report clusters, SLA disparities between neighborhoods, and language-confidence dips. Each surfaced gap ships with its evidence, a suggested fix, expected impact, and a departmental owner, so staff decide what to act on." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Service gaps are discovered from evidence patterns in the Continuous Evaluation Loop: repeated unknown phrases, clusters of staff corrections, duplicate report clusters, SLA disparities between neighborhoods, and language-confidence dips. Each surfaced gap ships with its evidence, a suggested fix, expected impact, and a departmental owner, so staff decide what to act on." }
     },
     {
       "@type": "Question",
-      "name": "What is the Continuous Civic Improvement Loop?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The Continuous Civic Improvement Loop is the nine-step cycle — Listen, Understand, Route, Resolve, Measure, Learn, Recommend, Approve, Improve — that turns every 311 interaction into evidence and every pattern into an approvable improvement. Envoz recommends; city staff approve; and every approved change is sandbox-tested, versioned, and audited before deployment." }
+      "name": "What is the Continuous Evaluation Loop?",
+      "acceptedAnswer": { "@type": "Answer", "text": "The Continuous Evaluation Loop (CEL) is how Envoz pictures continuous improvement: Listen, Understand, Route, Resolve, Measure, Learn, Recommend, Approve, Improve. Treat those stages as an illustration, not a spec'd product process. What actually happens is steady: every 311 interaction becomes evidence, patterns become recommendations, and city staff approve each change before it is sandbox-tested, versioned, audited, and deployed." }
     },
     {
       "@type": "Question",
-      "name": "What is the Nico Success Agent?",
-      "acceptedAnswer": { "@type": "Answer", "text": "The Nico Success Agent is the AI success agent assigned to each city, monitoring the 311 program 24/7 for routing accuracy, equity, surge patterns, and connector health. It drafts safe, evidence-linked improvement recommendations — such as new routing rules or vocabulary — and queues them for staff approval; it never deploys changes on its own." }
+      "name": "What are Nico's improvement recommendations?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Nico's improvement recommendations are drawn from the Continuous Evaluation Loop: every routed case, staff correction, and SLA outcome becomes evidence Nico turns into proposals your staff approve. Nico drafts safe, evidence-linked suggestions such as new routing rules, vocabulary additions, taxonomy candidates, and data-quality fixes, then queues them for staff approval with sample cases and sandbox results attached. It never deploys a change on its own. In the demo, Vista Robles has 6 open recommendations with 3 ready for approval." }
     },
     {
       "@type": "Question",
       "name": "How does the platform support council reporting?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Envoz generates council-ready proof reports directly from live evidence — access gains, routing accuracy, equity coverage, SLA compliance, and cost avoided. A city manager can generate a 90-day modernization report in one click, with every metric traceable back to the underlying cases and evidence log." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Envoz generates council-ready proof reports directly from live evidence: access gains, routing accuracy, equity coverage, SLA compliance, and cost avoided. A city manager can generate a 90-day modernization report in one click, with every metric traceable back to the underlying cases and evidence log." }
     },
     {
       "@type": "Question",

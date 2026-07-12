@@ -3,13 +3,14 @@
 (function () {
   "use strict";
 
-  var AI_COST_PER_INTERACTION = 0.42; // $ per AI-handled interaction (illustrative demo figure)
+  var AI_COST_PER_INTERACTION = 0.50; // $ per AI-handled interaction — demo estimate; default for the editable input below
   var AFTER_HOURS_TRIAGE_SHARE = 0.5; // share of after-hours calls assumed to otherwise become next-morning triage
 
+  // Pilots are one-time 90-day fixed-scope engagements; payback is measured against the pilot total, not a monthly fee.
   var TIERS = [
-    { id: "tier-small", max: 75000, fee: 3500, label: "Small city pilot", assumption: "vs. assumed small-city fee of $3,500/mo" },
-    { id: "tier-mid", max: 250000, fee: 6750, label: "Mid-size city pilot", assumption: "vs. assumed mid-size fee of $6,750/mo (range midpoint)" },
-    { id: "tier-large", max: Infinity, fee: 9000, label: "Large city / county pilot", assumption: "vs. assumed large-city fee of $9,000/mo (starting point)" }
+    { id: "tier-small", max: 75000, pilotTotal: 13500, label: "Small city pilot", assumption: "vs. a $12–15K fixed-scope pilot (small city)" },
+    { id: "tier-mid", max: 250000, pilotTotal: 17500, label: "Mid-size city pilot", assumption: "vs. a $15–20K fixed-scope pilot (mid-size city)" },
+    { id: "tier-large", max: Infinity, pilotTotal: 22000, label: "Large city / county pilot", assumption: "vs. a scoped pilot from $20K (large city / county)" }
   ];
 
   var reduceMotion = window.matchMedia &&
@@ -55,7 +56,7 @@
   }
 
   /* ---------------- inputs ---------------- */
-  var FIELDS = ["pop", "volume", "afterhours", "costcall", "containment", "handle", "hourly"];
+  var FIELDS = ["pop", "volume", "afterhours", "costcall", "costenvoz", "containment", "handle", "hourly"];
 
   function readVal(key) {
     var num = document.getElementById("in-" + key);
@@ -102,20 +103,20 @@
     var volume = readVal("volume");
     var afterHoursPct = readVal("afterhours") / 100;
     var costPerCall = readVal("costcall");
+    var costEnvoz = readVal("costenvoz");
     var containment = readVal("containment") / 100;
     var handleMin = readVal("handle");
     var hourly = readVal("hourly");
 
     var aiHandled = volume * containment;
     var hoursSaved = aiHandled * handleMin / 60;
-    var costAvoided = aiHandled * Math.max(0, costPerCall - AI_COST_PER_INTERACTION);
+    var costAvoided = aiHandled * Math.max(0, costPerCall - costEnvoz);
     var afterHoursValue = volume * afterHoursPct * containment *
       (handleMin / 60) * hourly * AFTER_HOURS_TRIAGE_SHARE;
     var annualValue = costAvoided + afterHoursValue;
 
     var tier = tierFor(pop);
-    var annualFee = tier.fee * 12;
-    var paybackMonths = annualValue > 0 ? (annualFee / annualValue) * 12 : Infinity;
+    var paybackMonths = annualValue > 0 ? (tier.pilotTotal / annualValue) * 12 : Infinity;
 
     setOutput("out-handled", aiHandled, fmtInt);
     setOutput("out-hours", hoursSaved, fmtInt);

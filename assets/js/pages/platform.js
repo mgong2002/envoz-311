@@ -33,7 +33,7 @@
     select(0);
   }
 
-  /* ---------------- Continuous Civic Improvement Loop ---------------- */
+  /* ---------------- Continuous Evaluation Loop ---------------- */
   function initLoop() {
     const host = document.getElementById("loop-host");
     const btn = document.getElementById("animate-loop-btn");
@@ -93,7 +93,7 @@
       const text = e.detail.text || "";
       if (/animate.*loop|loop.*animate/i.test(text)) {
         e.detail.handled = true;
-        e.detail.reply = "Animating the Continuous Civic Improvement Loop right here on the Platform page…";
+        e.detail.reply = "Animating the Continuous Evaluation Loop right here on the Platform page…";
         const section = document.getElementById("improvement-loop");
         if (section) section.scrollIntoView({ behavior: "smooth" });
         const viz = document.getElementById("loop-viz");
@@ -118,10 +118,28 @@
     });
   }
 
+  /* ---------------- Fill inline-SVG icon placeholders ---------------- */
+  function fillIcons() {
+    if (!window.Envoz || !Envoz.icon) return;
+    document.querySelectorAll("[data-icon]").forEach(function (el) {
+      const svg = Envoz.icon(el.getAttribute("data-icon"));
+      if (svg) el.innerHTML = svg;
+    });
+  }
+
+  /* ---------------- Append the shared closing pilot CTA band ---------------- */
+  function appendClosingCTA() {
+    if (!window.Envoz || !Envoz.closingCTA) return;
+    const main = document.getElementById("main");
+    if (main) main.insertAdjacentHTML("beforeend", Envoz.closingCTA());
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
+    fillIcons();
     initModeToggle();
     initLoop();
     initDrill();
     initNicoCommands();
+    appendClosingCTA();
   });
 })();

@@ -89,7 +89,7 @@
       <div class="flex space-between flex-wrap" style="align-items:flex-end">
         <div style="max-width:760px">
           <h1>City Manager Success Dashboard · Vista Robles</h1>
-          <p class="lede">The numbers a council actually asks about — access, speed, accuracy, equity, and cost — plus the AI success agent that keeps improving them.</p>
+          <p class="lede">The numbers a council actually asks about: access, speed, accuracy, equity, and cost, plus the recommendations the Continuous Evaluation Loop keeps generating.</p>
         </div>
         <div class="chip-row" style="margin-bottom:6px">
           <span class="chip chip-outline on-dark">Illustrative demo data</span>
@@ -102,12 +102,12 @@
   <!-- ============ Answer block + tabs ============ -->
   <section class="section-tight" style="padding-bottom:0">
     <div class="container">
-      <div class="answer-block" style="margin-top:0">This city manager 311 dashboard shows what changed for residents — faster response, correct routing, after-hours coverage, equitable neighborhood service, and lower cost per interaction — and turns that evidence into council-ready 311 reporting in one click.</div>
+      <div class="answer-block" style="margin-top:0">This city manager 311 dashboard shows what changed for residents: faster response, correct routing, after-hours coverage, equitable neighborhood service, and lower cost per interaction. It turns that evidence into council-ready 311 reporting in one click.</div>
       <div class="tabs" role="tablist" aria-label="Dashboard views" id="dash-tabs">
         <button class="tab" role="tab" type="button" id="tab-performance" data-tab="performance" aria-controls="panel-performance" aria-selected="true">Performance</button>
         <button class="tab" role="tab" type="button" id="tab-gaps" data-tab="gaps" aria-controls="panel-gaps" aria-selected="false" tabindex="-1">Service Gaps</button>
         <button class="tab" role="tab" type="button" id="tab-cel" data-tab="cel" aria-controls="panel-cel" aria-selected="false" tabindex="-1">CEL Learning</button>
-        <button class="tab" role="tab" type="button" id="tab-agent" data-tab="agent" aria-controls="panel-agent" aria-selected="false" tabindex="-1">Nico Success Agent</button>
+        <button class="tab" role="tab" type="button" id="tab-agent" data-tab="agent" aria-controls="panel-agent" aria-selected="false" tabindex="-1">Recommendations</button>
         <button class="tab" role="tab" type="button" id="tab-council" data-tab="council" aria-controls="panel-council" aria-selected="false" tabindex="-1">Council Proof</button>
       </div>
     </div>
@@ -119,7 +119,7 @@
       <div class="flex space-between flex-wrap">
         <div class="panel-head">
           <h2 style="margin-bottom:4px">Resident outcomes, not AI vanity metrics</h2>
-          <p class="small" style="color:var(--muted);margin-bottom:0">Faster response, correct routing, a cleared after-hours backlog, equitable neighborhood coverage, lower cost per interaction, fewer repeat contacts — and residents who trust the number they called.</p>
+          <p class="small" style="color:var(--muted);margin-bottom:0">Faster response, correct routing, a cleared after-hours backlog, equitable neighborhood coverage, lower cost per interaction, fewer repeat contacts, and residents who trust the number they called.</p>
         </div>
         <div class="flex flex-wrap" style="align-items:center">
           <div class="range-pills" role="group" aria-label="Time range" id="range-pills">
@@ -132,6 +132,7 @@
       </div>
       <div id="surge-banner" hidden></div>
       <div class="kpi-grid" id="kpi-grid" aria-live="polite"></div>
+      <p class="small" style="color:var(--muted);margin:12px 0 0;max-width:70ch">Efficiency here funds field work — pilots are never scoped around headcount reduction.</p>
       <div class="chart-grid" id="perf-charts"></div>
       <p class="disclaimer" style="margin-top:14px">All figures are illustrative demo data for the fictional City of Vista Robles.</p>
     </div>
@@ -142,7 +143,7 @@
     <div class="container">
       <div class="panel-head">
         <h2 style="margin-bottom:4px">AI-discovered service gaps</h2>
-        <p class="small" style="color:var(--muted)">Nico watches every routed case, staff correction, and unknown category — then surfaces the gaps worth fixing, with evidence and a one-click next step. Nothing changes in production without approval.</p>
+        <p class="small" style="color:var(--muted)">Nico watches every routed case, staff correction, and unknown category, then surfaces the gaps worth fixing with evidence and a one-click next step. Nothing changes in production without approval.</p>
       </div>
       <div class="grid grid-2" id="gap-cards" style="margin-top:22px"></div>
     </div>
@@ -152,20 +153,20 @@
   <section class="tab-panel" role="tabpanel" id="panel-cel" aria-labelledby="tab-cel" hidden>
     <div class="container">
       <div class="panel-head">
-        <h2 style="margin-bottom:4px">Civic Evidence Ledger · what the system learned</h2>
+        <h2 style="margin-bottom:4px">CEL Ledger · what the system learned</h2>
         <p class="small" style="color:var(--muted)">Every correction, unknown phrase, and connector hiccup becomes a logged learning signal. This quarter’s tally, and the ledger behind it.</p>
       </div>
       <div class="counter-grid" id="cel-counters"></div>
 
-      <h3 style="margin:34px 0 6px">Learning Ledger</h3>
+      <h3 style="margin:34px 0 6px">CEL Ledger</h3>
       <p class="small" style="color:var(--muted);margin-bottom:14px">Click any row for the full evidence and audit trail.</p>
       <div class="table-wrap" id="ledger-wrap"></div>
 
       <div class="card" id="cel-loop-card" style="margin-top:30px;position:relative">
         <div class="flex space-between flex-wrap">
           <div>
-            <h3 style="margin-bottom:4px">The Continuous Civic Improvement Loop</h3>
-            <p class="small" style="color:var(--muted)">How a 9:42 PM phone call becomes an approved, audited improvement to your 311 program.</p>
+            <h3 style="margin-bottom:4px">The Continuous Evaluation Loop, illustrated</h3>
+            <p class="small" style="color:var(--muted)">An illustration, not a spec'd process: how a 9:42 PM phone call becomes an approved, audited improvement to your 311 program.</p>
           </div>
           <button class="btn btn-secondary btn-sm" type="button" id="loop-replay">↻ Replay the loop</button>
         </div>
@@ -175,17 +176,17 @@
     </div>
   </section>
 
-  <!-- ============ TAB 4 · Nico Success Agent ============ -->
+  <!-- ============ TAB 4 · Improvement recommendations ============ -->
   <section class="tab-panel" role="tabpanel" id="panel-agent" aria-labelledby="tab-agent" hidden>
     <div class="container">
       <div class="panel-head">
-        <h2 style="margin-bottom:4px">Nico Success Agent · Assigned to Vista Robles</h2>
-        <p class="small" style="color:var(--muted)">Every Envoz city gets a dedicated AI success agent that monitors the program around the clock, finds what to improve next, and drafts the change for your approval. <strong>Autonomous where safe. Approval-gated where civic trust matters.</strong></p>
+        <h2 style="margin-bottom:4px">Nico's improvement recommendations · Vista Robles</h2>
+        <p class="small" style="color:var(--muted)">Drawn from the Continuous Evaluation Loop: every routed case, correction, and SLA outcome becomes evidence Nico turns into proposals your staff approve. <strong>Autonomous where safe. Approval-gated where civic trust matters.</strong></p>
       </div>
 
       <div class="card" id="agent-card" style="margin-top:22px"></div>
 
-      <h3 style="margin:32px 0 4px">What the agent monitors</h3>
+      <h3 style="margin:32px 0 4px">What Nico watches</h3>
       <div class="chip-cloud" id="agent-monitors" role="list"></div>
 
       <div class="flex space-between flex-wrap" style="margin:34px 0 4px;align-items:flex-end">
@@ -205,9 +206,9 @@
         <p class="small" style="color:var(--muted)">Governed autonomy is the product. These boundaries are enforced in the platform, not just promised.</p>
         <div class="boundary-cols">
           <div>
-            <span class="chip chip-teal">Nico CAN — autonomously</span>
+            <span class="chip chip-teal">Nico CAN, autonomously</span>
             <ul class="small">
-              <li>Monitor routing accuracy, SLA risk, equity, and language quality 24/7</li>
+              <li>Monitor routing accuracy, SLA risk, equity, and language quality</li>
               <li>Analyze correction trends and surge patterns across every interaction</li>
               <li>Draft rules, vocabulary, and taxonomy proposals with evidence attached</li>
               <li>Simulate and run sandbox tests against historical cases</li>
@@ -219,13 +220,13 @@
             <span class="chip chip-red">Nico CANNOT</span>
             <ul class="small">
               <li>Silently change production routing</li>
-              <li>Fabricate case numbers or resolution dates — ever</li>
+              <li>Fabricate case numbers or resolution dates</li>
               <li>Change the global taxonomy from one city’s correction</li>
               <li>Deploy any production change without city approval</li>
             </ul>
           </div>
         </div>
-        <div class="audit-ribbon" style="margin-top:16px"><span>🛡</span><span><strong style="color:#fff">Production changes require city approval</strong> — and every approval is logged to the Civic Evidence Ledger.</span></div>
+        <div class="audit-ribbon" style="margin-top:16px"><span data-icon="shield"></span><span><strong style="color:#fff">Production changes require city approval.</strong> Every approval is logged to the Continuous Evaluation Loop.</span></div>
       </div>
     </div>
   </section>
@@ -236,8 +237,8 @@
       <div class="grid grid-2" style="align-items:center">
         <div class="panel-head">
           <h2 style="margin-bottom:4px">Council-ready proof, generated from evidence</h2>
-          <p class="small" style="color:var(--muted)">Every number in this report traces back to a logged interaction, a routed case, or an approved change — no hand-assembled slide decks the night before the council meeting.</p>
-          <button class="btn btn-primary btn-lg" type="button" id="generate-report" style="margin-top:14px">📄 Generate council-ready proof report</button>
+          <p class="small" style="color:var(--muted)">Every number in this report traces back to a logged interaction, a routed case, or an approved change. No hand-assembled slide decks the night before the council meeting.</p>
+          <button class="btn btn-primary btn-lg" type="button" id="generate-report" style="margin-top:14px"><span data-icon="doc"></span> Generate council-ready proof report</button>
         </div>
         <div class="card card-flat" style="background:var(--aqua-50);border-color:var(--teal-100)">
           <h4>What the report covers</h4>
@@ -254,6 +255,18 @@
   </section>
 
 </main>
+
+<!-- ============ Closing pilot CTA band ============ -->
+<section class="section section-dark grid-texture">
+  <div class="container center">
+    <h2>Turn this dashboard into your council's next update</h2>
+    <p class="lede" style="margin:0 auto 22px">Start with a 90-day pilot, scoped to fit under most cities' small-purchase authority.</p>
+    <div class="flex flex-wrap" style="justify-content:center;gap:12px">
+      <button class="btn btn-primary btn-lg" type="button" data-pilot-open>Book a 20-minute pilot scoping call</button>
+      <a class="btn btn-secondary btn-lg" href="voice-ai.html?demo=pothole">Watch the demo</a>
+    </div>
+  </div>
+</section>
 
 <div id="site-footer"></div>
 <script src="assets/js/data.js"></script>

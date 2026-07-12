@@ -11,21 +11,25 @@
   };
 
   var STATUS_CLASS = {
-    "GA": "chip-green",
-    "GA · Open311": "chip-green",
+    "Production reference": "chip-green",
     "Partner API": "chip-ocean",
+    "Stage Two": "chip-amber",
+    "Roadmap": "chip-purple",
+    "Target catalog": "chip-outline",
+    "Supported options": "chip-teal",
+    "GA": "chip-green",
     "Beta": "chip-amber"
   };
 
   var CONNECTORS = [
     {
       name: "SeeClickFix / Open311", cat: "record",
-      useCase: "Primary overlay target — after-hours voice reports become SeeClickFix issues",
+      useCase: "Primary overlay target: after-hours voice reports become SeeClickFix issues",
       mode: "Overlay · Open311 write",
       writes: "Service request, category, geo-point, photos, summary, confidence + rationale note",
       reads: "Request types, case status, public comments",
       proof: "CRM-issued case ID echoed to resident; write receipt in audit log",
-      status: "GA · Open311",
+      status: "Production reference",
       detail: "The reference overlay integration. Envoz creates the issue through the Open311 GeoReport v2 endpoint where available, or the native SeeClickFix API, and only confirms a case number once SeeClickFix returns one. Status checks read back from the same record, so residents and staff see a single source of truth."
     },
     {
@@ -35,8 +39,8 @@
       writes: "Case, classification, priority, location, transcript summary",
       reads: "Service catalog, workflow states, case status",
       proof: "Tyler case ID + timestamped write receipt",
-      status: "GA",
-      detail: "Envoz maps its taxonomy to the Tyler service catalog during configuration, so cases arrive pre-classified into the workflows staff already run. The Tyler case ID is the number the resident hears — Envoz keeps only the write receipt and audit trail."
+      status: "Roadmap",
+      detail: "On the roadmap. Envoz will map its taxonomy to the Tyler service catalog so cases arrive pre-classified into the workflows staff already run, with the Tyler case ID as the number the resident hears. It is built on the same Open311-style write contract already proven with SeeClickFix, not shipping yet."
     },
     {
       name: "Granicus OneView / govService", cat: "record",
@@ -45,8 +49,8 @@
       writes: "Service request, routing rationale, resident contact preference",
       reads: "Request status, request types, knowledge articles",
       proof: "OneView request ID logged with write receipt",
-      status: "Partner API",
-      detail: "Delivered with vendor cooperation: Envoz writes requests into OneView / govService and reads status back for resident SMS updates. Knowledge articles can also ground Nico's answers, keeping the city's published guidance authoritative."
+      status: "Target catalog",
+      detail: "In the target catalog. Planned to write requests into OneView / govService and read status back for resident SMS updates, delivered with vendor cooperation. Knowledge articles can already ground Nico's answers today, keeping the city's published guidance authoritative."
     },
     {
       name: "CivicPlus", cat: "record",
@@ -55,8 +59,8 @@
       writes: "Service request, category, geo-point, summary",
       reads: "Request types, statuses; site content for grounded answers",
       proof: "Request ID confirmed before the resident hears it",
-      status: "GA",
-      detail: "For CivicPlus cities, Envoz writes requests into the same intake pipeline the website uses and deep-links residents to the public status page. The city website itself doubles as a knowledge source for grounded answers."
+      status: "Target catalog",
+      detail: "In the target catalog. For CivicPlus cities, Envoz is designed to write requests into the same intake pipeline the website uses and deep-link residents to the public status page. Today the city website already doubles as a knowledge source for grounded answers."
     },
     {
       name: "QAlert / Catalis", cat: "record",
@@ -65,8 +69,8 @@
       writes: "Case, department queue, priority, confidence note",
       reads: "Queues, statuses, duplicate candidates",
       proof: "QAlert case number + audit entry",
-      status: "Partner API",
-      detail: "Envoz routes into existing QAlert queues and reads duplicate candidates back before creating a case, so surge nights don't flood the queue with fourteen copies of the same storm-drain report."
+      status: "Stage Two",
+      detail: "Stage Two on the build-out (months 4–6). Envoz will route into existing QAlert queues and read duplicate candidates back before creating a case, so surge nights don't flood the queue with fourteen copies of the same storm-drain report."
     },
     {
       name: "Salesforce Service Cloud", cat: "record",
@@ -75,7 +79,7 @@
       writes: "Case object + custom fields: confidence, rationale, channel",
       reads: "Case status, contact records, entitlement / SLA data",
       proof: "Salesforce Case ID; idempotency key on every write",
-      status: "GA",
+      status: "Partner API",
       detail: "Cases are created through the standard REST API with Envoz confidence and rationale stored in custom fields, so admins can report on routing quality inside Salesforce. Entitlement data feeds SLA-risk alerts back into Envoz dashboards."
     },
     {
@@ -86,7 +90,7 @@
       reads: "Record types, statuses, inspection schedules",
       proof: "Accela record ID in audit log",
       status: "Partner API",
-      detail: "Complaints that classify as code enforcement — abandoned vehicles, property maintenance — are written as Accela records with the evidence summary attached, and inspection schedules read back for honest resident expectations."
+      detail: "Complaints that classify as code enforcement (abandoned vehicles, property maintenance) are written as Accela records with the evidence summary attached, and inspection schedules read back for honest resident expectations."
     },
     {
       name: "Cityworks", cat: "record",
@@ -95,8 +99,8 @@
       writes: "Service request linked to asset ID, priority, geo-point",
       reads: "Asset registry, work-order status",
       proof: "Work-order number confirmed before resident notification",
-      status: "Partner API",
-      detail: "Because Envoz resolves location against GIS asset layers first, Cityworks requests arrive already linked to the specific storm drain, streetlight, or road segment — crews get an asset ID, not a paragraph."
+      status: "Target catalog",
+      detail: "In the target catalog. Because Envoz resolves location against GIS asset layers first, planned Cityworks requests would arrive already linked to the specific storm drain, streetlight, or road segment, so crews get an asset ID instead of a paragraph."
     },
     {
       name: "OpenGov EAM / Cartegraph", cat: "record",
@@ -105,14 +109,14 @@
       writes: "Task / request with asset reference and severity",
       reads: "Asset and task status, maintenance schedules",
       proof: "Task ID + write receipt",
-      status: "Beta",
-      detail: "In pilot hardening: Envoz writes asset-referenced tasks into OpenGov EAM (Cartegraph) and reads maintenance schedules so Nico can tell a resident when the pothole's road segment is already slated for resurfacing."
+      status: "Target catalog",
+      detail: "In the target catalog. Envoz is designed to write asset-referenced tasks into OpenGov EAM (Cartegraph) and read maintenance schedules so Nico can eventually tell a resident when the pothole's road segment is already slated for resurfacing. Not shipping yet."
     },
     {
       name: "Esri / ArcGIS", cat: "gis",
       useCase: "Jurisdiction, ownership, and asset grounding for routing",
       mode: "Read · grounding",
-      writes: "None — read-only",
+      writes: "None (read-only)",
       reads: "Road ownership, parcels, storm-drain and streetlight asset layers",
       proof: "Layer + feature ID cited in routing rationale",
       status: "GA",
@@ -122,7 +126,7 @@
       name: "Google Maps", cat: "gis",
       useCase: "Geocoding fallback and landmark normalization",
       mode: "Read · grounding",
-      writes: "None — read-only",
+      writes: "None (read-only)",
       reads: "Geocoding, place and landmark names",
       proof: "Geocode source cited on location resolution",
       status: "GA",
@@ -135,14 +139,14 @@
       writes: "SMS confirmations with status links, callback requests",
       reads: "Call metadata, caller language hints, transfer status",
       proof: "Call SID logged on every interaction",
-      status: "GA",
-      detail: "Cities keep their existing 311 number — carriage simply points at Envoz. Low-confidence calls warm-transfer to staff with full context over the same trunk, and every interaction's call SID lands in the audit log."
+      status: "Supported options",
+      detail: "Cities keep their existing 311 number, and carriage simply points at Envoz. Low-confidence calls warm-transfer to staff with full context over the same trunk, and every interaction's call SID lands in the audit log."
     },
     {
       name: "Municode", cat: "knowledge",
       useCase: "Ordinance-grounded answers: parking, noise, permits",
       mode: "Read · knowledge",
-      writes: "None — read-only",
+      writes: "None (read-only)",
       reads: "Municipal code sections, ordinance text",
       proof: "Section citation on every grounded answer",
       status: "Beta",
@@ -152,11 +156,11 @@
       name: "City website / PDFs / Google Sheets", cat: "knowledge",
       useCase: "Grounded answers for schedules, hours, and fees",
       mode: "Read · knowledge",
-      writes: "None — read-only",
+      writes: "None (read-only)",
       reads: "Web pages, PDF documents, trash-schedule sheets",
       proof: "Source + freshness date shown per answer",
       status: "GA",
-      detail: "Most city knowledge lives in pages, PDFs, and spreadsheets — Envoz ingests them as-is, tenant-scoped, and shows the source and freshness date on every answer. Stale or conflicting sources surface as data-quality recommendations in the CEL."
+      detail: "Most city knowledge lives in pages, PDFs, and spreadsheets, and Envoz ingests them as-is, tenant-scoped, showing the source and freshness date on every answer. Stale or conflicting sources surface as data-quality recommendations in the CEL."
     }
   ];
 
@@ -291,14 +295,14 @@
       var steps = [
         [0, function () {
           nodes.write.classList.add("lit");
-          status.innerHTML = strip("audit-ribbon", "🛡",
+          status.innerHTML = strip("audit-ribbon", window.Envoz.icon("shield"),
             '<span>21:44:07 · <span class="mono">POST /open311/requests</span> · <span class="mono">idempotency_key=env-vr-4281-a1</span></span>');
         }],
         [1400, function () {
           nodes.write.classList.remove("lit");
           nodes.write.classList.add("error");
           status.innerHTML += strip("caution-strip", "⚠",
-            "Attempt 1 timed out after 8 seconds. Retrying with the same idempotency key — a duplicate case cannot be created.");
+            "Attempt 1 timed out after 8 seconds. Retrying with the same idempotency key, so a duplicate case cannot be created.");
         }],
         [2800, function () {
           conns[0].classList.add("lit");
@@ -317,14 +321,14 @@
         [7000, function () {
           nodes.fallback.classList.remove("lit");
           nodes.fallback.classList.add("done");
-          status.innerHTML += strip("audit-ribbon", "🛡",
+          status.innerHTML += strip("audit-ribbon", window.Envoz.icon("shield"),
             '<span>Structured case packet emailed to <span class="mono">publicworks@vistarobles.gov</span> · reconciliation flag set.</span>');
         }],
         [8400, function () {
           conns[2].classList.add("lit");
           nodes.honest.classList.add("done");
           status.innerHTML += strip("proof-strip", "✓",
-            "Resident hears the truth: “Your report is recorded — the city will text your case number as soon as it’s issued.” No number is invented.");
+            "Resident hears the truth: “Your report is recorded, and the city will text your case number as soon as it’s issued.” No number is invented.");
         }],
         [9800, function () {
           status.innerHTML += strip("proof-strip", "✓",
@@ -344,10 +348,10 @@
 
   /* ---------------- Nico command hooks ---------------- */
   var NICO_FILTERS = [
-    [/systems? of record|crm connectors?/i, "record", "Filtering the matrix to systems of record — the CRMs Envoz writes cases into."],
-    [/gis|maps? connectors?|arcgis/i, "gis", "Filtering the matrix to GIS & maps — read-only grounding for routing decisions."],
-    [/telephony|twilio|telnyx/i, "tel", "Filtering the matrix to telephony — cities keep their existing 311 number."],
-    [/knowledge sources?|municode/i, "knowledge", "Filtering the matrix to knowledge sources — every answer cites where it came from."]
+    [/systems? of record|crm connectors?/i, "record", "Filtering the matrix to systems of record: the CRMs Envoz writes cases into."],
+    [/gis|maps? connectors?|arcgis/i, "gis", "Filtering the matrix to GIS & maps: read-only grounding for routing decisions."],
+    [/telephony|twilio|telnyx/i, "tel", "Filtering the matrix to telephony: cities keep their existing 311 number."],
+    [/knowledge sources?|municode/i, "knowledge", "Filtering the matrix to knowledge sources: every answer cites where it came from."]
   ];
 
   function initNico() {
@@ -373,12 +377,23 @@
         if (section) section.scrollIntoView({ behavior: "smooth" });
         if (btn && !btn.disabled) setTimeout(function () { btn.click(); }, 600);
         e.detail.handled = true;
-        e.detail.reply = "Simulating a CRM API outage — watch the write path retry, fall back to structured email, and stay honest with the resident.";
+        e.detail.reply = "Simulating a CRM API outage: watch the write path retry, fall back to structured email, and stay honest with the resident.";
       }
     });
   }
 
+  /* ---------------- Fill static data-icon placeholders with inline SVG ---------------- */
+  function fillIcons(root) {
+    if (!window.Envoz || !window.Envoz.icon) return;
+    (root || document).querySelectorAll("[data-icon]").forEach(function (el) {
+      if (el.getAttribute("data-icon-done")) return;
+      el.innerHTML = window.Envoz.icon(el.getAttribute("data-icon"));
+      el.setAttribute("data-icon-done", "1");
+    });
+  }
+
   document.addEventListener("DOMContentLoaded", function () {
+    fillIcons();
     initMatrix();
     initReliability();
     initNico();

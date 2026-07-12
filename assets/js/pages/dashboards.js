@@ -27,6 +27,12 @@
   function esc(s) {
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   }
+  function icon(name) { return (window.Envoz && window.Envoz.icon) ? window.Envoz.icon(name) : ""; }
+  function fillIcons() {
+    $all("[data-icon]").forEach(function (el) {
+      if (!el.dataset.iconFilled) { el.innerHTML = icon(el.getAttribute("data-icon")); el.dataset.iconFilled = "1"; }
+    });
+  }
   function toast(msg) {
     var old = $(".toast");
     if (old) old.remove();
@@ -321,7 +327,7 @@
       kpiTile(M.answeredBeforeSecondRing, "Answered before second ring"),
       kpiTile(M.coverage, "24/7 coverage", "365 days, every language"),
       kpiTile(M.csat, "Resident CSAT", "▲ 0.8 vs voicemail era"),
-      kpiTile(M.costPerInteraction, "Cost per AI-handled interaction", "vs ~$7.60 human est.", "neutral"),
+      kpiTile(M.costPerInteraction, "Cost per AI-handled interaction", "vs ~$3.40 human est.", "neutral"),
       kpiTile(String(Math.round(312 * f)), "Staff hours saved", "triage & data entry"),
       kpiTile(String(Math.round(1248 * f).toLocaleString ? Math.round(1248 * f).toLocaleString("en-US") : Math.round(1248 * f)), "Service requests created"),
       kpiTile(M.avgHandle, "Average handle time", "voice → routed case", "neutral"),
@@ -408,7 +414,7 @@
         fmt: function (v) { return (Math.round(v * 10) / 10) + "%"; },
         aria: "Bar chart of routing accuracy by department, ranging from about 86 to 94 percent"
       }),
-      note: "County Partner referrals are hardest to route — a known gap Nico is watching."
+      note: "County Partner referrals are hardest to route, a known gap Nico is watching."
     }));
 
     cards.push(chartCard({
@@ -421,7 +427,7 @@
         fmt: function (v) { return Math.round(v) + "%"; },
         aria: "Bar chart of after-hours containment by day of week, highest on weekends"
       }),
-      note: "Remainder are warm-transferred with full context — residents never repeat themselves."
+      note: "Remainder are warm-transferred with full context, so residents never repeat themselves."
     }));
 
     var intents = state.surge ? SURGE.intents : scaleIntents(state.range);
@@ -439,7 +445,7 @@
 
     cards.push(chartCard({
       title: "Unknown categories trending down",
-      sub: "Calls with no confident taxonomy match — each one feeds the Learning Ledger",
+      sub: "Calls with no confident taxonomy match, each feeding the CEL Ledger",
       body: lineChart({
         labels: state.surge ? WEEKS : wk,
         series: [{
@@ -449,7 +455,7 @@
         yMin: 0, yMax: state.surge ? 11 : 9, fmt: function (v) { return (Math.round(v * 10) / 10) + "%"; },
         aria: "Line chart of unknown service category rate declining to 3.8 percent"
       }),
-      note: state.surge ? "The storm spike became the storm-drain subcategory now in the taxonomy (LL-1044)." : "Down from 7.2% — approved vocabulary and rules close the gap week by week."
+      note: state.surge ? "The storm spike became the storm-drain subcategory now in the taxonomy (CEL-1044)." : "Down from 7.2%. Approved vocabulary and rules close the gap week by week."
     }));
 
     cards.push(chartCard({
@@ -499,7 +505,7 @@
         fmt: function (v) { return "$" + (Math.round(v * 10) / 10) + "k"; },
         aria: "Grouped bar chart comparing estimated human handling cost to Envoz AI handling cost by month"
       }),
-      note: "≈ $17.7k avoided this quarter at $0.42 per AI-handled interaction vs ~$7.60 human estimate."
+      note: "≈ $7.1k avoided this quarter at $0.50 per AI-handled interaction vs ~$3.40 human estimate."
     }));
 
     cards.push(chartCard({
@@ -511,13 +517,13 @@
         yMin: 40, yMax: 90, fmt: function (v) { return Math.round(v) + "%"; },
         aria: "Line chart of status checks self-served without staff, rising to 78 percent"
       }),
-      note: "Answered from live CRM status — never a fabricated repair date."
+      note: "Answered from live CRM status, never a fabricated repair date."
     }));
 
     cards.push(chartCard({
       span: true,
       title: "Complaint-to-resolution timeline · median pothole case",
-      sub: "Where the 38 hours go — intake and routing take about 90 seconds; the rest is real-world work",
+      sub: "Where the 38 hours go: intake and routing take about 90 seconds; the rest is real-world work",
       legend: legend([["Nico (automated)", TEAL], ["Staff & scheduling", OCEAN], ["Closed & notified", GREEN]]),
       body: ganttChart({
         rows: BASE.timeline, max: 48, tick: 12,
@@ -563,7 +569,7 @@
 
   /* ==================== Tab 2 · Service Gaps ==================== */
   var CTA_FEEDBACK = {
-    "Create rule": { status: "Queued · rule drafted for approval", note: "Draft rule sent to the Nico Success Agent queue" },
+    "Create rule": { status: "Queued · rule drafted for approval", note: "Draft rule added to the recommendations queue" },
     "Open queue": { status: "Queue opened · flagged for supervisor", note: "4 at-risk cases surfaced in staff triage" },
     "Export for council": { status: "Exported · added to council report draft", note: "Will appear under “Service gaps discovered”" },
     "Add to configuration": { status: "Queued · configuration change drafted", note: "Proposed change awaits sandbox test & approval" }
@@ -595,10 +601,10 @@
       btn.addEventListener("click", function () {
         var fb = CTA_FEEDBACK[btn.dataset.cta] || CTA_FEEDBACK["Create rule"];
         var card = btn.closest(".card");
-        card.querySelector(".gap-state").outerHTML = '<span class="chip chip-green gap-state">✓ ' + esc(fb.status) + "</span>";
-        card.querySelector(".gap-proof").innerHTML = '<div class="proof-strip" style="margin-top:12px"><span class="proof-icon">✓</span>' + esc(fb.note) + " · logged to the Civic Evidence Ledger</div>";
+        card.querySelector(".gap-state").outerHTML = '<span class="chip chip-green gap-state">' + icon("check") + " " + esc(fb.status) + "</span>";
+        card.querySelector(".gap-proof").innerHTML = '<div class="proof-strip" style="margin-top:12px"><span class="proof-icon">' + icon("check") + "</span>" + esc(fb.note) + " · logged to the Continuous Evaluation Loop</div>";
         btn.disabled = true;
-        btn.textContent = "✓ Done";
+        btn.innerHTML = icon("check") + " Done";
         toast(fb.status);
       });
     });
@@ -614,11 +620,11 @@
   ];
 
   var LEDGER_DETAIL = {
-    "LL-1042": "Staff corrected 19 water-pooling cases from Streets to Utilities in 90 days; 17 of the 19 were within 30 ft of a storm-drain asset per the GIS layer. Proposed rule drafted, sandbox-tested against 47 historical cases (18/18 test suites passed), now awaiting city approval.",
-    "LL-1043": "Spanish-language calls near School Zone South resolved addresses at 71% vs 82% citywide. Root cause: residents use school nicknames and crosswalk landmarks absent from the location vocabulary. Additions running in sandbox against recorded (consented) demo transcripts.",
-    "LL-1044": "The phrase “storm grate burbling” appeared 14 times in 48 hours during the Jan 14 storm and fell below the confident-routing threshold each time. A provisional storm-drain backup subcategory was approved for the city taxonomy — flagged as a global taxonomy candidate pending multi-city evidence.",
-    "LL-1045": "SeeClickFix write API returned elevated 429 responses between 2–4 AM on Jul 5. Retry window widened with idempotency keys preserved; zero duplicate case confirmations sent to residents.",
-    "LL-1046": "17 neighborhood names in the imported trash-schedule sheet don’t match the canonical GIS list (e.g., “N. Foothills” vs “North Foothills”). Cleanup task list assigned to Sanitation before grounded answers go to production."
+    "CEL-1042": "Staff corrected 19 water-pooling cases from Streets to Utilities in 90 days; 17 of the 19 were within 30 ft of a storm-drain asset per the GIS layer. Proposed rule drafted, sandbox-tested against 47 historical cases (18/18 test suites passed), now awaiting city approval.",
+    "CEL-1043": "Spanish-language calls near School Zone South resolved addresses at 71% vs 82% citywide. Root cause: residents use school nicknames and crosswalk landmarks absent from the location vocabulary. Additions running in sandbox against recorded (consented) demo transcripts.",
+    "CEL-1044": "The phrase “storm grate burbling” appeared 14 times in 48 hours during the Jan 14 storm and fell below the 0.60 routing threshold each time. A provisional storm-drain backup subcategory was approved for the city taxonomy, flagged as a global taxonomy candidate pending multi-city evidence.",
+    "CEL-1045": "SeeClickFix write API returned elevated 429 responses between 2–4 AM on Jul 5. Retry window widened with idempotency keys preserved; zero duplicate case confirmations sent to residents.",
+    "CEL-1046": "17 neighborhood names in the imported trash-schedule sheet don’t match the canonical GIS list (e.g., “N. Foothills” vs “North Foothills”). Cleanup task list assigned to Sanitation before grounded answers go to production."
   };
 
   var celCounted = false;
@@ -701,7 +707,7 @@
     setTimeout(function () { window.Envoz.animateLoop($("#cel-loop-viz")); }, 450);
   }
 
-  /* ==================== Tab 4 · Nico Success Agent ==================== */
+  /* ==================== Tab 4 · Improvement recommendations ==================== */
   var MONITORS = [
     "Routing accuracy", "SLA risk", "Unknown-service categories", "Staff correction trends",
     "After-hours surge patterns", "Neighborhood service disparities", "Language access quality",
@@ -710,8 +716,8 @@
   ];
 
   var REC_AUDIT = {
-    "rec-storm-drain": "LL-1042", "rec-spanish-vocab": "LL-1043", "rec-storm-subcat": "LL-1044",
-    "rec-trash-data": "LL-1046", "rec-council-report": "LL-1048", "rec-sla-threshold": "LL-1047"
+    "rec-storm-drain": "CEL-1042", "rec-spanish-vocab": "CEL-1043", "rec-storm-subcat": "CEL-1044",
+    "rec-trash-data": "CEL-1046", "rec-council-report": "CEL-1048", "rec-sla-threshold": "CEL-1047"
   };
   var REC_SANDBOX_RESULT = {
     "rec-storm-drain": "Rule tested against 47 historical cases · expected reroute reduction: 14%",
@@ -730,7 +736,7 @@
       '<div class="flex flex-wrap" style="align-items:flex-start;gap:16px">' +
       '<span class="agent-orb" aria-hidden="true"></span>' +
       '<div style="flex:1;min-width:240px">' +
-      '<div class="flex flex-wrap" style="gap:8px"><h3 style="margin:0">Nico · Success Agent</h3>' +
+      '<div class="flex flex-wrap" style="gap:8px"><h3 style="margin:0">Nico’s recommendations</h3>' +
       '<span class="chip chip-green"><span class="dot"></span>' + esc(a.status) + "</span>" +
       '<span class="chip chip-outline">Last review: ' + esc(a.lastReview) + "</span></div>" +
       '<p class="small" style="margin:8px 0 4px;color:var(--muted)"><strong>Current focus:</strong> ' + esc(a.focus) + "</p>" +
@@ -740,7 +746,6 @@
       '<div class="agent-stats">' +
       '<div class="kpi"><span class="kpi-value">' + a.openRecs + '</span><br><span class="kpi-label">Open recommendations</span></div>' +
       '<div class="kpi"><span class="kpi-value">' + a.readyForApproval + '</span><br><span class="kpi-label">Ready for approval</span></div>' +
-      '<div class="kpi"><span class="kpi-value">' + esc(a.hoursSavedIfApproved) + '</span><br><span class="kpi-label">Staff hours saved if approved</span></div>' +
       '<div class="kpi"><span class="kpi-value">' + esc(a.nextCouncilUpdate) + '</span><br><span class="kpi-label">Next council update</span></div>' +
       "</div>";
   }
@@ -796,7 +801,7 @@
       if (st && /approved/i.test(st)) {
         var rec = findRec(card.dataset.rec);
         card.querySelector(".rec-ribbon").innerHTML =
-          '<div class="audit-ribbon" style="margin-top:12px"><span>🛡</span><span>Approved by City of Vista Robles · logged · <span class="mono">' + esc(REC_AUDIT[rec.id]) + "</span></span></div>";
+          '<div class="audit-ribbon" style="margin-top:12px"><span>' + icon("shield") + '</span><span>Approved by City of Vista Robles · logged · <span class="mono">' + esc(REC_AUDIT[rec.id]) + "</span></span></div>";
       }
     });
 
@@ -822,7 +827,7 @@
       setTimeout(generateReport, 350);
       return;
     }
-    if (/share draft/i.test(action)) { toast("Demo mode — export simulated"); return; }
+    if (/share draft/i.test(action)) { toast("Demo mode: export simulated"); return; }
     if (/assign review|send to review/i.test(action)) {
       state.recStatus[id] = "Assigned · under review";
       renderRecCards();
@@ -830,7 +835,7 @@
       return;
     }
     if (/cleanup task list/i.test(action)) { toast("Cleanup task list created · 17 items assigned to Sanitation"); return; }
-    if (/continue sandbox only/i.test(action)) { toast("Kept in sandbox — no production change made"); return; }
+    if (/continue sandbox only/i.test(action)) { toast("Kept in sandbox: no production change made"); return; }
     openRecDrawer(rec, {});
   }
 
@@ -864,13 +869,13 @@
     drawer.className = "drawer";
     drawer.setAttribute("role", "dialog");
     drawer.setAttribute("aria-modal", "true");
-    drawer.setAttribute("aria-label", rec.title + " — recommendation details");
+    drawer.setAttribute("aria-label", rec.title + ": recommendation details");
 
     var cases = rec.sampleCases.length
       ? rec.sampleCases.map(function (c) {
           return '<a class="chip chip-ocean" href="staff-triage.html?case=' + esc(c) + '" style="text-decoration:none">' + esc(c) + " ↗</a>";
         }).join(" ")
-      : '<span class="small" style="color:var(--muted)">No individual cases — this change is program-level.</span>';
+      : '<span class="small" style="color:var(--muted)">No individual cases; this change is program-level.</span>';
 
     drawer.innerHTML =
       '<div class="flex space-between" style="align-items:flex-start;gap:10px">' +
@@ -880,7 +885,7 @@
 
       '<div class="d-section" id="drawer-evidence"><div class="d-label">Evidence</div>' +
       '<p class="small" style="margin:0 0 8px">' + esc(rec.evidence) + "</p>" +
-      '<p class="small" style="margin:0;color:var(--muted)">' + esc(LEDGER_DETAIL[audit] || "Captured automatically from staff corrections, SLA outcomes, and interaction logs — every signal is evidence-linked.") + "</p></div>" +
+      '<p class="small" style="margin:0;color:var(--muted)">' + esc(LEDGER_DETAIL[audit] || "Captured automatically from staff corrections, SLA outcomes, and interaction logs. Every signal is evidence-linked.") + "</p></div>" +
 
       '<div class="d-section"><div class="d-label">Sample cases</div><div class="chip-row">' + cases + "</div></div>" +
 
@@ -890,26 +895,26 @@
 
       '<div class="d-section"><div class="d-label">Governance scope</div>' +
       '<div class="chip-row"><span class="chip chip-navy">' + esc(rec.scope) + "</span></div>" +
-      '<p class="small" style="margin:8px 0 0;color:var(--muted)">Scoped to Vista Robles only. One city’s correction never changes the global taxonomy — cross-city changes need multi-city evidence and separate review.</p></div>' +
+      '<p class="small" style="margin:8px 0 0;color:var(--muted)">Scoped to Vista Robles only. One city’s correction never changes the global taxonomy. Cross-city changes need multi-city evidence and separate review.</p></div>' +
 
       '<div class="d-section"><div class="d-label">Audit trail</div><ul class="audit-list">' +
       '<li><span class="mono">' + esc(audit) + "</span><span>Signal captured &amp; recommendation drafted</span></li>" +
       '<li><span class="mono">' + esc(audit) + "-S</span><span>Sandbox suite prepared (historical replay)</span></li>" +
-      '<li><span class="mono">' + esc(audit) + "-A</span><span>Approval decision — pending city sign-off</span></li></ul></div>" +
+      '<li><span class="mono">' + esc(audit) + "-A</span><span>Approval decision · pending city sign-off</span></li></ul></div>" +
 
       '<div class="d-section"><div class="d-label">Sandbox test</div>' +
-      '<button class="btn btn-secondary btn-sm" type="button" id="drawer-sandbox">▶ Run sandbox test</button>' +
+      '<button class="btn btn-secondary btn-sm" type="button" id="drawer-sandbox">' + icon("play") + ' Run sandbox test</button>' +
       '<div id="sandbox-zone" style="margin-top:10px" aria-live="polite">' +
-      (state.sandboxDone[rec.id] ? '<div class="proof-strip"><span class="proof-icon">✓</span>' + esc(REC_SANDBOX_RESULT[rec.id]) + "</div>" : "") +
+      (state.sandboxDone[rec.id] ? '<div class="proof-strip"><span class="proof-icon">' + icon("check") + "</span>" + esc(REC_SANDBOX_RESULT[rec.id]) + "</div>" : "") +
       "</div></div>" +
 
       '<div class="d-section"><div class="d-label">Approve</div>' +
       '<fieldset style="border:none;padding:0;margin:0 0 10px"><legend class="small" style="font-weight:600;padding:0;margin-bottom:6px">Choose deployment scope</legend>' +
-      '<label class="small" style="display:block;margin-bottom:4px"><input type="radio" name="approve-scope" value="sandbox" checked style="width:auto;margin-right:7px">Sandbox — test environment only</label>' +
-      '<label class="small" style="display:block"><input type="radio" name="approve-scope" value="production" style="width:auto;margin-right:7px">Production — live routing (city approval logged)</label></fieldset>' +
-      '<button class="btn btn-primary" type="button" id="drawer-approve"' + (approved ? " disabled" : "") + ">✓ Approve</button>" +
+      '<label class="small" style="display:block;margin-bottom:4px"><input type="radio" name="approve-scope" value="sandbox" checked style="width:auto;margin-right:7px">Sandbox: test environment only</label>' +
+      '<label class="small" style="display:block"><input type="radio" name="approve-scope" value="production" style="width:auto;margin-right:7px">Production: live routing (city approval logged)</label></fieldset>' +
+      '<button class="btn btn-primary" type="button" id="drawer-approve"' + (approved ? " disabled" : "") + ">" + icon("check") + " Approve</button>" +
       '<div id="approve-zone" style="margin-top:12px" aria-live="polite">' +
-      (approved ? '<div class="audit-ribbon"><span>🛡</span><span>Approved by City of Vista Robles · logged · <span class="mono">' + esc(audit) + "</span></span></div>" : "") +
+      (approved ? '<div class="audit-ribbon"><span>' + icon("shield") + '</span><span>Approved by City of Vista Robles · logged · <span class="mono">' + esc(audit) + "</span></span></div>" : "") +
       "</div>" +
       '<p class="small" style="color:var(--muted);margin:12px 0 0">Autonomous where safe. Approval-gated where civic trust matters.</p></div>';
 
@@ -956,10 +961,10 @@
       if (pct >= 100) {
         clearInterval(iv);
         setTimeout(function () {
-          zone.innerHTML = '<div class="proof-strip"><span class="proof-icon">✓</span>' + esc(REC_SANDBOX_RESULT[rec.id]) + "</div>";
+          zone.innerHTML = '<div class="proof-strip"><span class="proof-icon">' + icon("check") + "</span>" + esc(REC_SANDBOX_RESULT[rec.id]) + "</div>";
           state.sandboxDone[rec.id] = true;
           btn.disabled = false;
-          btn.textContent = "↻ Re-run sandbox test";
+          btn.innerHTML = icon("play") + " Re-run sandbox test";
           if (!/approved/i.test(recStatus(rec)) && !/ready/i.test(recStatus(rec))) {
             state.recStatus[rec.id] = "Ready for approval";
             var sc = $("#drawer-status", drawerEls.drawer);
@@ -985,15 +990,15 @@
       if (!drawerEls) return;
       sc.innerHTML = statusChipFor(newStatus);
       $("#approve-zone", drawerEls.drawer).innerHTML =
-        '<div class="audit-ribbon"><span>🛡</span><span>Approved by City of Vista Robles · logged · <span class="mono">' + esc(audit) + "</span></span></div>";
+        '<div class="audit-ribbon"><span>' + icon("shield") + '</span><span>Approved by City of Vista Robles · logged · <span class="mono">' + esc(audit) + "</span></span></div>";
       var ab = $("#drawer-approve", drawerEls.drawer);
       ab.disabled = true;
-      ab.textContent = "✓ " + newStatus;
+      ab.innerHTML = icon("check") + " " + esc(newStatus);
     }, 420);
 
     state.recStatus[rec.id] = newStatus;
     renderRecCards();
-    toast(newStatus + " · " + audit + " logged to the Civic Evidence Ledger");
+    toast(newStatus + " · " + audit + " logged to the Continuous Evaluation Loop");
   }
 
   /* ==================== Tab 5 · Council Proof ==================== */
@@ -1011,7 +1016,7 @@
     var wk8 = WEEKS.slice(4);
     return [
       sectionCard("Executive summary",
-        '<p class="small">In its first 90 days, Envoz 311 answered every resident call 24/7, routed ' + M.requestsCreated + " service requests into SeeClickFix with " + M.routingAccuracy + " accuracy, and raised SLA compliance 4.1 points — while capturing 327 after-hours calls that would previously have been voicemail.</p>" +
+        '<p class="small">In its first 90 days, Envoz 311 answered every resident call 24/7, routed ' + M.requestsCreated + " service requests into SeeClickFix with " + M.routingAccuracy + " accuracy, and raised SLA compliance 4.1 points while capturing 327 after-hours calls that would previously have been voicemail.</p>" +
         statRow([[M.slaCompliance, "SLA compliance · ▲ 4.1 pts"], ["327", "After-hours calls captured"], [M.costPerInteraction, "Cost per AI-handled interaction"], [M.csat, "Resident CSAT"]])),
       sectionCard("Resident access gains",
         statRow([["100%", "24/7 coverage · 365 days"], [M.answeredBeforeSecondRing, "Answered before second ring"], [M.avgHold, "Average hold time"], [M.languages, "Languages served"]]) +
@@ -1022,15 +1027,16 @@
         '<div class="chart-sub">SLA compliance trend · last 8 weeks</div>' +
         lineChart({ labels: wk8, series: [{ values: BASE.sla.slice(4), area: true }], yMin: 88, yMax: 96, h: 150, fmt: function (v) { return v.toFixed(1) + "%"; }, aria: "Line chart of SLA compliance rising to 93.4 percent" })),
       sectionCard("Equity and language access",
-        '<p class="small">All eight neighborhoods sit within a 5-point SLA band. Spanish-language address confidence near School Zone South is the one flagged disparity — a vocabulary fix is ready for approval (+11% expected).</p>' +
+        '<p class="small">All eight neighborhoods sit within a 5-point SLA band. Spanish-language address confidence near School Zone South is the one flagged disparity, and a vocabulary fix is ready for approval (+11% expected).</p>' +
         statRow([["8 / 8", "Neighborhoods in SLA band"], ["18", "Languages served this quarter"], ["94%", "Spanish routing confidence"], ["+11%", "Address-confidence fix ready"]])),
       sectionCard("Cost savings",
-        statRow([["$17.7k", "Est. cost avoided (90 days)"], [M.staffHoursSaved + " hrs", "Staff hours saved"], [M.costPerInteraction, "Per AI-handled interaction"], ["~$7.60", "Est. human handling cost"]]) +
+        statRow([["$7.1k", "Est. cost avoided (90 days)"], [M.staffHoursSaved + " hrs", "Staff hours saved"], [M.costPerInteraction, "Per AI-handled interaction"], ["~$3.40", "Est. human handling cost"]]) +
+        '<p class="small" style="color:var(--muted);margin:4px 0 10px">Efficiency here funds field work — pilots are never scoped around headcount reduction.</p>' +
         '<div class="chart-sub">Monthly cost comparison ($ thousands)</div>' +
         legend([["Est. human handling", OCEAN], ["Envoz AI-handled", TEAL]]) +
         groupedBars({ labels: BASE.cost.labels, series: [{ name: "Est. human handling", color: OCEAN, values: BASE.cost.human }, { name: "Envoz AI-handled", color: TEAL, values: BASE.cost.ai }], fmt: function (v) { return "$" + (Math.round(v * 10) / 10) + "k"; }, aria: "Grouped bars comparing human and AI handling cost by month" })),
       sectionCard("Service gaps discovered",
-        '<p class="small">The Continuous Civic Improvement Loop surfaced 6 service gaps this quarter — 3 with fixes ready for approval. Top three by expected impact:</p>' +
+        '<p class="small">The Continuous Evaluation Loop surfaced 6 service gaps this quarter, 3 with fixes ready for approval. Top three by expected impact:</p>' +
         '<ul class="small" style="line-height:1.9"><li><strong>Storm-drain misroutes:</strong> 19 corrections → proximity rule drafted (−14% reroutes)</li>' +
         "<li><strong>Spanish address confidence near schools:</strong> vocabulary additions (+11% confidence)</li>" +
         "<li><strong>Harbor View parks SLA lag:</strong> early-warning alert at 60% of SLA window</li></ul>" +
@@ -1040,7 +1046,7 @@
         "<li>Deploy Spanish landmark vocabulary for School Zone South</li>" +
         "<li>Enable parks SLA-risk alerts for Harbor View</li>" +
         "<li>Expand proactive SMS status updates to all departments</li></ul>" +
-        statRow([["42 hrs/mo", "Staff time saved if approved"], ["−14%", "Expected reroute reduction"], ["Friday", "Next council update"]]))
+        statRow([["3", "Fixes ready for approval"], ["−14%", "Expected reroute reduction"], ["Friday", "Next council update"]]))
     ];
   }
 
@@ -1048,7 +1054,7 @@
     if (state.reportBuilding) return;
     if (state.reportBuilt) {
       $("#council-report").scrollIntoView({ behavior: "smooth", block: "start" });
-      toast("Report already generated — scroll through it below");
+      toast("Report already generated. Scroll through it below");
       return;
     }
     state.reportBuilding = true;
@@ -1061,9 +1067,9 @@
       '<div class="flex space-between flex-wrap"><div>' +
       '<span class="eyebrow">Council-ready proof report</span>' +
       '<h2 style="margin-bottom:2px">Vista Robles 311 Modernization: First 90 Days</h2>' +
-      '<p class="small" style="color:var(--muted);margin:0">Prepared by the Nico Success Agent · every figure traces to a logged interaction or audit id · illustrative demo data</p>' +
+      '<p class="small" style="color:var(--muted);margin:0">Prepared from CEL evidence · every figure traces to a logged interaction or audit id · illustrative demo data</p>' +
       '</div><span class="chip chip-outline">Draft · ' + new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) + "</span></div>" +
-      '<div class="build-status" id="build-status" style="margin-top:14px"><span class="build-dot" aria-hidden="true"></span><span id="build-msg">Compiling evidence from the Civic Evidence Ledger…</span></div>' +
+      '<div class="build-status" id="build-status" style="margin-top:14px"><span class="build-dot" aria-hidden="true"></span><span id="build-msg">Compiling evidence from the Continuous Evaluation Loop…</span></div>' +
       "</div><div id=\"report-sections\"></div><div id=\"report-actions\"></div>";
 
     var sections = buildReportSections();
@@ -1081,16 +1087,16 @@
     });
 
     setTimeout(function () {
-      $("#build-status").innerHTML = '<div class="proof-strip" style="flex:1"><span class="proof-icon">✓</span>Report generated from ' + M.requestsCreated + " logged service requests · 7 sections · ready to present</div>";
+      $("#build-status").innerHTML = '<div class="proof-strip" style="flex:1"><span class="proof-icon">' + icon("check") + "</span>Report generated from " + M.requestsCreated + " logged service requests · 7 sections · ready to present</div>";
       $("#report-actions").innerHTML =
         '<div class="card report-section built" style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">' +
         '<div class="flex flex-wrap">' +
-        '<button class="btn btn-navy" type="button" data-export="PDF">⬇ Export PDF</button>' +
-        '<button class="btn btn-secondary" type="button" data-export="PowerPoint">⬇ Export PowerPoint</button>' +
-        '<button class="btn btn-secondary" type="button" data-export="Share link">🔗 Share link</button></div>' +
+        '<button class="btn btn-navy" type="button" data-export="PDF">' + icon("doc") + ' Export PDF</button>' +
+        '<button class="btn btn-secondary" type="button" data-export="PowerPoint">' + icon("doc") + ' Export PowerPoint</button>' +
+        '<button class="btn btn-secondary" type="button" data-export="Share link">' + icon("globe") + ' Share link</button></div>' +
         '<span class="disclaimer">Exports are simulated in this demo environment.</span></div>';
       $all("[data-export]").forEach(function (b) {
-        b.addEventListener("click", function () { toast("Demo mode — export simulated"); });
+        b.addEventListener("click", function () { toast("Demo mode: export simulated"); });
       });
       state.reportBuilding = false;
       state.reportBuilt = true;
@@ -1156,8 +1162,8 @@
       if (/surge/i.test(t)) {
         e.detail.handled = true;
         e.detail.reply = state.surge
-          ? "Storm surge mode is already on — you’re looking at the Jan 14 replay."
-          : "Switching to storm surge mode — replaying the Jan 14 storm: 4.2× call volume, 81% containment, Oak Bluff hotspot.";
+          ? "Storm surge mode is already on. You’re looking at the Jan 14 replay."
+          : "Switching to storm surge mode, replaying the Jan 14 storm: 4.2× call volume, 81% containment, Oak Bluff hotspot.";
         activateTab("performance");
         setSurge(true);
         $("#panel-performance").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1165,7 +1171,7 @@
       }
       if (/loop|improvement loop|civic improvement/i.test(t)) {
         e.detail.handled = true;
-        e.detail.reply = "Here’s the Continuous Civic Improvement Loop, embedded right in the CEL Learning tab — watch it run.";
+        e.detail.reply = "Here’s the Continuous Evaluation Loop, illustrated in the CEL Learning tab. Watch it run.";
         activateTab("cel");
         setTimeout(function () {
           $("#cel-loop-card").scrollIntoView({ behavior: "smooth", block: "start" });
@@ -1235,6 +1241,7 @@
 
   /* ==================== boot ==================== */
   document.addEventListener("DOMContentLoaded", function () {
+    fillIcons();
     initTabs();
     initControls();
     initNicoClaims();

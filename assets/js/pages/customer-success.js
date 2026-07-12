@@ -54,6 +54,18 @@
     return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   }
 
+  function icon(name) { return (window.Envoz && window.Envoz.icon) ? window.Envoz.icon(name) : ""; }
+
+  function fillIcons() {
+    var nodes = document.querySelectorAll("[data-icon]");
+    Array.prototype.forEach.call(nodes, function (el) {
+      if (!el.dataset.iconFilled) {
+        el.innerHTML = icon(el.getAttribute("data-icon"));
+        el.dataset.iconFilled = "1";
+      }
+    });
+  }
+
   function renderTimeline() {
     var grid = document.getElementById("phase-grid");
     if (!grid) return;
@@ -69,7 +81,9 @@
         '<span class="phase-caret" aria-hidden="true">▾</span>' +
         "</button>" +
         '<div class="phase-panel" id="phase-panel-' + i + '"' + (open ? "" : " hidden") + ">" +
-        "<ul>" + p.items.map(function (it) { return "<li>" + esc(it) + "</li>"; }).join("") + "</ul>" +
+        "<ul>" + p.items.map(function (it) {
+          return '<li><span class="tick">' + icon("check") + "</span><span>" + esc(it) + "</span></li>";
+        }).join("") + "</ul>" +
         '<span class="chip chip-green">' + esc(p.milestone) + "</span>" +
         "</div></div>"
       );
@@ -91,7 +105,7 @@
     head.setAttribute("aria-expanded", String(willOpen));
   }
 
-  /* ---------------- Nico Success Agent panel (from shared demo data) ---------------- */
+  /* ---------------- Nico's improvement recommendations panel (from shared demo data) ---------------- */
   function renderAgentStats() {
     var host = document.getElementById("agent-stats");
     if (!host || !window.ENVOZ_DATA || !window.ENVOZ_DATA.agent) return;
@@ -103,10 +117,9 @@
     var rows = [
       ["Current focus", a.focus],
       ["Last program review", a.lastReview],
-      ["Agent confidence", a.confidence],
+      ["Recommendation confidence", a.confidence],
       ["Open recommendations", a.openRecs],
       ["Ready for city approval", a.readyForApproval],
-      ["Staff hours saved if approved", a.hoursSavedIfApproved],
       ["Next council update", a.nextCouncilUpdate]
     ];
     host.innerHTML = rows.map(function (r) {
@@ -134,6 +147,7 @@
   }
 
   document.addEventListener("DOMContentLoaded", function () {
+    fillIcons();
     renderTimeline();
     renderAgentStats();
     initNicoHook();

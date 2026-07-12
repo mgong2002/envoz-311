@@ -51,11 +51,31 @@
     setTimeout(function () {
       pin.style.visibility = "hidden";
       pinLabel.style.visibility = "hidden";
-      caseCard.style.opacity = ".35";
+      caseCard.style.opacity = ".55";
       proof.style.visibility = "hidden";
       runHero();
     }, 1300 * LINES.length + 9000);
   }
 
-  document.addEventListener("DOMContentLoaded", runHero);
+  /* Fill inline-SVG icon placeholders (static HTML can't call JS at author time). */
+  function fillIcons() {
+    if (!window.Envoz || !Envoz.icon) return;
+    document.querySelectorAll("[data-icon]").forEach(function (el) {
+      const svg = Envoz.icon(el.getAttribute("data-icon"));
+      if (svg) el.innerHTML = svg;
+    });
+  }
+
+  /* Append the shared closing pilot CTA band. */
+  function appendClosingCTA() {
+    if (!window.Envoz || !Envoz.closingCTA) return;
+    const main = document.getElementById("main");
+    if (main) main.insertAdjacentHTML("beforeend", Envoz.closingCTA());
+  }
+
+  document.addEventListener("DOMContentLoaded", function () {
+    fillIcons();
+    appendClosingCTA();
+    runHero();
+  });
 })();

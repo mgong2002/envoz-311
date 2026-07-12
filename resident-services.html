@@ -73,7 +73,7 @@
       <div style="max-width:840px">
         <span class="eyebrow">Resident Services</span>
         <h1>One front door for every resident request — configured for your city.</h1>
-        <p class="lede" style="margin-top:14px">Envoz 311 ships with a full catalog of resident service types. Each one defines what Nico collects, which department owns the work, the SLA the resident is promised, and how ownership is verified — before a case is ever created.</p>
+        <p class="lede" style="margin-top:14px">Envoz 311 ships with a full catalog of resident service types. Each one defines what Nico collects, which department owns the work, the SLA the resident is promised, and how ownership is verified, before a case is ever created.</p>
         <div class="chip-row" style="margin-top:20px">
           <span class="chip chip-outline on-dark">29 services in this demo catalog</span>
           <span class="chip chip-outline on-dark">8 departments</span>
@@ -91,11 +91,11 @@
   <!-- ================= ANSWER BLOCK ================= -->
   <section class="section-tight">
     <div class="container">
-      <div class="answer-block reveal">The Envoz 311 resident services catalog defines how 311 service request automation behaves for each request type: the fields Nico must collect, the department that owns the work, the SLA target the resident is told, the GIS ownership check that confirms jurisdiction, and the request types where a grounded answer replaces a case entirely. Cities rename, retarget, and retire services in Configuration Studio — nothing here is hard-coded.</div>
+      <div class="answer-block reveal">The Envoz 311 resident services catalog defines how 311 service request automation behaves for each request type: the fields Nico must collect, the department that owns the work, the SLA target the resident is told, the GIS ownership check that confirms jurisdiction, and the request types where a grounded answer replaces a case entirely. Cities rename, retarget, and retire services in Configuration Studio. Nothing here is hard-coded.</div>
       <div class="grid grid-3 reveal" style="margin-top:22px">
         <div class="card card-pad-sm card-flat"><strong>Requests become cases.</strong><p class="small" style="color:var(--muted);margin:6px 0 0">Classified, geo-tagged, deduplicated, and written into your CRM with confidence and rationale.</p></div>
-        <div class="card card-pad-sm card-flat"><strong>Questions become answers.</strong><p class="small" style="color:var(--muted);margin:6px 0 0">Trash day, park hours, permit status — grounded in city sources, cited, never guessed. No case needed.</p></div>
-        <div class="card card-pad-sm card-flat"><strong>Emergencies become 911.</strong><p class="small" style="color:var(--muted);margin:6px 0 0">Every call starts with a safety gate. Danger to life redirects immediately — no ordinary 311 case is created.</p></div>
+        <div class="card card-pad-sm card-flat"><strong>Questions become answers.</strong><p class="small" style="color:var(--muted);margin:6px 0 0">Trash day, park hours, permit status: grounded in city sources, cited, never guessed. No case needed.</p></div>
+        <div class="card card-pad-sm card-flat"><strong>Emergencies become 911.</strong><p class="small" style="color:var(--muted);margin:6px 0 0">Every call starts with a safety gate. Danger to life redirects immediately. No ordinary 311 case is created.</p></div>
       </div>
     </div>
   </section>
@@ -128,9 +128,9 @@
           <button class="btn btn-ghost btn-sm" type="button" id="f-clear">Clear all filters</button>
         </div>
         <div class="svc-toggles" role="group" aria-label="Filter services by attribute">
-          <label class="svc-toggle"><input type="checkbox" id="f-photo">📷 Photo required</label>
-          <label class="svc-toggle"><input type="checkbox" id="f-gis">🗺 GIS check required</label>
-          <label class="svc-toggle"><input type="checkbox" id="f-referral">↗ External referral possible</label>
+          <label class="svc-toggle"><input type="checkbox" id="f-photo"> Photo required</label>
+          <label class="svc-toggle"><input type="checkbox" id="f-gis"><span data-icon="map" aria-hidden="true"></span> GIS check required</label>
+          <label class="svc-toggle"><input type="checkbox" id="f-referral"><span data-icon="route" aria-hidden="true"></span> External referral possible</label>
           <label class="svc-toggle"><input type="checkbox" id="f-review">◔ Low-confidence review gate</label>
         </div>
         <div class="svc-count" id="svc-count" aria-live="polite"></div>
@@ -140,7 +140,7 @@
 
       <div class="card svc-empty" id="svc-empty" hidden>
         <h3>No services match those filters</h3>
-        <p class="small" style="color:var(--muted)">Try removing a toggle or widening the category — every one of the 29 demo services is still here.</p>
+        <p class="small" style="color:var(--muted)">Try removing a toggle or widening the category. Every one of the 29 demo services is still here.</p>
         <button class="btn btn-secondary btn-sm" type="button" id="svc-empty-clear">Clear all filters</button>
       </div>
 
@@ -153,10 +153,10 @@
     <div class="container">
       <div class="card emergency-card reveal">
         <div class="chip-row" style="margin-bottom:10px"><span class="chip chip-red">Safety gate · first question, every call</span></div>
-        <h2 id="emergency-heading" style="font-size:1.35rem">Fire, downed wires, or danger to life? That is 911 — always.</h2>
-        <p>Nico opens every interaction with a safety gate: <em>“Is anyone hurt or in immediate danger?”</em> When the answer suggests an emergency — a structure fire, a downed power line, a gas smell, a crash with injuries — Envoz redirects the caller to 911 immediately. <strong>No ordinary 311 case is created, and no case number is ever invented for an emergency.</strong></p>
-        <div class="safety-strip"><span aria-hidden="true">🚨</span><span>Downed wire touching the road, smoke or flames, medical distress, or anyone trapped → immediate 911 redirect. 311 stays out of the way.</span></div>
-        <p class="small" style="color:var(--muted);margin-top:12px">After the emergency is handed off, Envoz logs the redirect as a <span class="mono">SAFETY_ESCALATION</span> outcome in the audit trail — so the city can prove the gate fired, without ever slowing the caller down.</p>
+        <h2 id="emergency-heading" style="font-size:1.35rem">Fire, downed wires, or danger to life? That is always 911.</h2>
+        <p>Nico opens every interaction with a safety gate: <em>“Is anyone hurt or in immediate danger?”</em> When the answer suggests an emergency (a structure fire, a downed power line, a gas smell, a crash with injuries), Envoz redirects the caller to 911 immediately. <strong>No ordinary 311 case is created, and no case number is ever invented for an emergency.</strong></p>
+        <div class="safety-strip"><span data-icon="warning" aria-hidden="true"></span><span>Downed wire touching the road, smoke or flames, medical distress, or anyone trapped → immediate 911 redirect. 311 stays out of the way.</span></div>
+        <p class="small" style="color:var(--muted);margin-top:12px">After the emergency is handed off, Envoz logs it as an <span class="mono">EMERGENCY_REDIRECTED</span> outcome in the audit trail, so the city can prove the gate fired without ever slowing the caller down.</p>
       </div>
     </div>
   </section>
@@ -165,28 +165,28 @@
   <section class="section section-aqua" id="referrals" style="padding:56px 0">
     <div class="container">
       <div class="center reveal">
-        <span class="eyebrow">When it isn’t the city’s asset</span>
-        <h2>Warm referrals — never a dead end</h2>
-        <p class="lede">GIS ownership checks catch requests the city can’t fix before a wrong case is filed. Nico explains who does own it, shares the right contact, and passes the full context along — the resident never repeats themselves.</p>
+        <span class="eyebrow">When it isn’t ours</span>
+        <h2>Warm referrals, never a dead end</h2>
+        <p class="lede">GIS ownership checks catch requests the city can’t fix before a wrong case is filed. Nico explains who does own it, shares the right contact, and passes the full context along, so the resident never repeats themselves.</p>
       </div>
       <div class="grid grid-3" style="margin-top:30px">
         <div class="card card-hover reveal">
-          <span class="icon-tile navy">🏛</span>
+          <span class="icon-tile navy" data-icon="building"></span>
           <h4>County &amp; state partners</h4>
-          <p class="small" style="color:var(--muted)">Potholes on county roads, flood-control channels, signals on state routes, deer on the highway shoulder — referred to the county or Caltrans with location and details attached.</p>
+          <p class="small" style="color:var(--muted)">Potholes on county roads, flood-control channels, signals on state routes, deer on the highway shoulder: all referred to the county or Caltrans with location and details attached.</p>
         </div>
         <div class="card card-hover reveal">
-          <span class="icon-tile ocean">⚡</span>
+          <span class="icon-tile ocean" data-icon="wrench"></span>
           <h4>Utility providers</h4>
-          <p class="small" style="color:var(--muted)">Power outages, utility-owned poles, and water-district hydrants get the provider’s outage line and reporting link — plus a safety check for downed wires first.</p>
+          <p class="small" style="color:var(--muted)">Power outages, utility-owned poles, and water-district hydrants get the provider’s outage line and reporting link, plus a safety check for downed wires first.</p>
         </div>
         <div class="card card-hover reveal">
-          <span class="icon-tile amber">🏘</span>
+          <span class="icon-tile amber" data-icon="users"></span>
           <h4>HOA &amp; private property</h4>
-          <p class="small" style="color:var(--muted)">Private streets, HOA landscaping, and on-parcel issues are explained kindly, with the right next step — and a city case where code enforcement genuinely applies.</p>
+          <p class="small" style="color:var(--muted)">Private streets, HOA landscaping, and on-parcel issues are explained kindly, with the right next step, and a city case where code enforcement genuinely applies.</p>
         </div>
       </div>
-      <div class="proof-strip reveal" style="margin-top:24px"><span class="proof-icon">✓</span>Every referral is logged as a <span class="mono">REFERRED</span> outcome with the reason and destination — so “not ours” is still measured, audited, and improvable.</div>
+      <div class="proof-strip reveal" style="margin-top:24px"><span class="proof-icon">✓</span>Every referral is logged as a <span class="mono">SERVICE_REQUEST_CREATED</span> case with an <span class="mono">external_referral</span> record, so “not ours” is still measured, audited, and improvable.</div>
     </div>
   </section>
 
@@ -196,12 +196,24 @@
       <div class="card reveal" style="display:flex;flex-wrap:wrap;gap:18px;align-items:center;justify-content:space-between">
         <div style="max-width:60ch">
           <h3 style="margin-bottom:6px">This catalog is a starting point, not a boundary.</h3>
-          <p class="small" style="color:var(--muted);margin:0">Rename services, change SLA targets, add subcategories, swap knowledge sources — all in Configuration Studio, all versioned and approval-gated.</p>
+          <p class="small" style="color:var(--muted);margin:0">Rename services, change SLA targets, add subcategories, swap knowledge sources. All in Configuration Studio, all versioned and approval-gated.</p>
         </div>
         <div class="flex flex-wrap">
           <a class="btn btn-primary" href="configuration-studio.html?flow=harbor-mesa">Configure Harbor Mesa</a>
           <a class="btn btn-secondary" href="voice-ai.html?demo=pothole">Watch a service in action</a>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CLOSING PILOT CTA ================= -->
+  <section class="section section-dark grid-texture">
+    <div class="container center">
+      <h2>Bring this catalog to your city.</h2>
+      <p class="lede" style="margin:0 auto 22px">Start with a 90-day pilot, scoped to fit under most cities’ small-purchase authority.</p>
+      <div class="flex flex-wrap" style="justify-content:center;gap:12px">
+        <button class="btn btn-primary btn-lg" type="button" data-pilot-open data-tier="Mid-size city pilot">Book a 20-minute pilot scoping call</button>
+        <a class="btn btn-secondary btn-lg" href="voice-ai.html?demo=pothole">Watch the demo</a>
       </div>
     </div>
   </section>

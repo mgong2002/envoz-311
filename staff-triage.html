@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Staff Triage Console — Clean, Confidence-Scored 311 Cases | Envoz 311</title>
-<meta name="description" content="The Envoz 311 staff triage console: city staff receive clean, confidence-scored cases with rationale and proof — approve, reroute, merge, escalate, or teach the AI with scoped corrections. Every decision audited in the Civic Evidence Ledger.">
+<meta name="description" content="The Envoz 311 staff triage console: city staff receive clean, confidence-scored cases with rationale and proof. Approve, reroute, merge, escalate, or teach the AI with scoped corrections. Every decision audited in the Continuous Evaluation Loop (CEL).">
 <link rel="icon" type="image/svg+xml" href="assets/img/envoz-mark.svg">
 <link rel="stylesheet" href="assets/css/main.css">
 <script type="application/ld+json">
@@ -110,16 +110,16 @@
   <section class="section-dark grid-texture triage-band">
     <div class="container flex space-between flex-wrap" style="align-items:flex-start;gap:18px">
       <div>
-        <h1>Staff Triage · Vista Robles 311</h1>
+        <h1>You arrived to 8 structured cases instead of 23 voicemails.</h1>
         <div class="chip-row">
           <span class="chip chip-outline on-dark">Illustrative demo data</span>
           <span class="chip chip-outline on-dark">Overlay mode · SeeClickFix</span>
           <span class="chip chip-outline on-dark">Tuesday 7:58 AM · overnight intake pre-triaged</span>
         </div>
-        <p class="band-line">AI feels like a transparent coworker, not a black box. You arrived to 8 structured cases — not 23 voicemails.</p>
+        <p class="band-line">Vista Robles 311. Every case arrives classified, geo-tagged, and explained, with confidence and rationale. Nico works like a transparent coworker, not a black box.</p>
       </div>
       <div style="text-align:right">
-        <button class="btn btn-primary" type="button" data-ccil-open>▶ Show how Envoz learns from a staff correction</button>
+        <button class="btn btn-primary" type="button" data-ccil-open><span data-icon="play"></span> Show how Envoz learns from a staff correction</button>
         <div class="small" style="color:var(--slate-400);margin-top:8px">Correction → evidence → rule → sandbox → approval</div>
       </div>
     </div>
@@ -128,7 +128,7 @@
   <!-- ================= CONSOLE ================= -->
   <section class="section-tight" id="console">
     <div class="container">
-      <div class="answer-block" style="margin-top:0">The Envoz 311 staff triage console gives city staff clean, confidence-scored cases instead of chaotic transcripts. Every case arrives classified, geo-tagged, and explained — staff approve, reroute, merge, escalate, or teach the system with scoped corrections, and every decision is logged to the Civic Evidence Ledger.</div>
+      <div class="answer-block" style="margin-top:0">The Envoz 311 staff triage console gives city staff clean, confidence-scored cases instead of chaotic transcripts. Every case arrives classified, geo-tagged, and explained. Staff approve, reroute, merge, escalate, or teach the system with scoped corrections, and every decision is logged to the Continuous Evaluation Loop (CEL).</div>
 
       <div class="console" style="margin-top:20px">
         <!-- LEFT RAIL -->
@@ -151,7 +151,7 @@
               <tbody id="triage-body"></tbody>
             </table>
           </div>
-          <p class="small" style="color:var(--muted);margin-top:10px">Select a case to open its detail panel. Every action writes a reversible, versioned event to the Civic Evidence Ledger (CEL). Illustrative demo data.</p>
+          <p class="small" style="color:var(--muted);margin-top:10px">Select a case to open its detail panel. Every action writes a reversible, versioned event to the Continuous Evaluation Loop (CEL). Illustrative demo data.</p>
         </div>
 
         <!-- CASE DETAIL (desktop; drawer on smaller screens) -->
@@ -166,9 +166,9 @@
   <section class="section section-aqua" id="learning-queue">
     <div class="container">
       <div class="reveal">
-        <span class="eyebrow">Unknowns learning queue</span>
-        <h2>When Nico doesn’t know, it says so — and asks you.</h2>
-        <p class="lede">VR-4320 never guessed its way into a department. Below the routing threshold, cases wait for a human — and your correction teaches the system exactly as much as you decide.</p>
+        <span class="eyebrow">Unknowns queue</span>
+        <h2>When Nico doesn’t know, it says so and asks you.</h2>
+        <p class="lede">VR-4320 never guessed its way into a department. Below the routing threshold, cases wait for a human. Your correction teaches the system exactly as much as you decide.</p>
       </div>
       <div class="grid grid-2" style="margin-top:26px;align-items:start">
         <div class="card reveal">
@@ -183,18 +183,18 @@
             “There’s a basketball-sized beehive in the bus shelter.”
             <footer class="small" style="color:var(--muted);margin-top:6px">Raw utterance · Voice · 3:45 PM · Jeffrey Transit Stop</footer>
           </blockquote>
-          <div class="caution-strip" role="status"><span aria-hidden="true">⚠</span>Human review required. No CRM case routed yet — held in the learning queue (4-hour target).</div>
+          <div class="caution-strip" role="status"><span data-icon="warning" aria-hidden="true"></span><span>Filed as other_unknown — VR-4320 issued and waiting in the Unknowns queue for a human to re-type. Same-day review.</span></div>
           <h4 style="margin:18px 0 4px">Attempted classifications</h4>
           <div id="clf-bars">
             <div class="clf-row"><span>Parks Maintenance</span><div class="clf-track"><div class="clf-fill" data-w="41"></div></div><span class="clf-val">41%</span></div>
             <div class="clf-row"><span>Code Enforcement</span><div class="clf-track"><div class="clf-fill" data-w="33"></div></div><span class="clf-val">33%</span></div>
             <div class="clf-row"><span>Animal / Vector Control</span><div class="clf-track"><div class="clf-fill" data-w="29"></div></div><span class="clf-val">29%</span></div>
           </div>
-          <p class="small" style="color:var(--muted);margin:10px 0 0">All three candidates fall below the 70% routing threshold, so Nico refused to guess — and told the resident a person would review it today.</p>
+          <p class="small" style="color:var(--muted);margin:10px 0 0">All three candidates fall below the 0.60 routing threshold, so Nico refused to guess and told the resident a person would review it today.</p>
         </div>
 
         <div class="card reveal" id="correction-card">
-          <h3 style="font-size:1.05rem">Correct it — and choose how far the lesson travels</h3>
+          <h3 style="font-size:1.05rem">Correct it, and choose how far the lesson travels</h3>
           <label class="field-label" for="correct-dept" style="margin-top:12px">Route this case to</label>
           <select id="correct-dept" style="max-width:320px"></select>
           <fieldset style="border:none;padding:0;margin:16px 0 0">
@@ -202,13 +202,13 @@
             <label class="scope-option"><input type="radio" name="scope" value="case" checked>
               <span><strong>Apply to this case only</strong><span class="small">One-time fix. Nothing else changes.</span></span></label>
             <label class="scope-option"><input type="radio" name="scope" value="rule">
-              <span><strong>Create city-only rule</strong><span class="small">“Beehive/wasp nest on a transit asset → Animal / Vector Control” — Vista Robles only, pending approval.</span></span></label>
+              <span><strong>Create city-only rule</strong><span class="small">“Beehive/wasp nest on a transit asset → Animal / Vector Control.” Vista Robles only, pending approval.</span></span></label>
             <label class="scope-option"><input type="radio" name="scope" value="dept">
               <span><strong>Add to department memory</strong><span class="small">The receiving department’s tenant-scoped vocabulary learns the phrasing.</span></span></label>
             <label class="scope-option"><input type="radio" name="scope" value="global">
               <span><strong>Submit as global taxonomy evidence</strong><span class="small">Anonymized evidence for the global review board. Nothing changes without human approval.</span></span></label>
           </fieldset>
-          <p class="small" style="color:var(--muted)"><strong>Corrections do not blindly overwrite the global model.</strong> You choose the blast radius — from one case to anonymized global evidence — and every choice is versioned and audited.</p>
+          <p class="small" style="color:var(--muted)"><strong>Corrections do not blindly overwrite the global model.</strong> You choose the blast radius, from one case to anonymized global evidence, and every choice is versioned and audited.</p>
           <button class="btn btn-primary" type="button" id="apply-correction">Apply correction</button>
           <div id="correction-result" aria-live="polite" style="margin-top:14px"></div>
         </div>
@@ -219,14 +219,26 @@
   <!-- ================= CCIL DEMO ================= -->
   <section class="section" id="ccil">
     <div class="container center reveal">
-      <span class="eyebrow">Continuous Civic Improvement Loop</span>
+      <span class="eyebrow">How Envoz learns</span>
       <h2>One reroute today. 14% fewer reroutes tomorrow.</h2>
-      <p class="lede">Watch a single staff correction on VR-4317 become an evidence-backed, sandbox-tested, city-approved routing rule — with a human sign-off at every gate.</p>
+      <p class="lede">Watch a single staff correction on VR-4317 become an evidence-backed, sandbox-tested, city-approved routing rule, with a human sign-off at every gate.</p>
       <div class="flex flex-wrap" style="justify-content:center;margin-top:22px">
-        <button class="btn btn-primary btn-lg" type="button" data-ccil-open>▶ Show how Envoz learns from a staff correction</button>
+        <button class="btn btn-primary btn-lg" type="button" data-ccil-open><span data-icon="play"></span> Show how Envoz learns from a staff correction</button>
         <a class="btn btn-secondary btn-lg" href="dashboards.html?tab=agent&amp;rec=rec-storm-drain">See the live recommendation in Dashboards</a>
       </div>
       <p class="small" style="color:var(--muted);margin-top:14px">Staff stay in control: Envoz recommends, city staff approve, and every change is sandbox-tested before deploy. Illustrative demo data.</p>
+    </div>
+  </section>
+
+  <!-- ================= CLOSING PILOT CTA ================= -->
+  <section class="section section-dark grid-texture">
+    <div class="container center">
+      <h2>See a clean queue in your own city.</h2>
+      <p class="lede" style="margin:0 auto 22px">Start with a 90-day pilot, scoped to fit under most cities’ small-purchase authority.</p>
+      <div class="flex flex-wrap" style="justify-content:center;gap:12px">
+        <button class="btn btn-primary btn-lg" type="button" data-pilot-open data-tier="Mid-size city pilot">Book a 20-minute pilot scoping call</button>
+        <a class="btn btn-secondary btn-lg" href="voice-ai.html?demo=pothole">Watch the demo</a>
+      </div>
     </div>
   </section>
 

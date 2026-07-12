@@ -6,13 +6,17 @@
 (function () {
   "use strict";
 
+  function ic(name) {
+    return (window.Envoz && window.Envoz.icon) ? window.Envoz.icon(name) : "";
+  }
+
   var CATEGORIES = [
     ["Roads & Transportation", "Streets, signals, sidewalks, and everything residents drive or walk past."],
-    ["Utilities & Water", "Leaks, backups, drains, and hydrants — with main-vs-private checks built in."],
+    ["Utilities & Water", "Leaks, backups, drains, and hydrants, with main-vs-private checks built in."],
     ["Clean & Safe", "Dumping, graffiti, missed pickups, and vector control."],
     ["Parks & Public Spaces", "Trees, trails, restrooms, playgrounds, and irrigation."],
     ["Code & Community", "Quality-of-life concerns handled with care and a services-first posture."],
-    ["Info / Knowledge", "Grounded answers from city sources — no case created, nothing guessed."]
+    ["Info / Knowledge", "Grounded answers from city sources: no case created, nothing guessed."]
   ];
 
   /* Each service:
@@ -300,10 +304,10 @@
     var out = [];
     out.push(s.dept
       ? '<span class="chip chip-navy">' + s.dept + "</span>"
-      : '<span class="chip chip-teal">Grounded answer — no case</span>');
-    out.push('<span class="chip chip-outline">⏱ ' + s.sla.split(" · ")[0] + "</span>");
-    if (s.photo === "required") out.push('<span class="chip chip-amber">📷 Photo required</span>');
-    if (s.referral) out.push('<span class="chip chip-ocean">↗ Referral possible</span>');
+      : '<span class="chip chip-teal">Grounded answer, no case</span>');
+    out.push('<span class="chip chip-outline">' + ic("clock") + " " + s.sla.split(" · ")[0] + "</span>");
+    if (s.photo === "required") out.push('<span class="chip chip-amber">Photo required</span>');
+    if (s.referral) out.push('<span class="chip chip-ocean">' + ic("route") + " Referral possible</span>");
     if (s.review) out.push('<span class="chip chip-purple">◔ Review gate</span>');
     return '<span class="chip-row">' + out.join("") + "</span>";
   }
@@ -317,14 +321,14 @@
     var bodyId = "svc-body-" + s.id;
     var body =
       row("Required fields", chipList(s.required, "chip-outline")) +
-      row("Routing", s.dept ? s.dept : "Grounded answer — no case created") +
+      row("Routing", s.dept ? s.dept : "Grounded answer, no case created") +
       row("SLA target", s.sla) +
       row("Ownership check", s.ownership) +
       row("Resident channels", chipList(s.channels, "chip-ocean")) +
       row("Photo", PHOTO_TEXT[s.photo]) +
       row("Duplicates & related", s.dupe) +
       row("Sample prompt", '<p class="svc-prompt">“' + s.prompt + "”</p>") +
-      (s.source ? row("Knowledge source", '<span class="chip chip-source">📚 ' + s.source + "</span>") : "");
+      (s.source ? row("Knowledge source", '<span class="chip chip-source">' + ic("doc") + " " + s.source + "</span>") : "");
 
     return (
       '<article class="card svc-card">' +
@@ -396,7 +400,7 @@
     deptSel.innerHTML =
       '<option value="all">All departments</option>' +
       depts.map(function (d) { return '<option value="' + d + '">' + d + "</option>"; }).join("") +
-      '<option value="__info">Grounded answer — no case</option>';
+      '<option value="__info">Grounded answer, no case</option>';
     deptSel.addEventListener("change", function () { state.dept = deptSel.value; render(); });
 
     channelSel.addEventListener("change", function () { state.channel = channelSel.value; render(); });
@@ -473,6 +477,11 @@
     deptSel = document.getElementById("f-dept");
     channelSel = document.getElementById("f-channel");
     if (!catalogEl) return;
+
+    // Fill static [data-icon] placeholders (chrome icons authored in HTML).
+    document.querySelectorAll("[data-icon]").forEach(function (el) {
+      el.innerHTML = ic(el.getAttribute("data-icon"));
+    });
 
     buildFilters();
     initExpand();
