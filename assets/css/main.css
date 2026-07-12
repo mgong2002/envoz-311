@@ -134,6 +134,9 @@ strong { color: var(--ink); }
 small, .small { font-size: 0.85rem; }
 ul, ol { padding-left: 1.3em; }
 code, .mono { font-family: var(--mono); font-size: 0.86em; }
+/* Long snake_case tokens in flowing prose must break rather than overflow narrow screens */
+.mono { overflow-wrap: anywhere; }
+.json-card .mono { overflow-wrap: normal; }
 
 :focus-visible {
   outline: 3px solid var(--ocean-500);

@@ -28,6 +28,13 @@
   "offers": { "@type": "Offer", "description": "90-day municipal pilot programs" }
 }
 </script>
+<style>
+  .marker-list li { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 4px; }
+  .li-ico { flex-shrink: 0; margin-top: 3px; display: inline-flex; font-size: 0.95em; }
+  .li-ico.warn { color: var(--amber-600); }
+  .li-ico.good { color: var(--green-600); }
+  .hero-call-ico { display: inline-flex; vertical-align: -0.12em; margin-right: 6px; color: var(--teal-500); }
+</style>
 </head>
 <body data-page="home" data-marketing="true">
 <a class="skip-link" href="#main">Skip to content</a>
@@ -56,7 +63,7 @@
         <!-- Left: active call -->
         <div class="card card-flat" style="background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:var(--slate-300)">
           <div class="flex space-between" style="margin-bottom:12px">
-            <strong style="color:#fff">📞 Active call · 9:42 PM</strong>
+            <strong style="color:#fff"><span class="hero-call-ico" data-icon="phone"></span>Active call · 9:42 PM</strong>
             <span class="nico-waveform speaking" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span></span>
           </div>
           <div id="hero-call" style="display:flex;flex-direction:column;gap:8px;min-height:190px" aria-live="polite"></div>
@@ -111,19 +118,19 @@
       </div>
       <div class="card reveal">
         <h4>Before Envoz · a typical night</h4>
-        <ul style="line-height:2">
-          <li>📼 23 voicemails waiting at 8 AM</li>
-          <li>❓ No locations, no classifications</li>
-          <li>😶 Residents heard nothing back</li>
-          <li>⏱ 2+ staff hours of morning triage</li>
+        <ul class="marker-list" style="line-height:1.9;list-style:none;padding-left:0">
+          <li><span class="li-ico warn" data-icon="warning"></span>23 voicemails waiting at 8 AM</li>
+          <li><span class="li-ico warn" data-icon="doc"></span>No locations, no classifications</li>
+          <li><span class="li-ico warn" data-icon="phone"></span>Residents heard nothing back</li>
+          <li><span class="li-ico warn" data-icon="clock"></span>2+ staff hours of morning triage</li>
         </ul>
         <hr class="divider">
         <h4>With Envoz · the same night</h4>
-        <ul style="line-height:2">
-          <li>✅ Every call answered before the second ring</li>
-          <li>📍 Cases geo-tagged and routed to the right department</li>
-          <li>💬 Residents get a case number and SMS status link</li>
-          <li>🌅 Staff arrive to a clean, prioritized queue</li>
+        <ul class="marker-list" style="line-height:1.9;list-style:none;padding-left:0">
+          <li><span class="li-ico good" data-icon="check"></span>Every call answered before the second ring</li>
+          <li><span class="li-ico good" data-icon="pin"></span>Cases geo-tagged and routed to the right department</li>
+          <li><span class="li-ico good" data-icon="phone"></span>Residents get a case number and SMS status link</li>
+          <li><span class="li-ico good" data-icon="check"></span>Staff arrive to a clean, prioritized queue</li>
         </ul>
       </div>
     </div>
