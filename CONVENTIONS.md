@@ -9,6 +9,30 @@ Static multi-page site. No build step, no external network requests (fonts/CDNs)
 - `assets/js/shared.js` — injects header/footer/Nico dock. **Do not edit.**
 - `assets/js/pages/<page>.js` — your page's behavior (plain JS, IIFE, `"use strict"`, no frameworks).
 - `assets/img/` — `envoz-mark.svg`, `metaengage-mark.svg`, `metaengage-logo.svg`.
+- `assets/fonts/` — vendored Public Sans variable woff2 (self-hosted; **do not** hot-link a font CDN).
+
+## Canonical facts & terminology (never contradict — see `docs/CANONICAL-FIXES.md`)
+
+- **Confidence thresholds:** escalate < 0.60; answer info ≥ 0.50. There is **no 0.70 threshold**. `Envoz.confidenceChip(pct)` amber-styles below 60.
+- **CEL = "Continuous Evaluation Loop"** — the only expansion. Never "Civic Evidence Ledger/Log". The dashboard view over CEL events is the **"CEL Ledger"** (ids `CEL-####`, not `LL-####`).
+- **The nine-step loop is a marketing illustration** of the CEL, not a spec'd process.
+- **Six routing outcomes only:** SERVICE_REQUEST_CREATED, INFORMATION_ANSWERED, ESCALATED_TO_HUMAN, EMERGENCY_REDIRECTED, STATUS_PROVIDED, NO_STRUCTURED_OUTPUT. Referrals = a case + external_referral record; emergencies = EMERGENCY_REDIRECTED.
+- **Priority enum:** emergency/high/normal/low. Queue flags (Needs Review, SLA Risk, Surge Cluster) live in `case.flag`/`queue`, never `priority`.
+- **Unknowns always issue a VR** (filed `other_unknown`, re-typed from the Unknowns queue). No caseless holds.
+- **Economics:** $0.50 AI-handled vs $3.40 human.
+- **Connectors:** SeeClickFix = production reference; Accela/Salesforce = partner API; QAlert = Stage Two; Tyler = roadmap; Granicus/CivicPlus/Cityworks/OpenGov = target catalog; Twilio/Telnyx = supported options. Only claim live writes to SeeClickFix.
+- **"Nico's improvement recommendations"** (drawn from the CEL) — not a "dedicated 24/7 success agent".
+
+## New shared APIs (from `window.Envoz`)
+
+- `Envoz.icon(name[, cls])` → inline `<svg class="i-icon">`. Names: mic, phone, pin, check, warning, shield, chart, gear, doc, clock, globe, route, building, wrench, bell, users, layers, play, scale, lock, sparkle, map, flag. **Use for UI iconography instead of emoji.** Keep emoji only inside simulated chat/call transcripts (content). In static HTML, drop `<span data-icon="NAME"></span>` and fill it in page JS: `document.querySelectorAll('[data-icon]').forEach(function(el){el.innerHTML=Envoz.icon(el.dataset.icon)});`
+- `Envoz.openPilotForm({tier})` — the primary commercial CTA. Any element with `data-pilot-open` (optional `data-tier`) opens it. **No `mailto:` CTAs.**
+- `Envoz.closingCTA({heading, sub})` → standard closing band HTML (pilot primary + watch-demo secondary). Every page should end with one.
+- CSS helpers: `.tinted-panel` (+ teal/amber/red/purple/green) replaces colored left-rail cards; `.i-icon` sizing is automatic inside `.icon-tile`/`.btn`/`.chip`.
+
+## Copy budgets (rendered copy)
+
+≤3 em dashes/page · ≤1 "X, not Y"/page · ≤1 slogan fragment/page · break ~1/3 of triads · eyebrows 2–3 words and never restating the h2. Brand-phrase homes: "no rip-and-replace"→index/platform/integrations; "council-ready"→customer-success/dashboards/pilot-pricing; "before the second ring"→index/voice-ai; "confidence and rationale"→trust/platform/staff-triage.
 
 ## Page skeleton (copy exactly)
 
